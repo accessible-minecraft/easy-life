@@ -20,14 +20,17 @@
   "entrypoints": {
     "main": [
       "net.shoaibkhan.health.n.hunger.Initial"
+    ],
+    "client": [
+      "net.shoaibkhan.health.n.hunger.ClientMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
+    "fabric-key-binding-api-v1":"*",
     "fabric": "*",
     "minecraft": "1.16.x"
   },
