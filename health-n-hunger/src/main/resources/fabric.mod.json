@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "hnh",
+  "id": "easylifebyshoaib",
   "version": "${version}",
 
-  "name": "Health n Hunger",
-  "description": "This mod alerts player when health or hunger is decreased and also adds a button to check health and hunger manually!",
+  "name": "Easy Life",
+  "description": "This mod alerts player when health  is decreased and also adds a button to check health and hunger manually!",
   "authors": [
-    "ShoaibKhan"
+    "Shoaib Khan"
   ],
   "contact": {
     "homepage": "",
@@ -14,16 +14,15 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "",
 
   "environment": "*",
   "entrypoints": {
     "main": [
       "net.shoaibkhan.health.n.hunger.Initial"
     ],
-    "client": [
-      "net.shoaibkhan.health.n.hunger.ClientMod"
-    ]
+    "client": [],
+    "server": []
   },
   "mixins": [
   ],
