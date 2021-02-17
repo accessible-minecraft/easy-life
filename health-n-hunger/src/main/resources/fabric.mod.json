@@ -22,7 +22,9 @@
       "net.shoaibkhan.health.n.hunger.Initial"
     ],
     "client": [],
-    "server": []
+    "server": [],
+    "cotton-client-commands": [
+      "net.shoaibkhan.health.n.hunger.MyCommands"]
   },
   "mixins": [
   ],
@@ -31,7 +33,8 @@
     "fabricloader": ">=0.7.4",
     "fabric-key-binding-api-v1":"*",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.16.x",
+    "cotton-client-commands": "^1.0.0"
   },
   "suggests": {
     "another-mod": ""
