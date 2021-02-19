@@ -8,20 +8,12 @@ import io.github.cottonmc.clientcommands.CottonClientCommandSource;
 import net.minecraft.text.LiteralText;
 
 public class MyCommands implements ClientCommandPlugin {
-
     @Override
     public void registerCommands(CommandDispatcher<CottonClientCommandSource> dispatcher) {
 
-        
-
-        
-        System.out.println("reached");
-
-        dispatcher.register(ArgumentBuilders.literal("client-commands").executes(
-            source -> {
-                // String value = (String)health_n_hunger.get("status").toString();
-                // System.out.println(value);
-                source.getSource().sendFeedback(new LiteralText("value"));
+        dispatcher.register(ArgumentBuilders.literal("updateConfigFile").executes(source -> {
+            Config config = new Config();
+                source.getSource().sendFeedback(new LiteralText(""+config.getHealth_n_hunger_status().equals("on")));
                 return 1;
             }
         ));

@@ -14,15 +14,14 @@
 // @Mixin(ClientPlayerEntity.class)
 // public class PlayerEntityMixin {
 
-//     @Inject(at = @At("HEAD"),method = "tick")
-//     private void tickUpdate(CallbackInfo info){
-
-//     }
-
 //     @Inject(at = @At("HEAD"),method="sendChatMessage")
-//     private void onSendMessage(String message, CallbackInfo info){
+//     private void onSendMessage(Text message, boolean actionBar, CallbackInfo info){
 //         final PlayerEntity player = (PlayerEntity)(Object) this;
-//         sendMessage(new LiteralText(message), true);
+//         // player.sendMessage(new LiteralText(message.asString()), true);
+//         System.out.println("\n\n\n\t\t"+message);
+//         System.out.println("\n\n\n\t\t"+message);
+//         System.out.println("\n\n\n\t\t"+message);
+//         System.out.println("\n\n\n\t\t"+message);
 //     }
     
 // }
