@@ -13,7 +13,7 @@ public class MyCommands implements ClientCommandPlugin {
 
         dispatcher.register(ArgumentBuilders.literal("updateConfigFile").executes(source -> {
             Config config = new Config();
-                source.getSource().sendFeedback(new LiteralText(""+config.getHealth_n_hunger_status().equals("on")));
+                source.getSource().sendFeedback(new LiteralText(""+config.getHealth_n_hunger_positionx()));
                 return 1;
             }
         ));

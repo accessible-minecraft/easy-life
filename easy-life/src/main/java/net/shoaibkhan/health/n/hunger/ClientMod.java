@@ -27,17 +27,18 @@ public class ClientMod {
         config = Initial.config;
 
         HudRenderCallback.EVENT.register((__, ___) -> {
+
             if (tickCount > 0f) {
                 if (this.kbPressed() && (config.getHealth_n_hunger_status()).equals("on")) {
                     tickCount -= client.getTickDelta();
                 }
             }
 
-            if (coordFlag) {
+            if (coordFlag && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")||(config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 showCoord();
             }
 
-            while (coord.wasPressed()) {
+            while (coord.wasPressed() && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")||(config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 coordFlag = !coordFlag;
             }
 
@@ -78,13 +79,15 @@ public class ClientMod {
         double hunger = client.player.getHungerManager().getFoodLevel();
         int height = client.getWindow().getScaledHeight();
         int width = client.getWindow().getScaledWidth();
+        int reqHeight = config.getHealth_n_hunger_positiony();
+        int reqWidth = config.getHealth_n_hunger_positionx();
         matrixStack.push();
         matrixStack.scale(2, 2, inGameHud.getZOffset());
 
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
-                new LiteralText(config.getHealth_n_hunger_status() + "" + (double) Math.round((health / 2) * 10) / 10
-                        + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food Level"),
-                (int) (width * 0.1), (int) (height * 0.35), 0xff0000);
+                new LiteralText( "" + (double) Math.round((health / 2) * 10) / 10
+                        + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food"),
+                (int) (width * reqWidth/100), (int) (height * reqHeight/100), 0xff0000);
         matrixStack.pop();
         return true;
     }
@@ -113,29 +116,39 @@ public class ClientMod {
 
         if (player == null)
             return;
-        Vec3d pos = player.getPos();
-        String posString= "Position: "+(double) Math.round(pos.x*100)/100+" | "+(double) Math.round(pos.y*100)/100+" | "+(double) Math.round(pos.z*100)/100;
-        
-        String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
-        
-        
-        matrixStack.push();
-        matrixStack.scale(1, 1, inGameHud.getZOffset());
-        DrawableHelper.fill(matrixStack, 0, 40, (posString.length()*5)-5, 54, 0xff000000);
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.scale(1, 1, inGameHud.getZOffset());
-        textRenderer.draw(matrixStack, posString, 3, 43, 0xffffffff);
-        matrixStack.pop();
 
-        matrixStack.push();
-        matrixStack.scale(1, 1, inGameHud.getZOffset());
-        DrawableHelper.fill(matrixStack, 0, 57, (dirString.length()*5), 71, 0xff000000);
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.scale(1, 1, inGameHud.getZOffset());
-        textRenderer.draw(matrixStack, dirString, 3, 60, 0xffffffff);
-        matrixStack.pop();
+        if((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")){
+            Vec3d pos = player.getPos();
+            String posX = ((double)pos.x)+"";
+            String posY = ((double)pos.y)+"";
+            String posZ = ((double)pos.z)+"";
+            posX = posX.substring(0, posX.indexOf("."));
+            posY = posY.substring(0, posY.indexOf("."));
+            posZ = posZ.substring(0, posZ.indexOf("."));
+            String posString= "Position: "+posX+" | "+posY+" | "+posZ;
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            DrawableHelper.fill(matrixStack, config.getPlayer_coordination_positionx(), config.getPlayer_coordination_positiony(), (posString.length()*5)-2, config.getPlayer_coordination_positiony()+14, 0xff000000);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            textRenderer.draw(matrixStack, posString, config.getPlayer_coordination_positionx()+3, config.getPlayer_coordination_positiony()+3, 0xffffffff);
+            matrixStack.pop();
+
+        }
+
+        if((config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on")){
+            String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            DrawableHelper.fill(matrixStack, config.getPlayer_direction_positionx(), config.getPlayer_direction_positiony(), (dirString.length()*5), config.getPlayer_direction_positiony()+14, 0xff000000);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            textRenderer.draw(matrixStack, dirString, config.getPlayer_direction_positionx()+3, config.getPlayer_direction_positiony()+3, 0xffffffff);
+            matrixStack.pop();
+        }
+        
 
     }
 
@@ -154,5 +167,7 @@ public class ClientMod {
                 return "";
         }
     }
+
+
 
 }

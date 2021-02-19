@@ -2,19 +2,19 @@ health-n-hunger-status=on
 health-n-hunger-color=red
 health-n-hunger-scale=2
 health-n-hunger-positionx=10
-health-n-hunger-positiony=30
+health-n-hunger-positiony=35
 
 health-bar-status=off
 health-bar-width=3
 
 player-coordination-status=on
 player-coordination-color=white
-player-coordination-backgroundcolor=black
+player-coordination-background=black
 player-coordination-positionx=0
 player-coordination-positiony=40
 
 player-direction-status=on
 player-direction-color=white
-player-direction-backgroundcolor=black
+player-direction-background=black
 player-direction-positionx=0
 player-direction-positiony=57

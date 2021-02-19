@@ -7,17 +7,17 @@ import java.io.InputStreamReader;
 
 public class Config {
 
-    private String health_n_hunger_status, health_n_hunger_color;
-    private int health_n_hunger_scale,health_n_hunger_positionx,health_n_hunger_positiony;
+    private String health_n_hunger_status="on", health_n_hunger_color="red";
+    private int health_n_hunger_scale=2,health_n_hunger_positionx=10,health_n_hunger_positiony=30;
 
-    private String health_bar_status;
-    private int health_bar_width;
+    private String health_bar_status="off";
+    private int health_bar_width=3;
 
-    private String player_coordination_status,player_coordination_color,player_coordination_backgroundcolor;
-    private int player_coordination_positionx,player_coordination_positiony;
+    private String player_coordination_status="on",player_coordination_color="white",player_coordination_backgroundcolor="black";
+    private int player_coordination_positionx=0,player_coordination_positiony=40;
 
-    private String player_direction_status,player_direction_color,player_direction_backgroundcolor;
-    private int player_direction_positionx,player_direction_positiony;
+    private String player_direction_status="on",player_direction_color="white",player_direction_backgroundcolor="black";
+    private int player_direction_positionx=0,player_direction_positiony=57;
     
     Config(){
         try (BufferedReader in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/config.txt")))) {
@@ -32,11 +32,43 @@ public class Config {
                         health_n_hunger_status = line.replace("status=", "");
                     else if(line.contains("color"))
                             health_n_hunger_color = line.replace("color=", "");
+                        else if(line.contains("scale"))
+                                health_n_hunger_scale = Integer.parseInt(line.replace("scale=", ""));
+                            else if(line.contains("positionx"))
+                                    health_n_hunger_positionx = Integer.parseInt(line.replace("positionx=", ""));
+                                else if(line.contains("positiony"))
+                                        health_n_hunger_positiony = Integer.parseInt(line.replace("positiony=", ""));
 
-                } else if(line.toLowerCase().contains("health-bar")){
+                } else if(line.contains("health-bar")){
                     line = line.replace("health-bar-", "");
                     if(line.contains("status"))
                         health_bar_status = line.replace("status=", "");
+                    else if(line.contains("width"))
+                            health_bar_width = Integer.parseInt(line.replace("width=", ""));
+                } else if(line.contains("player-coordination")){
+                    line = line.replace("player-coordination-", "");
+                    if(line.contains("status"))
+                        player_coordination_status = line.replace("status=", "");
+                    else if(line.contains("color"))
+                            player_coordination_color = line.replace("color=", "");
+                        else if(line.contains("background"))
+                                player_coordination_backgroundcolor = line.replace("background=", "");
+                            else if(line.contains("positionx"))
+                                    player_coordination_positionx = Integer.parseInt(line.replace("positionx=", ""));
+                                else if(line.contains("positiony"))
+                                        player_coordination_positiony = Integer.parseInt(line.replace("positiony=", ""));
+                } else if(line.contains("player-direction")){
+                    line = line.replace("player-direction-", "");
+                    if(line.contains("status"))
+                        player_direction_status = line.replace("status=", "");
+                    else if(line.contains("color"))
+                            player_direction_color = line.replace("color=", "");
+                        else if(line.contains("background"))
+                                player_direction_backgroundcolor = line.replace("background=", "");
+                            else if(line.contains("positionx"))
+                                    player_direction_positionx = Integer.parseInt(line.replace("positionx=", ""));
+                                else if(line.contains("positiony"))
+                                        player_direction_positiony = Integer.parseInt(line.replace("positiony=", ""));
                 }
             }
             in.close();
