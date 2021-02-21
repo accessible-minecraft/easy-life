@@ -6,6 +6,7 @@
     "mixins": [
     ],
     "client": [
+      "net.shoaibkhan.health.n.hunger.mixin.MinecraftClientMixin"
     ],
     "injectors": {
       "defaultRequire": 1

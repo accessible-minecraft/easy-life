@@ -12,6 +12,8 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.Vec3d;
 
@@ -21,6 +23,9 @@ public class ClientMod {
     private float tickCount = 0f;
     private boolean coordFlag = false;
     private Config config;
+    public static boolean flag = true;
+    private CustomWait obj = new CustomWait();
+    public static int healthWarningFlag = 0,foodWarningFlag = 0,airWarningFlag = 0;
 
     public ClientMod(KeyBinding kb, KeyBinding coord) {
         client = MinecraftClient.getInstance();
@@ -34,11 +39,14 @@ public class ClientMod {
                 }
             }
 
-            if (coordFlag && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")||(config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
+            if (coordFlag && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")
+                    || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 showCoord();
             }
 
-            while (coord.wasPressed() && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")||(config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
+            while (coord.wasPressed()
+                    && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")
+                            || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 coordFlag = !coordFlag;
             }
 
@@ -48,20 +56,38 @@ public class ClientMod {
                 }
             }
 
-            if (client.world.isClient && (config.getHealth_bar_status()).equalsIgnoreCase("on")) {
+            if ( !client.isPaused() && client.world.isClient) {
                 final PlayerEntity player = client.player;
                 final InGameHud inGameHud = client.inGameHud;
                 final MatrixStack matrixStack = new MatrixStack();
+                final TextRenderer textRenderer = client.textRenderer;
+
                 if (player != null) {
-                    double health = client.player.getHealth();
-                    int width = client.getWindow().getScaledWidth();
-                    matrixStack.push();
-                    matrixStack.scale(1, 1, inGameHud.getZOffset());
+                
+                    final int height = client.getWindow().getScaledHeight();
+                    final int width = client.getWindow().getScaledWidth();
+                    final int reqHeight = config.getHealth_n_hunger_positiony();
+                    final int reqWidth = config.getHealth_n_hunger_positionx();    
+                    final double health = player.getHealth();
+                    final double food = player.getHungerManager().getFoodLevel();
+                    final double air = player.getAir();
 
-                    DrawableHelper.fill(matrixStack, 0, 0, width, 4, getColor(health));
-                    matrixStack.pop();
+                    if((config.getHealth_bar_status()).equalsIgnoreCase("on")){
+                        matrixStack.push();
+                        matrixStack.scale(1, 1, inGameHud.getZOffset());
+    
+                        DrawableHelper.fill(matrixStack, 0, 0, width, 4, getColor(health));
+                        matrixStack.pop();
+
+                    }
+
+                    healthWarning(player,inGameHud,matrixStack,textRenderer,height,width,reqHeight,reqWidth,health);
+
+                    foodWarning(player,inGameHud,matrixStack,textRenderer,height,width,reqHeight,reqWidth,health,food);
+
+                    airWarning(player,inGameHud,matrixStack,textRenderer,height,width,reqHeight,reqWidth,health,food,air);
+                    
                 }
-
             }
 
         });
@@ -85,20 +111,20 @@ public class ClientMod {
         matrixStack.scale(2, 2, inGameHud.getZOffset());
 
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
-                new LiteralText( "" + (double) Math.round((health / 2) * 10) / 10
+                new LiteralText(player.world.getTime()+ "" + (double) Math.round((health / 2) * 10) / 10
                         + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food"),
-                (int) (width * reqWidth/100), (int) (height * reqHeight/100), 0xff0000);
+                (int) (width * reqWidth/100), (int) (height * reqHeight/100), colors("red"));
         matrixStack.pop();
         return true;
     }
 
     private int getColor(double health) {
         if (health <= 20.0 && health > 12.0) {
-            return 0xff008000;
-        } else if (health <= 12.0 && health > 8.0) {
-            return 0xffff0000;
-        } else if (health <= 8.0) {
-            return 0xff800000;
+            return colors("green");
+        } else if (health <= 12.0 && health > 6.0) {
+            return colors("brown");
+        } else if (health <= 6.0) {
+            return colors("red");
         }
         return 0;
 
@@ -128,11 +154,11 @@ public class ClientMod {
             String posString= "Position: "+posX+" | "+posY+" | "+posZ;
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, config.getPlayer_coordination_positionx(), config.getPlayer_coordination_positiony(), (posString.length()*5)-2, config.getPlayer_coordination_positiony()+14, 0xff000000);
+            DrawableHelper.fill(matrixStack, config.getPlayer_coordination_positionx(), config.getPlayer_coordination_positiony(), (posString.length()*5)-2, config.getPlayer_coordination_positiony()+14, colors("black"));
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, posString, config.getPlayer_coordination_positionx()+3, config.getPlayer_coordination_positiony()+3, 0xffffffff);
+            textRenderer.draw(matrixStack, posString, config.getPlayer_coordination_positionx()+3, config.getPlayer_coordination_positiony()+3, colors("white"));
             matrixStack.pop();
 
         }
@@ -141,11 +167,11 @@ public class ClientMod {
             String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, config.getPlayer_direction_positionx(), config.getPlayer_direction_positiony(), (dirString.length()*5), config.getPlayer_direction_positiony()+14, 0xff000000);
+            DrawableHelper.fill(matrixStack, config.getPlayer_direction_positionx(), config.getPlayer_direction_positiony(), (dirString.length()*5), config.getPlayer_direction_positiony()+14, colors("black"));
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, dirString, config.getPlayer_direction_positionx()+3, config.getPlayer_direction_positiony()+3, 0xffffffff);
+            textRenderer.draw(matrixStack, dirString, config.getPlayer_direction_positionx()+3, config.getPlayer_direction_positiony()+3, colors("white"));
             matrixStack.pop();
         }
         
@@ -168,6 +194,148 @@ public class ClientMod {
         }
     }
 
+    private int colors(String c){
+        c = c.trim().toLowerCase();
+        switch (c) {
+            case "red":
+                return 0xffdb0000;
+            case "grey":
+                return 0xff808080;
+            case "purple":
+                return 0xff800080;
+            case "white":
+                return 0xfff0f0f0;
+            case "black":
+                return 0xff0f0f0f;
+            case "pink":
+                return 0xffff0f87;
+            case "blue":
+                return 0xff1f1fff;
+            case "green":
+                return 0xff00bd00;
+            case "yellow":
+                return 0xffffff3d;
+            case "orange":
+                return 0xffe09200;
+            case "brown":
+                return 0xff610000;
+            default:
+                return 0xffff0000;
+        }
+    }
 
+    private void healthWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health){
+        if (health < 10.0 && health > 6.0 && healthWarningFlag<=0) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+            obj = new CustomWait();
+            obj.setWait(3000, 1);
+            obj.start();
+        }
+
+        if (health < 6.0 && health > 0 && healthWarningFlag<=0) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("red"));
+            matrixStack.pop();
+            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            obj = new CustomWait();
+            obj.setWait(3000, 1);
+            obj.start();
+        }
+
+        if (healthWarningFlag >= 2000 ){
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+        }
+
+
+    }
+
+    private void foodWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food){
+        if (food < 10.0 && food > 6.0 && health > 10 && foodWarningFlag <=0 ) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+            obj = new CustomWait();
+            obj.setWait(3000, 2);
+            obj.start();
+        }
+
+        if (food < 6.0 && food > 0 && health > 10 && foodWarningFlag <=0 ) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            obj = new CustomWait();
+            obj.setWait(3000, 2);
+            obj.start();
+        }
+
+        if (foodWarningFlag >= 2000 && health > 10 ){
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+        }
+
+
+    }
+
+    private void airWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food,double air){
+        if (air < 150.0 && air > 90 && food>10 && health > 10 && airWarningFlag <=0 ) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+            obj = new CustomWait();
+            obj.setWait(3000, 3);
+            obj.start();
+        }
+
+        if (air < 90 && air > 0 && food>10 && health > 10 && airWarningFlag <=0 ) {
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            obj = new CustomWait();
+            obj.setWait(3000, 3);
+            obj.start();
+        }
+
+        if (airWarningFlag >= 2000 && food>10 && health > 10 ){
+            matrixStack.push();
+            matrixStack.scale(2, 2, inGameHud.getZOffset());
+
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors("yellow"));
+            matrixStack.pop();
+        }
+        
+
+    }
 
 }

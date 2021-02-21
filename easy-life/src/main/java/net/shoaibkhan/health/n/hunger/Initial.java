@@ -17,16 +17,14 @@ public class Initial implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        // On initializing minecraft
         System.out.println("Mod is initializing!!");
         
         config = new Config();
 
         kb = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
-        coord = KeyBindingHelper.registerKeyBinding(new KeyBinding("Co-ordination", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F9, "Easy Life"));
+        coord = KeyBindingHelper.registerKeyBinding(new KeyBinding("Co-ordinates", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F6, "Easy Life"));
 
         clientMod = new ClientMod(kb,coord);
-
     }
     
 }
