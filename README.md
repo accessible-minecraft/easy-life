@@ -1,8 +1,8 @@
-# Health n Hunger Mod
+# Easy Life Mod
 
 ## Discription
 
-This is a __fabric__ mod. This mod shows the player the current coordinates and the direction. This mod also adds warns when health/food/air bubble is decreased.
+This is a __Minecraft Fabric__ mod. This mod shows the player the current coordinates and the direction. This mod also adds warns when health/food/air bubble is decreased.
 
 [Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.0.jar)
 
