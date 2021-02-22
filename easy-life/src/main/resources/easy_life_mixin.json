@@ -5,9 +5,7 @@
     "compatibilityLevel": "JAVA_8",
     "mixins": [
     ],
-    "client": [
-      "net.shoaibkhan.health.n.hunger.mixin.MinecraftClientMixin"
-    ],
+    "client": [],
     "injectors": {
       "defaultRequire": 1
     }
