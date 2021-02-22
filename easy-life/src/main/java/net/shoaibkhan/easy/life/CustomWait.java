@@ -1,4 +1,4 @@
-package net.shoaibkhan.health.n.hunger;
+package net.shoaibkhan.easy.life;
 
 public class CustomWait extends Thread {
     private int timeOut, val;

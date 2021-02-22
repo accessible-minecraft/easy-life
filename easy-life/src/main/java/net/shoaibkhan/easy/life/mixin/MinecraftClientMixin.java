@@ -1,4 +1,4 @@
-package net.shoaibkhan.health.n.hunger.mixin;
+package net.shoaibkhan.easy.life.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

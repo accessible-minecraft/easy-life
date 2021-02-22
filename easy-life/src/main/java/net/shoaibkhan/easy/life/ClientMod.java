@@ -1,4 +1,4 @@
-package net.shoaibkhan.health.n.hunger;
+package net.shoaibkhan.easy.life;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 

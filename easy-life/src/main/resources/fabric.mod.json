@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.shoaibkhan.health.n.hunger.Initial"
+      "net.shoaibkhan.easy.life.Initial"
     ],
     "client": [],
     "server": []

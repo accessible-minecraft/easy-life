@@ -1,4 +1,4 @@
-package net.shoaibkhan.health.n.hunger;
+package net.shoaibkhan.easy.life;
 
 import org.lwjgl.glfw.GLFW;
 

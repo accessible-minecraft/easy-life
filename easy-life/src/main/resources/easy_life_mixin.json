@@ -1,7 +1,7 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "net.shoaibkhan.health.n.hunger.mixin",
+    "package": "net.shoaibkhan.easy.life.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
     ],
