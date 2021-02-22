@@ -14,7 +14,7 @@ ___
 
 ## Requirements
 
-#### These are the current requirements of the mod:-
+__These are the current requirements of the mod:-__
 
 1. Minecraft Java (1.16.x)
 2. [Fabric](https://fabricmc.net/wiki/install)
