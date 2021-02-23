@@ -25,6 +25,7 @@
     "server": []
   },
   "mixins": [
+    "easy_life_mixin.json"
   ],
 
   "depends": {

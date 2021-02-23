@@ -3,7 +3,7 @@ health-n-hunger-status=on
 health-n-hunger-color=red
 health-n-hunger-scale=2
 health-n-hunger-positionx=10
-health-n-hunger-positiony=35
+health-n-hunger-positiony=30
 
 
 //Health Bar Configurations
@@ -28,7 +28,7 @@ player-direction-positiony=57
 
 
 //Player Warnings Configurations
-player-warnings-status=off
+player-warnings-status=on
 player-warnings-color=yellow
 player-warnings-scale=2
 player-warnings-positionx=20

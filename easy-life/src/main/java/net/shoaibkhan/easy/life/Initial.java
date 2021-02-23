@@ -13,7 +13,7 @@ import net.minecraft.client.util.InputUtil;
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
     public static Config config;
-    public static KeyBinding kb,coord;
+    public static KeyBinding kb,coord,CONFIG_KEY;
 
     @Override
     public void onInitialize() {
@@ -23,8 +23,9 @@ public class Initial implements ModInitializer {
 
         kb = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
         coord = KeyBindingHelper.registerKeyBinding(new KeyBinding("Co-ordinates", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F6, "Easy Life"));
+        CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_J, "Easy Life"));
 
-        clientMod = new ClientMod(kb,coord);
+        clientMod = new ClientMod(kb,coord,CONFIG_KEY);
     }
     
 }

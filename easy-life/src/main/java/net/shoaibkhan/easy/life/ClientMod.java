@@ -9,49 +9,66 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.gui.ConfigGui;
+import net.shoaibkhan.easy.life.gui.ConfigScreen;
 
 @Environment(EnvType.CLIENT)
 public class ClientMod {
     private MinecraftClient client;
-    private float tickCount = 0f;
+    public static float tickCount = 0f;
     private boolean coordFlag = false;
+    public static boolean kbFlag = false;
     private Config config;
     public static boolean flag = true;
     private CustomWait obj = new CustomWait();
     public static int healthWarningFlag = 0, foodWarningFlag = 0, airWarningFlag = 0;
+    GameOptions gameOptions;
 
-    public ClientMod(KeyBinding kb, KeyBinding coord) {
+    public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY) {
         client = MinecraftClient.getInstance();
         config = Initial.config;
+        
 
         HudRenderCallback.EVENT.register((__, ___) -> {
+            if(client.player== null) return;
 
+            while(CONFIG_KEY.wasPressed()){
+                client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
+                return;
+            }
+            
             if (tickCount > 0f) {
-                if (this.kbPressed() && (config.getHealth_n_hunger_status()).equals("on")) {
+                if (this.kbPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
                     tickCount -= client.getTickDelta();
                 }
             }
 
-            if (coordFlag && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")
+            if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
                     || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 showCoord();
             }
 
             while (coord.wasPressed()
-                    && ((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")
+                    && (ELConfig.get(ELConfig.Player_Coordinates_Key)
                             || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
                 coordFlag = !coordFlag;
             }
 
-            while (kb.wasPressed() && (config.getHealth_n_hunger_status()).equals("on")) {
+            while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
                 if (this.kbPressed()) {
+                    double health = client.player.getHealth();
+                    double hunger = client.player.getHungerManager().getFoodLevel();
+                    client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
                     tickCount = 120f;
                 }
             }
@@ -62,9 +79,10 @@ public class ClientMod {
                 final MatrixStack matrixStack = new MatrixStack();
                 final TextRenderer textRenderer = client.textRenderer;
 
-                if (player != null && ((config.getHealth_bar_status()).equalsIgnoreCase("on")
-                        || (config.getPlayer_direction_status().equalsIgnoreCase("on")))) {
+                if (player != null && (ELConfig.get(ELConfig.Health_Bar_Key)
+                        || ELConfig.get(ELConfig.Player_Warning_Key)) ) {
 
+                    
                     final int height = client.getWindow().getScaledHeight();
                     final int width = client.getWindow().getScaledWidth();
                     final int reqHeight = config.getPlayer_warning_positiony();
@@ -73,7 +91,7 @@ public class ClientMod {
                     final double food = player.getHungerManager().getFoodLevel();
                     final double air = player.getAir();
 
-                    if ((config.getHealth_bar_status()).equalsIgnoreCase("on")) {
+                    if (ELConfig.get(ELConfig.Health_Bar_Key)) {
                         matrixStack.push();
                         matrixStack.scale(1, 1, inGameHud.getZOffset());
 
@@ -82,7 +100,7 @@ public class ClientMod {
 
                     }
 
-                    if ((config.getPlayer_warning_status().equalsIgnoreCase("on"))) {
+                    if (ELConfig.get(ELConfig.Player_Warning_Key)) {
                         healthWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
                                 health);
 
@@ -107,7 +125,7 @@ public class ClientMod {
         final MatrixStack matrixStack = new MatrixStack();
         if (player == null)
             return false;
-
+        String narrator = client.options.narrator.name();
         double health = player.getHealth();
         double hunger = player.getHungerManager().getFoodLevel();
         int height = client.getWindow().getScaledHeight();
@@ -122,7 +140,7 @@ public class ClientMod {
                         + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food"),
                 (int) (width * reqWidth/100), (int) (height * reqHeight/100), colors("red"));
         matrixStack.pop();
-        
+
         return true;
     }
 
@@ -202,7 +220,7 @@ public class ClientMod {
         }
     }
 
-    private int colors(String c){
+    public static int colors(String c){
         c = c.trim().toLowerCase();
         switch (c) {
             case "red":
@@ -240,6 +258,10 @@ public class ClientMod {
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
             matrixStack.pop();
+            String narrator = client.options.narrator.name();
+            narrator = narrator.toLowerCase().trim();
+            if(narrator.equalsIgnoreCase("all") && healthWarningFlag<=0)
+                player.sendSystemMessage(new LiteralText("message"), Util.NIL_UUID);
             obj = new CustomWait();
             obj.setWait(config.getPlayer_warning_timeout()*1000, 1);
             obj.start();
