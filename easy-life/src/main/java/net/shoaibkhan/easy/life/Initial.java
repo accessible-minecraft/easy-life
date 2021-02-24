@@ -12,14 +12,12 @@ import net.minecraft.client.util.InputUtil;
 @Environment(EnvType.CLIENT)
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
-    public static Config config;
     public static KeyBinding kb,coord,CONFIG_KEY;
 
     @Override
     public void onInitialize() {
         System.out.println("Mod is initializing!!");
         
-        config = new Config();
 
         kb = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
         coord = KeyBindingHelper.registerKeyBinding(new KeyBinding("Co-ordinates", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F6, "Easy Life"));

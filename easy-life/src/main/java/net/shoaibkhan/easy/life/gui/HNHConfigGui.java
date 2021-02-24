@@ -19,33 +19,33 @@ import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 
-public class PWConfigGui extends LightweightGuiDescription {
+public class HNHConfigGui extends LightweightGuiDescription {
     private SerializableConfig tempConfig;
     private ClientPlayerEntity player;
     private MinecraftClient client;
     
-    public PWConfigGui(ClientPlayerEntity player,MinecraftClient client){
+    public HNHConfigGui(ClientPlayerEntity player,MinecraftClient client){
         this.player = player;
         this.client = client;
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(300, 240);
+        root.setSize(300, 120);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 13, 7, 1);
+        root.add(doneButton, 12, 5, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Player Warnings Configuration"), ClientMod.colors("red"));
+        WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 13, 7, 1);
+        root.add(nsbutton, 3, 5, 7, 1);
 
 
-        ColorButton pwcolor = new ColorButton("Color", 0,ELConfig.getPwColor());
+        ColorButton pwcolor = new ColorButton("Color", 0,ELConfig.getHnhColor());
         root.add(pwcolor, 1, 1, 6, 1);
 
         ScaleButton pwscale = new ScaleButton("Scale", 2);
@@ -71,57 +71,6 @@ public class PWConfigGui extends LightweightGuiDescription {
 
         DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf);
         root.add(pwpossubmit, 14, 3, 3, 1);
-
-        WLabel pwtimeout = new WLabel(new LiteralText("Timeout (in seconds) :-"), ClientMod.colors("black"));
-        pwtimeout.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwtimeout, 1, 5, 5, 1);
-
-        WTextField pwtof = new WTextField(new LiteralText("120"));
-        root.add(pwtof, 9, 5, 2, 1);
-
-        SubmitButton pwtosubmit = new SubmitButton("Submit",pwtof);
-        root.add(pwtosubmit, 12, 5, 3, 1);
-
-        WLabel pwht = new WLabel(new LiteralText("Health Threshold :-"), ClientMod.colors("black"));
-        pwht.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwht, 1, 7, 5, 1);
-
-        WLabel pwhtft = new WLabel(new LiteralText("First="));
-        pwhtft.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwhtft, 7, 7, 2, 1);
-
-        WTextField pwhtftf = new WTextField(new LiteralText("10"));
-        root.add(pwhtftf, 9, 7, 2, 1);
-
-        WLabel pwhtst = new WLabel(new LiteralText("Second="));
-        pwhtst.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwhtst, 12, 7, 2, 1);
-
-        WTextField pwhtstf = new WTextField(new LiteralText("10"));
-        root.add(pwhtstf, 15, 7, 2, 1);
-
-        DoubleSubmitButton pwhtsubmit = new DoubleSubmitButton("Submit",pwhtftf,pwhtstf);
-        root.add(pwhtsubmit, 18, 7, 3, 1);
-
-        WLabel pwft = new WLabel(new LiteralText("Food Threshold :-"), ClientMod.colors("black"));
-        pwft.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwft, 1, 9, 4, 1);
-
-        WTextField pwftf = new WTextField(new LiteralText("10"));
-        root.add(pwftf, 7, 9, 2, 1);
-
-        SubmitButton pwftsubmit = new SubmitButton("Submit",pwftf);
-        root.add(pwftsubmit, 10, 9, 3, 1);
-
-        WLabel pwat = new WLabel(new LiteralText("Air Threshold :-"), ClientMod.colors("black"));
-        pwat.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwat, 1, 11, 4, 1);
-
-        WTextField pwatf = new WTextField(new LiteralText("10"));
-        root.add(pwatf, 7, 11, 2, 1);
-
-        SubmitButton pwatsubmit = new SubmitButton("Submit",pwatf);
-        root.add(pwatsubmit, 10, 11, 3, 1);
         
         root.validate(this);
     }
@@ -134,9 +83,10 @@ public class PWConfigGui extends LightweightGuiDescription {
     private void onDoneClick() {
         this.player.closeScreen();
     }
-    
+
     @Override
     public void addPainters() {
         this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey")));
     }
+    
 }

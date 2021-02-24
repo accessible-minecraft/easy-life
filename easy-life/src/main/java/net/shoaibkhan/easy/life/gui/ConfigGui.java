@@ -31,7 +31,7 @@ public class ConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 12, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("black"));
+        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
@@ -57,6 +57,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(pcstatus, 9, 4, 6, 1);
 
         WButton pcmore = new WButton(new LiteralText("More.."));
+        pcmore.setOnClick(this::pcClick);
         root.add(pcmore, 17, 4, 5, 1);
 
 
@@ -67,6 +68,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(pdstatus, 9, 6, 6, 1);
 
         WButton pdmore = new WButton(new LiteralText("More.."));
+        pdmore.setOnClick(this::pdClick);
         root.add(pdmore, 17, 6, 5, 1);
 
 
@@ -77,6 +79,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(hnhstatus, 9, 8, 6, 1);
 
         WButton hnhmore = new WButton(new LiteralText("More.."));
+        hnhmore.setOnClick(this::hnhClick);
         root.add(hnhmore, 17, 8, 5, 1);
 
 
@@ -87,6 +90,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(hbstatus, 9, 10, 6, 1);
 
         WButton hbmore = new WButton(new LiteralText("More.."));
+        hbmore.setOnClick(this::hbClick);
         root.add(hbmore, 17, 10, 5, 1);
         
         root.validate(this);
@@ -94,7 +98,6 @@ public class ConfigGui extends LightweightGuiDescription {
 
     private void onDoneClick() {
         this.player.closeScreen();
-
     }
 
     private void pwClick(){
@@ -102,9 +105,29 @@ public class ConfigGui extends LightweightGuiDescription {
         this.client.openScreen(new ConfigScreen(new PWConfigGui(client.player,client)));
     }
 
+    private void pcClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new PCConfigGui(client.player,client)));
+    }
+
+    private void pdClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new PDConfigGui(client.player,client)));
+    }
+
+    private void hnhClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new HNHConfigGui(client.player,client)));
+    }
+
+    private void hbClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new HBConfigGui(client.player,client)));
+    }
+
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("grey")));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey")));
     }
 
 }

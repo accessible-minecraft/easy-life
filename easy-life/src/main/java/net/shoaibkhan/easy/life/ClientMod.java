@@ -16,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.ConfigGui;
@@ -28,15 +27,14 @@ public class ClientMod {
     public static float tickCount = 0f;
     private boolean coordFlag = false;
     public static boolean kbFlag = false;
-    private Config config;
     public static boolean flag = true;
     private CustomWait obj = new CustomWait();
     public static int healthWarningFlag = 0, foodWarningFlag = 0, airWarningFlag = 0;
+    public static String[] colorNames = {"black","white","red","blue","purple","green","grey","lightgrey","yellow","orange","brown","pink"};
     GameOptions gameOptions;
 
     public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY) {
         client = MinecraftClient.getInstance();
-        config = Initial.config;
         
 
         HudRenderCallback.EVENT.register((__, ___) -> {
@@ -87,8 +85,8 @@ public class ClientMod {
                     
                     final int height = client.getWindow().getScaledHeight();
                     final int width = client.getWindow().getScaledWidth();
-                    final int reqHeight = config.getPlayer_warning_positiony();
-                    final int reqWidth = config.getPlayer_warning_positionx();
+                    final int reqHeight = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionY()));
+                    final int reqWidth = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionX()));
                     final double health = player.getHealth();
                     final double food = player.getHungerManager().getFoodLevel();
                     final double air = player.getAir();
@@ -97,7 +95,7 @@ public class ClientMod {
                         matrixStack.push();
                         matrixStack.scale(1, 1, inGameHud.getZOffset());
 
-                        DrawableHelper.fill(matrixStack, 0, 0, width, 4, getColor(health));
+                        DrawableHelper.fill(matrixStack, 0, 0, width, Integer.parseInt(ELConfig.getString(ELConfig.getHbWidth())), getColor(health));
                         matrixStack.pop();
 
                     }
@@ -132,10 +130,10 @@ public class ClientMod {
         double hunger = player.getHungerManager().getFoodLevel();
         int height = client.getWindow().getScaledHeight();
         int width = client.getWindow().getScaledWidth();
-        int reqHeight = config.getHealth_n_hunger_positiony();
-        int reqWidth = config.getHealth_n_hunger_positionx();
+        int reqHeight = Integer.parseInt(ELConfig.getString(ELConfig.getHnhPositionY()));
+        int reqWidth = Integer.parseInt(ELConfig.getString(ELConfig.getHnhPositionX()));
         matrixStack.push();
-        matrixStack.scale(2, 2, inGameHud.getZOffset());
+        matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getHnhScale())), Integer.parseInt(ELConfig.getString(ELConfig.getHnhScale())), inGameHud.getZOffset());
 
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
                 new LiteralText("" + (double) Math.round((health / 2) * 10) / 10
@@ -182,11 +180,11 @@ public class ClientMod {
             String posString= "Position: "+posX+" | "+posY+" | "+posZ;
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, config.getPlayer_coordination_positionx(), config.getPlayer_coordination_positiony(), (posString.length()*5)-2, config.getPlayer_coordination_positiony()+14, colors("black"));
+            DrawableHelper.fill(matrixStack, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX())), Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY())), (posString.length()*5)-2, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+14, colors(ELConfig.getString(ELConfig.getPcBgColor())));
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, posString, config.getPlayer_coordination_positionx()+3, config.getPlayer_coordination_positiony()+3, colors("white"));
+            textRenderer.draw(matrixStack, posString, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+3, colors(ELConfig.getString(ELConfig.getPcColor())));
             matrixStack.pop();
 
         }
@@ -195,11 +193,11 @@ public class ClientMod {
             String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, config.getPlayer_direction_positionx(), config.getPlayer_direction_positiony(), (dirString.length()*5), config.getPlayer_direction_positiony()+14, colors("black"));
+            DrawableHelper.fill(matrixStack, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX())), Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY())), (dirString.length()*5), Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+14, colors(ELConfig.getString(ELConfig.getPdBgColor())));
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, dirString, config.getPlayer_direction_positionx()+3, config.getPlayer_direction_positiony()+3, colors("white"));
+            textRenderer.draw(matrixStack, dirString, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+3, colors(ELConfig.getString(ELConfig.getPdColor())));
             matrixStack.pop();
         }
         
@@ -257,35 +255,35 @@ public class ClientMod {
     private void healthWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health){
         if (health < 10.0 && health > 6.0 && healthWarningFlag<=0) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 1);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1);
             obj.start();
         }
 
         if (health < 6.0 && health > 0 && healthWarningFlag<=0) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 1);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1);
             obj.start();
         }
 
-        if (healthWarningFlag >= ((config.getPlayer_warning_timeout()*1000)-1000) ){
+        if (healthWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) ){
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
         }
 
@@ -295,35 +293,35 @@ public class ClientMod {
     private void foodWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food){
         if (food < 10.0 && food > 6.0 && health > 10 && foodWarningFlag <=0 ) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 2);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2);
             obj.start();
         }
 
         if (food < 6.0 && food > 0 && health > 10 && foodWarningFlag <=0 ) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 2);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2);
             obj.start();
         }
 
-        if (foodWarningFlag >= ((config.getPlayer_warning_timeout()*1000)-1000) && health > 10 ){
+        if (foodWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) && health > 10 ){
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
         }
 
@@ -333,35 +331,35 @@ public class ClientMod {
     private void airWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food,double air){
         if (air < 150.0 && air > 90 && food>10 && health > 10 && airWarningFlag <=0 ) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 3);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3);
             obj.start();
         }
 
         if (air < 90 && air > 0 && food>10 && health > 10 && airWarningFlag <=0 ) {
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
             player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
             obj = new CustomWait();
-            obj.setWait(config.getPlayer_warning_timeout()*1000, 3);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3);
             obj.start();
         }
 
-        if (airWarningFlag >= ((config.getPlayer_warning_timeout()*1000)-1000) && food>10 && health > 10 ){
+        if (airWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) && food>10 && health > 10 ){
             matrixStack.push();
-            matrixStack.scale(config.getPlayer_warning_scale(),config.getPlayer_warning_scale(), inGameHud.getZOffset());
+            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
+                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
         }
         
