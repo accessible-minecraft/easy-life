@@ -5,11 +5,11 @@ import io.github.cottonmc.cotton.gui.widget.WTextField;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.config.ELConfig;
 
-public class SubmitButton extends WButton{
+public class THSubmitButton extends WButton{
     private String translationText,jsonKey;
     private WTextField textField;
 
-    public SubmitButton(String translationText,WTextField textField,String jsonKey){
+    public THSubmitButton(String translationText,WTextField textField,String jsonKey){
         super(new LiteralText(translationText));
         this.translationText = translationText;
         this.textField = textField;
@@ -20,6 +20,6 @@ public class SubmitButton extends WButton{
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         String value = this.textField.getText();
-        if(ELConfig.setInt(jsonKey, value)) this.textField.setSuggestion(value);
+        if(ELConfig.setDouble(jsonKey, value)) this.textField.setSuggestion(value);
     }
 }

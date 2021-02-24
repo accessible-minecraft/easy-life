@@ -45,32 +45,32 @@ public class HNHConfigGui extends LightweightGuiDescription {
         root.add(nsbutton, 3, 5, 7, 1);
 
 
-        ColorButton pwcolor = new ColorButton("Color", 0,ELConfig.getHnhColor());
-        root.add(pwcolor, 1, 1, 6, 1);
+        ColorButton hnhcolor = new ColorButton("Color",ELConfig.getHnhColor());
+        root.add(hnhcolor, 1, 1, 6, 1);
 
-        ScaleButton pwscale = new ScaleButton("Scale", 2);
-        root.add(pwscale, 8, 1, 6, 1);
+        ScaleButton hnhscale = new ScaleButton("Scale", ELConfig.getHnhScale());
+        root.add(hnhscale, 8, 1, 6, 1);
 
-        WLabel pwpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
-        pwpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwpos, 1, 3, 3, 1);
+        WLabel hnhpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
+        hnhpos.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(hnhpos, 1, 3, 3, 1);
 
-        WLabel pwx = new WLabel(new LiteralText("X="));
-        pwx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwx, 5, 3, 1, 1);
+        WLabel hnhx = new WLabel(new LiteralText("X="));
+        hnhx.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(hnhx, 5, 3, 1, 1);
 
-        WTextField pwxf = new WTextField(new LiteralText("10"));
-        root.add(pwxf, 6, 3, 2, 1);
+        WTextField hnhxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionX())));
+        root.add(hnhxf, 6, 3, 2, 1);
 
-        WLabel pwy = new WLabel(new LiteralText("Y="));
-        pwy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwy, 9, 3, 1, 1);
+        WLabel hnhy = new WLabel(new LiteralText("Y="));
+        hnhy.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(hnhy, 9, 3, 1, 1);
 
-        WTextField pwyf = new WTextField(new LiteralText("10"));
-        root.add(pwyf, 10, 3, 2, 1);
+        WTextField hnhyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionY())));
+        root.add(hnhyf, 10, 3, 2, 1);
 
-        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf);
-        root.add(pwpossubmit, 14, 3, 3, 1);
+        DoubleSubmitButton hnhpossubmit = new DoubleSubmitButton("Submit",hnhxf,hnhyf,ELConfig.getHnhPositionX(),ELConfig.getHnhPositionY());
+        root.add(hnhpossubmit, 14, 3, 3, 1);
         
         root.validate(this);
     }

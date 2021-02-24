@@ -45,35 +45,33 @@ public class PDConfigGui extends LightweightGuiDescription {
         root.add(nsbutton, 3, 7, 7, 1);
 
 
-        ScaleButton pwscale = new ScaleButton("Scale", 2);
-        root.add(pwscale, 1, 1, 6, 1);
 
-        ColorButton pwcolor = new ColorButton("Color", 0,ELConfig.getPdColor());
-        root.add(pwcolor, 1, 3, 6, 1);
+        ColorButton pdcolor = new ColorButton("Color",ELConfig.getPdColor());
+        root.add(pdcolor, 1, 3, 6, 1);
 
-        ColorButton pwbgcolor = new ColorButton("Background Color", 0,ELConfig.getPdBgColor());
-        root.add(pwbgcolor, 8, 3, 8, 1);
+        ColorButton pdbgcolor = new ColorButton("Background Color",ELConfig.getPdBgColor());
+        root.add(pdbgcolor, 8, 3, 8, 1);
 
-        WLabel pwpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
-        pwpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwpos, 1, 5, 3, 1);
+        WLabel pdpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
+        pdpos.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pdpos, 1, 5, 3, 1);
 
-        WLabel pwx = new WLabel(new LiteralText("X="));
-        pwx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwx, 5, 5, 1, 1);
+        WLabel pdx = new WLabel(new LiteralText("X="));
+        pdx.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pdx, 5, 5, 1, 1);
 
-        WTextField pwxf = new WTextField(new LiteralText("10"));
-        root.add(pwxf, 6, 5, 2, 1);
+        WTextField pdxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPdPositionX())));
+        root.add(pdxf, 6, 5, 2, 1);
 
-        WLabel pwy = new WLabel(new LiteralText("Y="));
-        pwy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwy, 9, 5, 1, 1);
+        WLabel pdy = new WLabel(new LiteralText("Y="));
+        pdy.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pdy, 9, 5, 1, 1);
 
-        WTextField pwyf = new WTextField(new LiteralText("10"));
-        root.add(pwyf, 10, 5, 2, 1);
+        WTextField pdyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPdPositionY())));
+        root.add(pdyf, 10, 5, 2, 1);
 
-        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf);
-        root.add(pwpossubmit, 14, 5, 3, 1);
+        DoubleSubmitButton pdpossubmit = new DoubleSubmitButton("Submit",pdxf,pdyf,ELConfig.getPdPositionX(),ELConfig.getPdPositionY());
+        root.add(pdpossubmit, 14, 5, 3, 1);
         
         root.validate(this);
     }

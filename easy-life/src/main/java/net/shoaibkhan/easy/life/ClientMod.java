@@ -125,7 +125,6 @@ public class ClientMod {
         final MatrixStack matrixStack = new MatrixStack();
         if (player == null)
             return false;
-        String narrator = client.options.narrator.name();
         double health = player.getHealth();
         double hunger = player.getHungerManager().getFoodLevel();
         int height = client.getWindow().getScaledHeight();
@@ -138,7 +137,7 @@ public class ClientMod {
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
                 new LiteralText("" + (double) Math.round((health / 2) * 10) / 10
                         + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food"),
-                (int) (width * reqWidth/100), (int) (height * reqHeight/100), colors("red"));
+                (int) (width * reqWidth/100), (int) (height * reqHeight/100), colors(ELConfig.getString(ELConfig.getHnhColor())));
         matrixStack.pop();
 
         return true;
@@ -253,29 +252,50 @@ public class ClientMod {
     }
 
     private void healthWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health){
-        if (health < 10.0 && health > 6.0 && healthWarningFlag<=0) {
+        double firstTH;
+        double secondTH;
+        if( Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) > Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) ){
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+        } else {
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2; 
+        }
+        if (health < firstTH && health > secondTH && healthWarningFlag <= 0) {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
+            
+            if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+                player.sendMessage(new LiteralText("Health Low"), true);
+            } else {
+                player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            }
+                    
             matrixStack.pop();
             obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1,this.client);
             obj.start();
         }
 
-        if (health < 6.0 && health > 0 && healthWarningFlag<=0) {
+        if (health < secondTH && health > 0 && healthWarningFlag<=0) {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
-            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+                player.sendMessage(new LiteralText("Health Low"), true);
+            } else {
+                player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            }
             obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1,this.client);
             obj.start();
+            
         }
 
         if (healthWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) ){
@@ -291,28 +311,30 @@ public class ClientMod {
     }
 
     private void foodWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food){
-        if (food < 10.0 && food > 6.0 && health > 10 && foodWarningFlag <=0 ) {
-            matrixStack.push();
-            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
-
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
-            matrixStack.pop();
-            obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2);
-            obj.start();
+        double foodTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwFtth())) * 2;
+        double firstTH;
+        double secondTH;
+        if( Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) > Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) ){
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+        } else {
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2; 
         }
-
-        if (food < 6.0 && food > 0 && health > 10 && foodWarningFlag <=0 ) {
+        if (food < foodTH && food > 0 && health > firstTH && foodWarningFlag <=0 ) {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
-            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+                player.sendMessage(new LiteralText("Food Low"), true);
+            } else {
+                player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            }
             obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2,this.client);
             obj.start();
         }
 
@@ -329,28 +351,32 @@ public class ClientMod {
     }
 
     private void airWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food,double air){
-        if (air < 150.0 && air > 90 && food>10 && health > 10 && airWarningFlag <=0 ) {
-            matrixStack.push();
-            matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
-
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
-                    (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
-            matrixStack.pop();
-            obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3);
-            obj.start();
+        double foodTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwFtth())) * 2;
+        double airTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwAtth())) * 30;
+        double firstTH;
+        double secondTH;
+        if( Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) > Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) ){
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+        } else {
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
+            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2; 
         }
 
-        if (air < 90 && air > 0 && food>10 && health > 10 && airWarningFlag <=0 ) {
+        if (air < airTH && air > 0 && food>foodTH && health > firstTH && airWarningFlag <=0 ) {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())),Integer.parseInt(ELConfig.getString(ELConfig.getPwScale())), inGameHud.getZOffset());
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(ELConfig.getString(ELConfig.getPwColor())));
             matrixStack.pop();
-            player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+                player.sendMessage(new LiteralText("Air Low"), true);
+            } else {
+                player.playSound(SoundEvents.BLOCK_ANVIL_LAND,SoundCategory.PLAYERS,(float)1,(float) 1);
+            }
             obj = new CustomWait();
-            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3);
+            obj.setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3,this.client);
             obj.start();
         }
 

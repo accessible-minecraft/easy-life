@@ -1,12 +1,16 @@
 package net.shoaibkhan.easy.life;
 
+import net.minecraft.client.MinecraftClient;
+import net.shoaibkhan.easy.life.config.ELConfig;
+
 public class CustomWait extends Thread {
     private int timeOut, val;
-    // protected int healthWarningFlag = 0,foodWarningFlag = 0;
+    private MinecraftClient client;
 
-    protected void setWait(int timeOut, int val) {
+    protected void setWait(int timeOut, int val, MinecraftClient client) {
         this.timeOut = timeOut;
         this.val = val;
+        this.client = client;
     }
 
     public void run() {
@@ -14,6 +18,10 @@ public class CustomWait extends Thread {
             ClientMod.healthWarningFlag = timeOut;
             while (ClientMod.healthWarningFlag > 0) {
                 try {
+                    if(client.player==null){
+                        ClientMod.healthWarningFlag = 0;
+                        return;
+                    }
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -25,6 +33,10 @@ public class CustomWait extends Thread {
             ClientMod.foodWarningFlag = timeOut;
             while (ClientMod.foodWarningFlag > 0) {
                 try {
+                    if(client.player==null){
+                        ClientMod.foodWarningFlag = 0;
+                        return;
+                    }
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -36,6 +48,10 @@ public class CustomWait extends Thread {
             ClientMod.airWarningFlag = timeOut;
             while (ClientMod.airWarningFlag > 0) {
                 try {
+                    if(client.player==null){
+                        ClientMod.airWarningFlag = 0;
+                        return;
+                    }
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

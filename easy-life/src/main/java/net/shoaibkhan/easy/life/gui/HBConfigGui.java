@@ -5,18 +5,14 @@ import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
-import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
-import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
+import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.config.SerializableConfig;
-import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
-import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
-import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 
 public class HBConfigGui extends LightweightGuiDescription {
     private SerializableConfig tempConfig;
@@ -43,8 +39,8 @@ public class HBConfigGui extends LightweightGuiDescription {
         nsbutton.setOnClick(this::onBackClick);
         root.add(nsbutton, 3, 3, 7, 1);
 
-        ScaleButton pwscale = new ScaleButton("Width", 3);
-        root.add(pwscale, 5, 1, 6, 1);
+        ScaleButton hbscale = new ScaleButton("Width", ELConfig.getHbWidth());
+        root.add(hbscale, 0, 1, 6, 1);
         
         root.validate(this);
     }

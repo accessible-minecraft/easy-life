@@ -19,7 +19,7 @@ public class ELConfig {
     public static final String Health_n_Hunger_Key = "health_n_hunger", HNH_Color = "hnh_color" , HNH_Scale = "hnh_scale", HNH_Position_X = "hnh_position_x", HNH_Position_Y = "hnh_position_y";
     public static final String Player_Coordinates_Key = "player_coordinates",PC_Color = "pc_color", PC_Bg_Color = "pc_bg_color",PC_Position_X = "pc_position_x",PC_Position_Y = "pc_position_y";
     public static final String Player_Direction_Key = "player_direction",PD_Color = "pd_color", PD_Bg_Color = "pd_bg_color",PD_Position_X = "pd_position_x",PD_Position_Y = "pd_position_y";
-    public static final String Player_Warning_Key = "player_warning",PW_Color = "pw_color", PW_Scale = "pw_scale", PW_Position_X = "pw_position_x", PW_Position_Y = "pw_position_y",PW_Timeout = "pw_timeout";
+    public static final String Player_Warning_Key = "player_warning",PW_Color = "pw_color", PW_Scale = "pw_scale", PW_Position_X = "pw_position_x", PW_Position_Y = "pw_position_y",PW_Timeout = "pw_timeout",PW_HT_F_TH = "pw_ht_f_th",PW_HT_S_TH="pw_ht_s_th",PW_FTTH="PW_FTTH",PW_ATTH="pw_atth";
     public static final String Health_Bar_Key = "health_bar",HB_Width = "hb_width";
     public static final String Narrator_Support_Key = "narrator_support";
 
@@ -55,6 +55,28 @@ public class ELConfig {
     public static void setString(String key, String value){
         data.addProperty(key, value);
         saveConfig(data);
+    }
+
+    public static boolean setInt(String key, String value){
+        try{
+            Integer.parseInt(value);
+            data.addProperty(key, value);
+            saveConfig(data);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean setDouble(String key, String value){
+        try{
+            Double.parseDouble(value);
+            data.addProperty(key, value);
+            saveConfig(data);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
     }
 
     private static JsonObject loadConfig() {
@@ -99,7 +121,11 @@ public class ELConfig {
             data.add(PW_Scale, new JsonPrimitive("2"));
             data.add(PW_Position_X, new JsonPrimitive("20"));
             data.add(PW_Position_Y, new JsonPrimitive("30"));
-            data.add(PW_Timeout, new JsonPrimitive("120"));
+            data.add(PW_Timeout, new JsonPrimitive("30"));
+            data.add(PW_HT_F_TH, new JsonPrimitive("3.0"));
+            data.add(PW_HT_S_TH, new JsonPrimitive("0"));
+            data.add(PW_FTTH, new JsonPrimitive("3.0"));
+            data.add(PW_ATTH, new JsonPrimitive("3.0"));
             
             data.add(Health_Bar_Key, new JsonPrimitive(false));
             data.add(HB_Width, new JsonPrimitive("3"));
@@ -116,7 +142,6 @@ public class ELConfig {
 
         String jsonString = new Gson().toJson(data);
         try {
-
             File configFile = new File(CONFIG_PATH);
             configFile.getParentFile().mkdirs();
             FileWriter configWriter = new FileWriter(configFile);
@@ -223,5 +248,21 @@ public class ELConfig {
 
     public static String getHbWidth() {
         return HB_Width;
+    }
+
+    public static String getPwHtFTh() {
+        return PW_HT_F_TH;
+    }
+
+    public static String getPwHtSTh() {
+        return PW_HT_S_TH;
+    }
+
+    public static String getPwFtth() {
+        return PW_FTTH;
+    }
+
+    public static String getPwAtth() {
+        return PW_ATTH;
     }
 }

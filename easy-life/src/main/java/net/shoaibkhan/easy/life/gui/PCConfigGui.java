@@ -44,36 +44,32 @@ public class PCConfigGui extends LightweightGuiDescription {
         nsbutton.setOnClick(this::onBackClick);
         root.add(nsbutton, 3, 7, 7, 1);
 
+        ColorButton pccolor = new ColorButton("Color",ELConfig.getPcColor());
+        root.add(pccolor, 1, 3, 6, 1);
 
-        ScaleButton pwscale = new ScaleButton("Scale", 2);
-        root.add(pwscale, 1, 1, 6, 1);
+        ColorButton pcbgcolor = new ColorButton("Background Color",ELConfig.getPcBgColor());
+        root.add(pcbgcolor, 8, 3, 8, 1);
 
-        ColorButton pwcolor = new ColorButton("Color", 0,ELConfig.getPcColor());
-        root.add(pwcolor, 1, 3, 6, 1);
+        WLabel pcpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
+        pcpos.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pcpos, 1, 5, 3, 1);
 
-        ColorButton pwbgcolor = new ColorButton("Background Color", 0,ELConfig.getPcBgColor());
-        root.add(pwbgcolor, 8, 3, 8, 1);
+        WLabel pcx = new WLabel(new LiteralText("X="));
+        pcx.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pcx, 5, 5, 1, 1);
 
-        WLabel pwpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
-        pwpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwpos, 1, 5, 3, 1);
+        WTextField pcxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionX())));
+        root.add(pcxf, 6, 5, 2, 1);
 
-        WLabel pwx = new WLabel(new LiteralText("X="));
-        pwx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwx, 5, 5, 1, 1);
+        WLabel pcy = new WLabel(new LiteralText("Y="));
+        pcy.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pcy, 9, 5, 1, 1);
 
-        WTextField pwxf = new WTextField(new LiteralText("10"));
-        root.add(pwxf, 6, 5, 2, 1);
+        WTextField pcyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionY())));
+        root.add(pcyf, 10, 5, 2, 1);
 
-        WLabel pwy = new WLabel(new LiteralText("Y="));
-        pwy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pwy, 9, 5, 1, 1);
-
-        WTextField pwyf = new WTextField(new LiteralText("10"));
-        root.add(pwyf, 10, 5, 2, 1);
-
-        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf);
-        root.add(pwpossubmit, 14, 5, 3, 1);
+        DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf,ELConfig.getPcPositionX(),ELConfig.getPcPositionY());
+        root.add(pcpossubmit, 14, 5, 3, 1);
         
         root.validate(this);
     }
