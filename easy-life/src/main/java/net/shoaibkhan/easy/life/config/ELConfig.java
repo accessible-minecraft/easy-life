@@ -21,6 +21,7 @@ public class ELConfig {
     public static final String Player_Direction_Key = "player_direction";
     public static final String Player_Warning_Key = "player_warning";
     public static final String Health_Bar_Key = "health_bar";
+    public static final String Narrator_Support_Key = "narrator_support";
 
     public ELConfig() {
     }
@@ -68,6 +69,7 @@ public class ELConfig {
             data.add(Player_Direction_Key, new JsonPrimitive(true));
             data.add(Player_Warning_Key, new JsonPrimitive(true));
             data.add(Health_Bar_Key, new JsonPrimitive(false));
+            data.add(Narrator_Support_Key, new JsonPrimitive(true));
 
             saveConfig(data);
             return data;
@@ -110,5 +112,9 @@ public class ELConfig {
 
     public static String getPlayerDirectionKey() {
         return Player_Direction_Key;
+    }
+
+    public static String getNarratorSupportKey() {
+        return Narrator_Support_Key;
     }
 }

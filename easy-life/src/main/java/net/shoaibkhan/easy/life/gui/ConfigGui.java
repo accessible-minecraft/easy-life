@@ -6,8 +6,9 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.config.SerializableConfig;
@@ -16,43 +17,89 @@ import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
 public class ConfigGui extends LightweightGuiDescription {
     private SerializableConfig tempConfig;
     private ClientPlayerEntity player;
+    private MinecraftClient client;
 
-    public ConfigGui(ClientPlayerEntity player) {
+    public ConfigGui(ClientPlayerEntity player,MinecraftClient client) {
         this.player = player;
+        this.client = client;
         WGridPanel root = new WGridPanel();
 
         setRootPanel(root);
-        root.setSize(240, 240);
+        root.setSize(300, 240);
 
-        ConfigButton Health_n_Hunger_Button = new ConfigButton("Health n Hunger",ELConfig.Health_n_Hunger_Key);
-        root.add(Health_n_Hunger_Button, 0, 1, 10, 1);
-
-        ConfigButton Player_Coordinates_Button = new ConfigButton("Player Coordinates",ELConfig.Player_Coordinates_Key);
-        root.add(Player_Coordinates_Button, 11, 1, 10, 1);
-
-        ConfigButton Player_Direction_Button = new ConfigButton("Player Direction",ELConfig.Player_Direction_Key);
-        root.add(Player_Direction_Button, 11, 3, 10, 1);
-
-        ConfigButton Player_Warning_Button = new ConfigButton("Player Warning",ELConfig.Player_Warning_Key);
-        root.add(Player_Warning_Button, 0, 2, 10, 1);
-
-        ConfigButton Health_Bar_Key_Button = new ConfigButton("Health Bar", ELConfig.Health_Bar_Key);
-        root.add(Health_Bar_Key_Button, 11, 2, 10, 1);
-
-        WButton doneButton = new WButton(new TranslatableText("Done"));
+        WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 7, 8, 7, 1);
+        root.add(doneButton, 12, 12, 7, 1);
 
-        WLabel label = new WLabel(new TranslatableText("Easy Life"), ClientMod.colors("black"));
+        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("black"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
+        ConfigButton nsbutton = new ConfigButton("Narrator",ELConfig.getNarratorSupportKey());
+        root.add(nsbutton, 3, 12, 7, 1);
+
+
+        WLabel pwlabel = new WLabel(new LiteralText("Player Warnings :-"), ClientMod.colors("black"));
+        root.add(pwlabel, 1, 2, 7 ,1);
+
+        ConfigButton pwstatus = new ConfigButton("Status", ELConfig.getPlayerWarningKey());
+        root.add(pwstatus, 9, 2, 6, 1);
+
+        WButton pwmore = new WButton(new LiteralText("More.."));
+        pwmore.setOnClick(this::pwClick);
+        root.add(pwmore, 17, 2, 5, 1);
+        
+
+        WLabel pclabel = new WLabel(new LiteralText("Player Coordinates :-"), ClientMod.colors("black"));
+        root.add(pclabel, 1, 4, 7 ,1);
+
+        ConfigButton pcstatus = new ConfigButton("Status", ELConfig.getPlayerCoordinatesKey());
+        root.add(pcstatus, 9, 4, 6, 1);
+
+        WButton pcmore = new WButton(new LiteralText("More.."));
+        root.add(pcmore, 17, 4, 5, 1);
+
+
+        WLabel pdlabel = new WLabel(new LiteralText("Player Direction :-"), ClientMod.colors("black"));
+        root.add(pdlabel, 1, 6, 7 ,1);
+
+        ConfigButton pdstatus = new ConfigButton("Status", ELConfig.getPlayerDirectionKey());
+        root.add(pdstatus, 9, 6, 6, 1);
+
+        WButton pdmore = new WButton(new LiteralText("More.."));
+        root.add(pdmore, 17, 6, 5, 1);
+
+
+        WLabel hnhlabel = new WLabel(new LiteralText("Health n Hunger :-"), ClientMod.colors("black"));
+        root.add(hnhlabel, 1, 8, 7 ,1);
+
+        ConfigButton hnhstatus = new ConfigButton("Status", ELConfig.getHealthNHungerKey());
+        root.add(hnhstatus, 9, 8, 6, 1);
+
+        WButton hnhmore = new WButton(new LiteralText("More.."));
+        root.add(hnhmore, 17, 8, 5, 1);
+
+
+        WLabel hblabel = new WLabel(new LiteralText("Health Bar :-"), ClientMod.colors("black"));
+        root.add(hblabel, 1, 10, 7 ,1);
+
+        ConfigButton hbstatus = new ConfigButton("Status", ELConfig.getHealthBarKey());
+        root.add(hbstatus, 9, 10, 6, 1);
+
+        WButton hbmore = new WButton(new LiteralText("More.."));
+        root.add(hbmore, 17, 10, 5, 1);
+        
         root.validate(this);
-    }
+}
 
     private void onDoneClick() {
         this.player.closeScreen();
 
+    }
+
+    private void pwClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new PWConfigGui(client.player,client)));
     }
 
     @Override

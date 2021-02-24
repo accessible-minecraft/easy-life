@@ -33,4 +33,4 @@ player-warnings-color=yellow
 player-warnings-scale=2
 player-warnings-positionx=20
 player-warnings-positiony=30
-player-warnings-timeout=300
+player-warnings-timeout=120

@@ -43,7 +43,7 @@ public class ClientMod {
             if(client.player== null) return;
 
             while(CONFIG_KEY.wasPressed()){
-                client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
+                client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
                 return;
             }
             
@@ -54,21 +54,23 @@ public class ClientMod {
             }
 
             if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-                    || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
+                    || ELConfig.get(ELConfig.Player_Direction_Key))) {
                 showCoord();
             }
 
             while (coord.wasPressed()
                     && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-                            || (config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on"))) {
+                            || ELConfig.get(ELConfig.Player_Direction_Key))) {
                 coordFlag = !coordFlag;
             }
 
             while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
                 if (this.kbPressed()) {
-                    double health = client.player.getHealth();
-                    double hunger = client.player.getHungerManager().getFoodLevel();
-                    client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+                    if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+                        double health = client.player.getHealth();
+                        double hunger = client.player.getHungerManager().getFoodLevel();
+                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+                    }
                     tickCount = 120f;
                 }
             }
@@ -169,7 +171,7 @@ public class ClientMod {
         if (player == null)
             return;
 
-        if((config.getPlayer_coordination_status().trim().toLowerCase()).equalsIgnoreCase("on")){
+        if(ELConfig.get(ELConfig.Player_Coordinates_Key)){
             Vec3d pos = player.getPos();
             String posX = ((double)pos.x)+"";
             String posY = ((double)pos.y)+"";
@@ -189,7 +191,7 @@ public class ClientMod {
 
         }
 
-        if((config.getPlayer_direction_status().trim().toLowerCase()).equalsIgnoreCase("on")){
+        if(ELConfig.get(ELConfig.Player_Direction_Key)){
             String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
@@ -245,6 +247,8 @@ public class ClientMod {
                 return 0xffe09200;
             case "brown":
                 return 0xff610000;
+            case "lightgrey":
+                return 0xffececec;
             default:
                 return 0xffff0000;
         }
@@ -258,10 +262,6 @@ public class ClientMod {
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
                     (int) (width * reqWidth / 100), (int) (height * reqHeight / 100), colors(config.getPlayer_warning_color()));
             matrixStack.pop();
-            String narrator = client.options.narrator.name();
-            narrator = narrator.toLowerCase().trim();
-            if(narrator.equalsIgnoreCase("all") && healthWarningFlag<=0)
-                player.sendSystemMessage(new LiteralText("message"), Util.NIL_UUID);
             obj = new CustomWait();
             obj.setWait(config.getPlayer_warning_timeout()*1000, 1);
             obj.start();
