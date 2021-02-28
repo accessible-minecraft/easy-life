@@ -22,6 +22,8 @@ public class THDoubleSubmitButton  extends WButton{
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
+        if(a.getText().equals(""))a.setText(ELConfig.getString(jsonkeya));
+        if(b.getText().equals(""))b.setText(ELConfig.getString(jsonkeyb));
         if( ELConfig.setDouble(jsonkeya, a.getText()) && ELConfig.setDouble(jsonkeyb, b.getText()) ) {
             a.setText("");
             b.setText("");

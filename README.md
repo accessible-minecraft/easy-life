@@ -4,11 +4,11 @@
 
 This is a __Minecraft Fabric__ mod. This mod shows the current coordinates and the direction of the player. This mod also adds warns when health/food/air bubble is decreased.
 
-[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.0.jar)
+[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.1.jar)
 
 *Note: This is a client-side mod. So no need to install it to server.*
 
-If you have any issues with the mod, you can describe your issues in the [issues]() tab.
+If you have any issues with the mod, you can describe your issues in the [issues](https://github.com/shoaib11120/easy-life/issues) tab.
 
 ___
 
@@ -18,46 +18,26 @@ __These are the current requirements of the mod:-__
 
 1. Minecraft Java (1.16.x)
 2. [Fabric](https://fabricmc.net/wiki/install)
-3. [WinRar](https://www.win-rar.com/download.html) (Only for mod customization)
+3. [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) (Only for narrator support. Don't download it if you don't want the narrator support.)
 
 ___
 
 ## Mod Installation
 
-Download the [easy-life-1.x.x.jar](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.0.jar) file and paste it in your mods folder located in :-
->%AppData%\\.minecraft\mods
+Download the [easy-life-1.x.x.jar](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.1.jar) file and paste it in your mods folder located in :-
+
+    %AppData%\.minecraft\mods
 
 Your mod is now installed!
 ___
 
 ## Mod Customization
 
-### Step 1: Navigate to your mods folder
+The hotkey to open Customization menu is **'J'**. Now you can configure the mod in-game.
 
->%AppData%\\.minecraft\mods
+<font size="5em"> **Demo:-** </font>
 
-![Mods Folder](/readmeAssets/mods_folder.png)
-
-### Step 2: Open the mod jar file with WinRar
-
-![Open with WinRar](/readmeAssets/openWithWinrar.png)
-
-### Step 3: Navigate to assets folder
-
-![Navigate to assets folder](/readmeAssets/navigate_to_assets.png)
-
-### Step 4: Open config.txt file and change the configuration
-
-![Open config.txt](/readmeAssets/config.png)
-
-### Step 5: Save the new configurations
-
-To save the configuration save the file and when you will close the file you will get a prompt to update the archive, hit ok!
-![Save new configurations](/readmeAssets/save_prompt.png)
-
-Your new configurations for the mod are saved.
-
-__*Note:You can only change the configurations when Minecraft is closed.*__
+![Config Menu](/readmeAssets/config_menu.png)
 
 #### In-Built Colors
 
@@ -74,7 +54,6 @@ Below are the in-built colors that you can use in the mod:-
 1. Yellow
 1. Orange
 1. Brown
-
 ___
 
 ## Mod Features
@@ -82,75 +61,96 @@ ___
 ### Player Coordinates
 
 __Enabled__ by default. This feature/mod will show the current coordinates/position of the player. The Hotkey for this mod is __F6__ .
-
-#### Demo:-
+s
+<font size="5em"> **Demo:-** </font>
 
 ![Player Coordinates Demo](/readmeAssets/player_coordinates.png)
 
-#### Configurations:-
+<font size="5em"> **Configurations:-** </font>
+
+**Mod Screen:-**
+
+![Player Coordination Menu Screen](/readmeAssets/pc_mod_screen.png)
 
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
-player-coordination-status | on/off | on | To enable/disble this mod
-player-coordination-color | [In-Built Colors](#in-built-colors) | White | To change the text color
-player-coordination-background | [In-Built Colors](#in-built-colors) | Black | To change the background color
-player-coordination-positionx | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
-player-coordination-positiony | Integers/Real numbers | 40 | To change the Y(vertical) position of the overlay
+**Status** | on/off | on | To enable/disble this mod
+**Color** | [In-Built Colors](#in-built-colors) | White | To change the text color
+**Background Color** | [In-Built Colors](#in-built-colors) | Black | To change the background color
+**Position: X** | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
+**Position: Y** | Integers/Real numbers | 40 | To change the Y(vertical) position of the overlay
 
 ### Player Direction
 
 __Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ .
 
-#### Demo:-
+<font size="5em"> **Demo:-** </font>
 
 ![Player Coordinates Demo](/readmeAssets/player_direction.png)
 
-#### Configurations:-
+<font size="5em"> **Configurations:-** </font>
+
+**Mod Screen:-**
+
+![Player Coordination Menu Screen](/readmeAssets/pd_mod_screen.png)
 
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
-player-direction-status | on/off | on | To enable/disble this mod
-player-direction-color | [In-Built Colors](#in-built-colors) | White | To change the text color
-player-direction-background | [In-Built Colors](#in-built-colors) | Black | To change the background color
-player-direction-positionx | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
-player-direction-positiony | Integers/Real numbers | 57 | To change the Y(vertical) position of the overlay
+**Status** | on/off | on | To enable/disble this mod
+**Color** | [In-Built Colors](#in-built-colors) | White | To change the text color
+**Background Color** | [In-Built Colors](#in-built-colors) | Black | To change the background color
+**Position: X** | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
+**Position: Y** | Integers/Real numbers | 57 | To change the Y(vertical) position of the overlay
 
 ### Health n Hunger
 
-__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __R__.
+__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __R__. Added narraotor plus support to this mod.
 
-#### Demo:-
+<font size="5em"> **Demo:-** </font>
 
 ![Health n Hunger](/readmeAssets/health_n_hunger.png)
 
-#### Configurations:-
+<font size="5em"> **Configurations:-** </font>
+
+**Mod Menu:-**
+
+![Health n Hunger Mod Screen](/readmeAssets/hnh_mod_screen.png)
 
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
-health-n-hunger-status | on/off | on | To enable/disble this mod
-health-n-hunger-color | [In-Built Colors](#in-built-colors) | Red | To change the text color
-health-n-hunger-scale | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
-health-n-hunger-positionx | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
-health-n-hunger-positiony | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
+**Status** | on/off | on | To enable/disble this mod
+**Color** | [In-Built Colors](#in-built-colors) | Red | To change the text color
+**Scale** | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
+**Position: X** | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
+**Position: Y** | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
 
 ### Player Warnings
 
-__Disabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low.
+__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. Added narraotor plus support to this mod.
 
-#### Demo:-
+<font size="5em"> **Demo:-** </font>
 
 ![Player Warnings](/readmeAssets/player_warning.png)
 
-#### Configurations:-
+<font size="5em"> **Configurations:-** </font>
+
+**Mod Screen:-**
+
+![Player Warnings Mod Screen](/readmeAssets/pw_mod_screen.png)
 
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
-player-warnings-status | on/off | on | To enable/disble this mod
-player-warnings-color | [In-Built Colors](#in-built-colors) | Yellow | To change the text color
-player-warnings-scale | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
-player-warnings-positionx | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
-player-warnings-positiony | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
-player-warnings-timeout | Time(in seconds) | 300 |To change the cooldown of the mod.
+**Status** | on/off | on | To enable/disble this mod
+**Color** | [In-Built Colors](#in-built-colors) | Yellow | To change the text color
+**Scale** | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
+**Position: X** | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
+**Position: Y** | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
+**Timeout** | Time(in seconds) | 300 |To change the cooldown of the mod.
+**Sound** | on/off | on | To enable/disable the anvil landing sound.
+**Health Threshold: First** | Double/Real Numbers | 3.0 | To change threshold value of health warning.
+**Health Threshold: Second** | Double/Real Numbers | 0 | To change threshold value of health warning.
+**Food Threshold** | Double/Real Numbers | 3.0 | To change threshold value of food warning.
+**Air Threshold** | Double/Real Numbers | 3.0 | To change threshold value of air bubble warning.
 
 ___
 

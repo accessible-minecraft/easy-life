@@ -21,6 +21,8 @@ public class DoubleSubmitButton extends WButton{
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
+        if(posx.getText().equals(""))posx.setText(ELConfig.getString(jsonkeyx));
+        if(posy.getText().equals(""))posy.setText(ELConfig.getString(jsonkeyy));
         if( ELConfig.setInt(jsonkeyx, posx.getText()) && ELConfig.setInt(jsonkeyy, posy.getText()) ) {
             posx.setText("");
             posy.setText("");

@@ -60,6 +60,51 @@ public class CustomWait extends Thread {
                 ClientMod.airWarningFlag--;
             }
 
+        } else if (val == 4) {
+            ClientMod.healthWarningAfterFlag = timeOut;
+            while (ClientMod.healthWarningAfterFlag > 0 && running ) {
+                try {
+                    if(client.player==null){
+                        ClientMod.healthWarningAfterFlag = 0;
+                        return;
+                    }
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ClientMod.healthWarningAfterFlag--;
+            }
+
+        } else if (val == 5) {
+            ClientMod.foodWarningAfterFlag = timeOut;
+            while (ClientMod.foodWarningAfterFlag > 0 && running ) {
+                try {
+                    if(client.player==null){
+                        ClientMod.foodWarningAfterFlag = 0;
+                        return;
+                    }
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ClientMod.foodWarningAfterFlag--;
+            }
+
+        } else if (val == 6) {
+            ClientMod.airWarningAfterFlag = timeOut;
+            while (ClientMod.airWarningAfterFlag > 0 && running ) {
+                try {
+                    if(client.player==null){
+                        ClientMod.airWarningAfterFlag = 0;
+                        return;
+                    }
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ClientMod.airWarningAfterFlag--;
+            }
+
         }
     }
 
