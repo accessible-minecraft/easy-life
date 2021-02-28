@@ -6,6 +6,7 @@ import net.shoaibkhan.easy.life.config.ELConfig;
 public class CustomWait extends Thread {
     private int timeOut, val;
     private MinecraftClient client;
+    private boolean running=false;
 
     protected void setWait(int timeOut, int val, MinecraftClient client) {
         this.timeOut = timeOut;
@@ -16,7 +17,7 @@ public class CustomWait extends Thread {
     public void run() {
         if (val == 1) {
             ClientMod.healthWarningFlag = timeOut;
-            while (ClientMod.healthWarningFlag > 0) {
+            while (ClientMod.healthWarningFlag > 0 && running ) {
                 try {
                     if(client.player==null){
                         ClientMod.healthWarningFlag = 0;
@@ -31,7 +32,7 @@ public class CustomWait extends Thread {
 
         } else if (val == 2) {
             ClientMod.foodWarningFlag = timeOut;
-            while (ClientMod.foodWarningFlag > 0) {
+            while (ClientMod.foodWarningFlag > 0 && running ) {
                 try {
                     if(client.player==null){
                         ClientMod.foodWarningFlag = 0;
@@ -46,7 +47,7 @@ public class CustomWait extends Thread {
 
         } else if (val == 3) {
             ClientMod.airWarningFlag = timeOut;
-            while (ClientMod.airWarningFlag > 0) {
+            while (ClientMod.airWarningFlag > 0 && running ) {
                 try {
                     if(client.player==null){
                         ClientMod.airWarningFlag = 0;
@@ -60,5 +61,14 @@ public class CustomWait extends Thread {
             }
 
         }
+    }
+
+    public void stopThread() {
+        running = false;
+        interrupt();
+    }
+
+    public void startThread(){
+        running = true;
     }
 }

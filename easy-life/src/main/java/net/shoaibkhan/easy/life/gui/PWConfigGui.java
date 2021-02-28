@@ -15,6 +15,7 @@ import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.config.SerializableConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
+import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
@@ -32,11 +33,11 @@ public class PWConfigGui extends LightweightGuiDescription {
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(300, 240);
+        root.setSize(300, 260);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 13, 7, 1);
+        root.add(doneButton, 12, 15, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Player Warnings Configuration"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -44,7 +45,7 @@ public class PWConfigGui extends LightweightGuiDescription {
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 13, 7, 1);
+        root.add(nsbutton, 3, 15, 7, 1);
 
 
         ColorButton pwcolor = new ColorButton("Color",ELConfig.getPwColor());
@@ -124,6 +125,9 @@ public class PWConfigGui extends LightweightGuiDescription {
 
         THSubmitButton pwatsubmit = new THSubmitButton("Submit",pwatf,ELConfig.getPwAtth());
         root.add(pwatsubmit, 10, 11, 3, 1);
+
+        ConfigButton pwsound = new ConfigButton("Sounds",ELConfig.getPwSoundStatus());
+        root.add(pwsound, 1, 13, 5, 1);
         
         root.validate(this);
     }
