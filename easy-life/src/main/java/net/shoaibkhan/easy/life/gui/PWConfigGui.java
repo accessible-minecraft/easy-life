@@ -13,7 +13,6 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
-import net.shoaibkhan.easy.life.config.SerializableConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
@@ -23,7 +22,6 @@ import net.shoaibkhan.easy.life.gui.widgets.THDoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.THSubmitButton;
 
 public class PWConfigGui extends LightweightGuiDescription {
-    private SerializableConfig tempConfig;
     private ClientPlayerEntity player;
     private MinecraftClient client;
     

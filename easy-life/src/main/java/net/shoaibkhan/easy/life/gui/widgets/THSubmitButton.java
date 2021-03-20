@@ -6,12 +6,11 @@ import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.config.ELConfig;
 
 public class THSubmitButton extends WButton{
-    private String translationText,jsonKey;
+    private String jsonKey;
     private WTextField textField;
 
     public THSubmitButton(String translationText,WTextField textField,String jsonKey){
         super(new LiteralText(translationText));
-        this.translationText = translationText;
         this.textField = textField;
         this.jsonKey = jsonKey;
     }
@@ -19,10 +18,12 @@ public class THSubmitButton extends WButton{
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        String value = this.textField.getText();
-        if(ELConfig.setDouble(jsonKey, value)) {
-            this.textField.setText("");
-            this.textField.setSuggestion(value);
+        if(this.isEnabled()){
+            String value = this.textField.getText();
+            if(ELConfig.setDouble(jsonKey, value)) {
+                this.textField.setText("");
+                this.textField.setSuggestion(value);
+            }
         }
     }
 }

@@ -19,9 +19,11 @@ public class ScaleButton extends WButton {
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if(this.value+1>5) this.value = 1;
-        else this.value += 1;
-        ELConfig.setInt(jsonKey, ""+value);
-        this.setLabel(new LiteralText(this.translationKey + " : " + this.value));
+        if(this.isEnabled()){
+            if(this.value+1>5) this.value = 1;
+            else this.value += 1;
+            ELConfig.setInt(jsonKey, ""+value);
+            this.setLabel(new LiteralText(this.translationKey + " : " + this.value));
+        }
     }
 }

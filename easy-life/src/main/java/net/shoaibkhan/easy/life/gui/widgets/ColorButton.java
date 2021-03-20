@@ -9,7 +9,6 @@ public class ColorButton extends WButton {
     private String translationKey,jsonKey;
     private int index;
     public ColorButton(String translationKey,String jsonKey){
-        
         super(new LiteralText(translationKey +" : "+ ELConfig.getString(jsonKey)));
         this.translationKey = translationKey;
         this.jsonKey = jsonKey;
@@ -25,9 +24,11 @@ public class ColorButton extends WButton {
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if((this.index+1)==ClientMod.colorNames.length) index = 0;
-        else this.index+=1;
-        ELConfig.setString(jsonKey, ClientMod.colorNames[index]);
-        this.setLabel(new LiteralText(translationKey +" : "+ ClientMod.colorNames[index]));
+        if(this.isEnabled()){
+            if((this.index+1)==ClientMod.colorNames.length) index = 0;
+            else this.index+=1;
+            ELConfig.setString(jsonKey, ClientMod.colorNames[index]);
+            this.setLabel(new LiteralText(translationKey +" : "+ ClientMod.colorNames[index]));
+        }
     }
 }

@@ -329,7 +329,6 @@ public class ClientMod {
     private void foodWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food){
         double foodTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwFtth())) * 2;
         double firstTH;
-        double secondTH;
         if(food>=foodTH && foodWarningFlag>0 && obj[1].isAlive() && foodWarningAfterFlag<=0){
             obj[1].stopThread();
             foodWarningFlag = 0;
@@ -340,10 +339,8 @@ public class ClientMod {
         }
         if( Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) > Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) ){
             firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2;
-            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
         } else {
-            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
-            secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2; 
+            firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2; 
         }
         if (food < foodTH && food > 0 && health >=firstTH && foodWarningFlag <=0 && foodWarningAfterFlag<=0) {
             matrixStack.push();

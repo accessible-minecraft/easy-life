@@ -1,9 +1,6 @@
 package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-
 import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.config.ELConfig;
 
@@ -21,11 +18,10 @@ public class ConfigButton extends WButton {
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        boolean enabled = ELConfig.toggle(this.jsonKey);
-        TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
-        this.setLabel(newButtonText);
-        // Toggle the value
-        // Save hte value
-
+        if(this.isEnabled()){    
+            boolean enabled = ELConfig.toggle(this.jsonKey);
+            TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+            this.setLabel(newButtonText);
+        }
     }
 }

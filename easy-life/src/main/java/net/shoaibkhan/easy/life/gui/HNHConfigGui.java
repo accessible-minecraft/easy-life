@@ -13,14 +13,11 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
-import net.shoaibkhan.easy.life.config.SerializableConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
-import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 
 public class HNHConfigGui extends LightweightGuiDescription {
-    private SerializableConfig tempConfig;
     private ClientPlayerEntity player;
     private MinecraftClient client;
     

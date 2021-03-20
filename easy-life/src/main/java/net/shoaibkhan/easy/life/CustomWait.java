@@ -1,7 +1,6 @@
 package net.shoaibkhan.easy.life;
 
 import net.minecraft.client.MinecraftClient;
-import net.shoaibkhan.easy.life.config.ELConfig;
 
 public class CustomWait extends Thread {
     private int timeOut, val;
