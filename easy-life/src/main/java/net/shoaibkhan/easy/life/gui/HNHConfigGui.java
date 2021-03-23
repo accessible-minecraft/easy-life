@@ -14,8 +14,10 @@ import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
+import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
+import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
 
 public class HNHConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -27,11 +29,11 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(300, 120);
+        root.setSize(300, 180);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 5, 7, 1);
+        root.add(doneButton, 12, 9, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -39,35 +41,56 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 5, 7, 1);
+        root.add(nsbutton, 3, 9, 7, 1);
 
+
+
+        WLabel hnh_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black"));
+        hnh_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(hnh_color_label, 1, 1, 3, 1);
 
         ColorButton hnhcolor = new ColorButton("Color",ELConfig.getHnhColor());
-        root.add(hnhcolor, 1, 1, 6, 1);
+        if(ELConfig.get(ELConfig.getHnhColorCustom())) hnhcolor.setEnabled(false);
+        else hnhcolor.setEnabled(true);
+        root.add(hnhcolor, 12, 1, 5, 1);
+
+        WTextField hnhcolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.getHnhColorCustomVal())));
+        if(ELConfig.get(ELConfig.getHnhColorCustom())) hnhcolortf.setEditable(true);
+        else hnhcolortf.setEditable(false);
+        hnhcolortf.setDisabledColor(0x2c2c2c);
+        root.add(hnhcolortf, 5, 3, 4, 1);
+
+        SubmitColorButton hnhcolorsubmit = new SubmitColorButton("Set", hnhcolortf, ELConfig.getHnhColorCustomVal());
+        if(ELConfig.get(ELConfig.getHnhColorCustom())) hnhcolorsubmit.setEnabled(true);
+        else hnhcolorsubmit.setEnabled(false);
+        root.add(hnhcolorsubmit, 11, 3, 2, 1);
+
+        CustomColorButton hnh_color_custom_button = new CustomColorButton("Custom Color", ELConfig.getHnhColorCustom(), hnhcolor, hnhcolortf, hnhcolorsubmit);
+        root.add(hnh_color_custom_button, 5, 1, 6, 1);
 
         ScaleButton hnhscale = new ScaleButton("Scale", ELConfig.getHnhScale());
-        root.add(hnhscale, 8, 1, 6, 1);
+        root.add(hnhscale, 1, 7, 6, 1);
 
         WLabel hnhpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
         hnhpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhpos, 1, 3, 3, 1);
+        root.add(hnhpos, 1, 5, 3, 1);
 
         WLabel hnhx = new WLabel(new LiteralText("X="));
         hnhx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhx, 5, 3, 1, 1);
+        root.add(hnhx, 5, 5, 1, 1);
 
         WTextField hnhxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionX())));
-        root.add(hnhxf, 6, 3, 2, 1);
+        root.add(hnhxf, 6, 5, 2, 1);
 
         WLabel hnhy = new WLabel(new LiteralText("Y="));
         hnhy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhy, 9, 3, 1, 1);
+        root.add(hnhy, 9, 5, 1, 1);
 
         WTextField hnhyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionY())));
-        root.add(hnhyf, 10, 3, 2, 1);
+        root.add(hnhyf, 10, 5, 2, 1);
 
         DoubleSubmitButton hnhpossubmit = new DoubleSubmitButton("Submit",hnhxf,hnhyf,ELConfig.getHnhPositionX(),ELConfig.getHnhPositionY());
-        root.add(hnhpossubmit, 14, 3, 3, 1);
+        root.add(hnhpossubmit, 14, 5, 3, 1);
         
         root.validate(this);
     }

@@ -10,9 +10,9 @@ public class CustomColorButton extends WButton {
     private String jsonKey;
     private ColorButton cButton;
     private WTextField tField;
-    private SubmitButton sButton;
+    private SubmitColorButton sButton;
 
-    public CustomColorButton(String translationKey, String jsonKey, ColorButton cButton, WTextField tField, SubmitButton sButton) {
+    public CustomColorButton(String translationKey, String jsonKey, ColorButton cButton, WTextField tField, SubmitColorButton sButton) {
         super(new TranslatableText(translationKey + (ELConfig.get(jsonKey) ? " : on" : " : off")));
         this.translateKey = translationKey;
         this.jsonKey = jsonKey;

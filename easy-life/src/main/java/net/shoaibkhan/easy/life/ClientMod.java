@@ -135,11 +135,16 @@ public class ClientMod {
         int reqWidth = Integer.parseInt(ELConfig.getString(ELConfig.getHnhPositionX()));
         matrixStack.push();
         matrixStack.scale(Integer.parseInt(ELConfig.getString(ELConfig.getHnhScale())), Integer.parseInt(ELConfig.getString(ELConfig.getHnhScale())), inGameHud.getZOffset());
-
+        int color = colors(ELConfig.getString(ELConfig.getHnhColor()));
+        try {
+            if(ELConfig.get(ELConfig.getHnhColorCustom())) color = colors(ELConfig.getString(ELConfig.getHnhColorCustomVal()));
+        } catch (Exception e) {
+            color = colors(ELConfig.getString(ELConfig.getHnhColor()));
+        }        
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
                 new LiteralText("" + (double) Math.round((health / 2) * 10) / 10
                         + "X Health    " + (double) Math.round((hunger / 2) * 10) / 10 + "X Food"),
-                (int) (width * reqWidth/100), (int) (height * reqHeight/100), colors(ELConfig.getString(ELConfig.getHnhColor())));
+                (int) (width * reqWidth/100), (int) (height * reqHeight/100), color);
         matrixStack.pop();
 
         return true;
@@ -185,7 +190,15 @@ public class ClientMod {
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, posString, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+3, colors(ELConfig.getString(ELConfig.getPcColor())));
+            int color = colors(ELConfig.getString(ELConfig.getPcColor()));
+            try {
+                if(ELConfig.get(ELConfig.getPcColorCustom())){
+                    color = colors(ELConfig.getString(ELConfig.getPcColorCustomVal()));
+                }
+            } catch (Exception e) {
+                color = colors(ELConfig.getString(ELConfig.getPcColor()));
+            }
+            textRenderer.draw(matrixStack, posString, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+3, color);
             matrixStack.pop();
 
         }
@@ -198,7 +211,13 @@ public class ClientMod {
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            textRenderer.draw(matrixStack, dirString, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+3, colors(ELConfig.getString(ELConfig.getPdColor())));
+            int color = colors(ELConfig.getString(ELConfig.getPdColor()));
+            try {
+                if(ELConfig.get(ELConfig.getPdColorCustom())) color = colors(ELConfig.getString(ELConfig.getPdColorCustomVal()));
+            } catch (Exception e) {
+                color = colors(ELConfig.getString(ELConfig.getPdColor()));
+            }
+            textRenderer.draw(matrixStack, dirString, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+3, color);
             matrixStack.pop();
         }
         
@@ -249,7 +268,7 @@ public class ClientMod {
             case "lightgrey":
                 return 0xffececec;
             default:
-                return 0xffff0000;
+                return Integer.parseInt(c,16);
         }
     }
 

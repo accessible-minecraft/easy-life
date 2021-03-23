@@ -16,7 +16,7 @@ import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
-import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
+import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
 
 public class PCConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -28,11 +28,11 @@ public class PCConfigGui extends LightweightGuiDescription {
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(320, 200);
+        root.setSize(320, 180);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 11, 7, 1);
+        root.add(doneButton, 12, 9, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -40,7 +40,7 @@ public class PCConfigGui extends LightweightGuiDescription {
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 11, 7, 1);
+        root.add(nsbutton, 3, 9, 7, 1);
 
 
 
@@ -49,16 +49,17 @@ public class PCConfigGui extends LightweightGuiDescription {
         root.add(pc_color_label, 1, 1, 3, 1);
 
         ColorButton pccolor = new ColorButton("Color",ELConfig.getPcColor());
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pccolor.setEnabled(true);
-        else pccolor.setEnabled(false);
+        if(ELConfig.get(ELConfig.getPcColorCustom())) pccolor.setEnabled(false);
+        else pccolor.setEnabled(true);
         root.add(pccolor, 12, 1, 5, 1);
 
-        WTextField pccolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.PC_Color_Custom_val)));
+        WTextField pccolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.getPcColorCustomVal())));
         if(ELConfig.get(ELConfig.getPcColorCustom())) pccolortf.setEditable(true);
         else pccolortf.setEditable(false);
+        pccolortf.setDisabledColor(0x2c2c2c);
         root.add(pccolortf, 5, 3, 4, 1);
 
-        SubmitButton pccolorsubmit = new SubmitButton("Set", pccolortf, ELConfig.getPcColorCustomVal());
+        SubmitColorButton pccolorsubmit = new SubmitColorButton("Set", pccolortf, ELConfig.getPcColorCustomVal());
         if(ELConfig.get(ELConfig.getPcColorCustom())) pccolorsubmit.setEnabled(true);
         else pccolorsubmit.setEnabled(false);
         root.add(pccolorsubmit, 11, 3, 2, 1);
@@ -73,45 +74,30 @@ public class PCConfigGui extends LightweightGuiDescription {
         root.add(pc_background_color_label, 1, 5, 5, 1);
 
         ColorButton pcbgcolor = new ColorButton("Color",ELConfig.getPcBgColor());
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pcbgcolor.setEnabled(true);
-        else pcbgcolor.setEnabled(false);
-        root.add(pcbgcolor, 14, 5, 5, 1);
-
-        WTextField pcbgcolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.getPcBgColorCustomVal())));
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pcbgcolortf.setEditable(true);
-        else pcbgcolortf.setEditable(false);
-        root.add(pcbgcolortf, 7, 7, 4, 1);
-
-        SubmitButton pcbgcolorsubmit = new SubmitButton("Set", pcbgcolortf, ELConfig.getPcColorCustomVal());
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pcbgcolorsubmit.setEnabled(true);
-        else pcbgcolorsubmit.setEnabled(false);
-        root.add(pcbgcolorsubmit, 13, 7, 2, 1);
-
-        CustomColorButton pc_bg_color_custom_button = new CustomColorButton("Custom Color", ELConfig.getPcColorCustom(), pcbgcolor, pcbgcolortf, pcbgcolorsubmit);
-        root.add(pc_bg_color_custom_button, 7, 5, 6, 1);
+        root.add(pcbgcolor, 7, 5, 5, 1);
 
 
 
         WLabel pcpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
         pcpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pcpos, 1, 9, 3, 1);
+        root.add(pcpos, 1, 7, 3, 1);
 
         WLabel pcx = new WLabel(new LiteralText("X="));
         pcx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pcx, 5, 9, 1, 1);
+        root.add(pcx, 5, 7, 1, 1);
 
         WTextField pcxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionX())));
-        root.add(pcxf, 6, 9, 2, 1);
+        root.add(pcxf, 6, 7, 2, 1);
 
         WLabel pcy = new WLabel(new LiteralText("Y="));
         pcy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pcy, 9, 9, 1, 1);
+        root.add(pcy, 9, 7, 1, 1);
 
         WTextField pcyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionY())));
-        root.add(pcyf, 10, 9, 2, 1);
+        root.add(pcyf, 10, 7, 2, 1);
 
         DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf,ELConfig.getPcPositionX(),ELConfig.getPcPositionY());
-        root.add(pcpossubmit, 14, 9, 3, 1);
+        root.add(pcpossubmit, 14, 7, 3, 1);
 
         root.validate(this);
     }

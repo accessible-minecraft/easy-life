@@ -14,7 +14,9 @@ import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
+import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
+import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
 
 public class PDConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -26,11 +28,11 @@ public class PDConfigGui extends LightweightGuiDescription {
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(300, 120);
+        root.setSize(320, 180);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 5, 7, 1);
+        root.add(doneButton, 12, 9, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Player Direction Configuration"), ClientMod.colors("red"));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -38,36 +40,64 @@ public class PDConfigGui extends LightweightGuiDescription {
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 5, 7, 1);
+        root.add(nsbutton, 3, 9, 7, 1);
 
 
+
+        WLabel pd_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black"));
+        pd_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pd_color_label, 1, 1, 3, 1);
 
         ColorButton pdcolor = new ColorButton("Color",ELConfig.getPdColor());
-        root.add(pdcolor, 1, 1, 6, 1);
+        if(ELConfig.get(ELConfig.getPdColorCustom())) pdcolor.setEnabled(false);
+        else pdcolor.setEnabled(true);
+        root.add(pdcolor, 12, 1, 5, 1);
 
-        ColorButton pdbgcolor = new ColorButton("Background Color",ELConfig.getPdBgColor());
-        root.add(pdbgcolor, 8, 1, 8, 1);
+        WTextField pdcolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.getPdColorCustomVal())));
+        if(ELConfig.get(ELConfig.getPdColorCustom())) pdcolortf.setEditable(true);
+        else pdcolortf.setEditable(false);
+        pdcolortf.setDisabledColor(0x2c2c2c);
+        root.add(pdcolortf, 5, 3, 4, 1);
+
+        SubmitColorButton pdcolorsubmit = new SubmitColorButton("Set", pdcolortf, ELConfig.getPdColorCustomVal());
+        if(ELConfig.get(ELConfig.getPdColorCustom())) pdcolorsubmit.setEnabled(true);
+        else pdcolorsubmit.setEnabled(false);
+        root.add(pdcolorsubmit, 11, 3, 2, 1);
+
+        CustomColorButton pd_color_custom_button = new CustomColorButton("Custom Color", ELConfig.getPdColorCustom(), pdcolor, pdcolortf, pdcolorsubmit);
+        root.add(pd_color_custom_button, 5, 1, 6, 1);
+
+
+
+        WLabel pd_background_color_label = new WLabel(new LiteralText("Background Color :-"), ClientMod.colors("black"));
+        pd_background_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(pd_background_color_label, 1, 5, 5, 1);
+
+        ColorButton pdbgcolor = new ColorButton("Color",ELConfig.getPdBgColor());
+        root.add(pdbgcolor, 7, 5, 5, 1);
+
+
 
         WLabel pdpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
         pdpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pdpos, 1, 3, 3, 1);
+        root.add(pdpos, 1, 7, 3, 1);
 
         WLabel pdx = new WLabel(new LiteralText("X="));
         pdx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pdx, 5, 3, 1, 1);
+        root.add(pdx, 5, 7, 1, 1);
 
         WTextField pdxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPdPositionX())));
-        root.add(pdxf, 6, 3, 2, 1);
+        root.add(pdxf, 6, 7, 2, 1);
 
         WLabel pdy = new WLabel(new LiteralText("Y="));
         pdy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(pdy, 9, 3, 1, 1);
+        root.add(pdy, 9, 7, 1, 1);
 
         WTextField pdyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPdPositionY())));
-        root.add(pdyf, 10, 3, 2, 1);
+        root.add(pdyf, 10, 7, 2, 1);
 
         DoubleSubmitButton pdpossubmit = new DoubleSubmitButton("Submit",pdxf,pdyf,ELConfig.getPdPositionX(),ELConfig.getPdPositionY());
-        root.add(pdpossubmit, 14, 3, 3, 1);
+        root.add(pdpossubmit, 14, 7, 3, 1);
         
         root.validate(this);
     }
