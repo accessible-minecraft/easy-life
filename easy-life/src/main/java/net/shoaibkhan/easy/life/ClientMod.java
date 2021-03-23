@@ -37,7 +37,7 @@ public class ClientMod {
     public static String[] soundNames = {"anvil land"};
     GameOptions gameOptions;
 
-    public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY) {
+    public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator) {
         client = MinecraftClient.getInstance();
         
 
@@ -47,6 +47,25 @@ public class ClientMod {
             while(CONFIG_KEY.wasPressed()){
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
                 return;
+            }
+
+            while(position_narrator.wasPressed()){
+                final PlayerEntity player = client.player;
+                Vec3d pos = player.getPos();
+                String posX = ((double)pos.x)+"";
+                String posY = ((double)pos.y)+"";
+                String posZ = ((double)pos.z)+"";
+                posX = posX.substring(0, posX.indexOf("."));
+                posY = posY.substring(0, posY.indexOf("."));
+                posZ = posZ.substring(0, posZ.indexOf("."));
+                String text = "Position is, "+posX+"x, "+posY+"y, "+posZ+"z";
+                player.sendMessage(new LiteralText(text), true);
+            }
+
+            while(direction_narrator.wasPressed()){
+                final PlayerEntity player = client.player;
+                String text = "Player is facing, "+player.getHorizontalFacing().asString();
+                player.sendMessage(new LiteralText(text), true);
             }
             
             if (tickCount > 0f) {
@@ -521,6 +540,8 @@ public class ClientMod {
                 else if(o<=0) return 0x00ececec;
                 return 0xffececec;
             default:
+                if(c.contains("#")) c = c.replace("#", "");
+                if(c.contains("0x")) c = c.replace("0x", "");
                 int hex = Integer.parseInt(c,16);
                 int r = (hex & 0xff0000) >> 16;
                 int g = (hex & 0xff00) >> 8;

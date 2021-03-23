@@ -4,7 +4,7 @@
 
 This is a __Minecraft Fabric__ mod. This mod shows the current coordinates and the direction of the player. This mod also adds warns when health/food/air bubble is decreased.
 
-[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.1.jar)
+[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.2.jar)
 
 *Note: This is a client-side mod. So no need to install it to server.*
 
@@ -38,6 +38,7 @@ The hotkey to open Customization menu is **'J'**. Now you can configure the mod 
 <font size="5em"> **Demo:-** </font>
 
 ![Config Menu](/readmeAssets/config_menu.png)
+___
 
 #### In-Built Colors
 
@@ -56,12 +57,19 @@ Below are the in-built colors that you can use in the mod:-
 1. Brown
 ___
 
+#### Custom Colors
+
+Now you can use custom colors in place of in-built colors. You can find custom colors from this website - [Color Picker](https://htmlcolorcodes.com/color-picker/).
+
+*___Note:- You can only use hex color codes___*
+
+___
 ## Mod Features
 
 ### Player Coordinates
 
-__Enabled__ by default. This feature/mod will show the current coordinates/position of the player. The Hotkey for this mod is __F6__ .
-s
+__Enabled__ by default. This feature/mod will show the current coordinates/position of the player. The Hotkey for this mod is __'F6'__ . The Hotkey for position narrator is __'G'__.
+
 <font size="5em"> **Demo:-** </font>
 
 ![Player Coordinates Demo](/readmeAssets/player_coordinates.png)
@@ -75,14 +83,14 @@ s
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
 **Status** | on/off | on | To enable/disble this mod
-**Color** | [In-Built Colors](#in-built-colors) | White | To change the text color
-**Background Color** | [In-Built Colors](#in-built-colors) | Black | To change the background color
+**Text Color** | [In-Built Colors](#in-built-colors) / [Custom Colors](#custom-colors) | White | To change the text color and the opacity/transparency.
+**Background Color** | [In-Built Colors](#in-built-colors) / [Custom Colors](#custom-colors) | Black | To change the background color and the opacity/transparency.
 **Position: X** | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
 **Position: Y** | Integers/Real numbers | 40 | To change the Y(vertical) position of the overlay
 
 ### Player Direction
 
-__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ .
+__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ . The Hotkey for position narrator is __'H'__.
 
 <font size="5em"> **Demo:-** </font>
 
@@ -97,8 +105,8 @@ __Enabled__ by default. This feature/mod will show the current direction the pla
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
 **Status** | on/off | on | To enable/disble this mod
-**Color** | [In-Built Colors](#in-built-colors) | White | To change the text color
-**Background Color** | [In-Built Colors](#in-built-colors) | Black | To change the background color
+**Text Color** | [In-Built Colors](#in-built-colors) / [Custom Colors](#custom-colors) | White | To change the text color and the opacity/transparency.
+**Background Color** | [In-Built Colors](#in-built-colors) | Black | To change the background color and the opacity/transparency.
 **Position: X** | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
 **Position: Y** | Integers/Real numbers | 57 | To change the Y(vertical) position of the overlay
 
@@ -119,7 +127,7 @@ __Enabled__ by default. This feature/mod shows the current health and hunger/foo
 Name | Values | Default Value | Usage
 ---- | ------ | ------------- | -----
 **Status** | on/off | on | To enable/disble this mod
-**Color** | [In-Built Colors](#in-built-colors) | Red | To change the text color
+**Text Color** | [In-Built Colors](#in-built-colors) / [Custom Colors](#custom-colors) | Red | To change the text color and the opacity/transparency.
 **Scale** | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
 **Position: X** | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
 **Position: Y** | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
