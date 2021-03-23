@@ -29,7 +29,7 @@ public class HBConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 3, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Health Bar Configuration"), ClientMod.colors("red"));
+        WLabel label = new WLabel(new LiteralText("Health Bar Configuration"), ClientMod.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
@@ -54,7 +54,7 @@ public class HBConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey")));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",100)));
     }
     
 }

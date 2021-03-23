@@ -17,6 +17,7 @@ import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
+import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
 
 public class HNHConfigGui extends LightweightGuiDescription {
@@ -29,23 +30,23 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(300, 180);
+        root.setSize(320, 220);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 9, 7, 1);
+        root.add(doneButton, 12, 11, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), ClientMod.colors("red"));
+        WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), ClientMod.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
         WButton nsbutton = new WButton(new LiteralText("Back"));
         nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 9, 7, 1);
+        root.add(nsbutton, 3, 11, 7, 1);
 
 
 
-        WLabel hnh_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black"));
+        WLabel hnh_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black",100));
         hnh_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(hnh_color_label, 1, 1, 3, 1);
 
@@ -68,29 +69,39 @@ public class HNHConfigGui extends LightweightGuiDescription {
         CustomColorButton hnh_color_custom_button = new CustomColorButton("Custom Color", ELConfig.getHnhColorCustom(), hnhcolor, hnhcolortf, hnhcolorsubmit);
         root.add(hnh_color_custom_button, 5, 1, 6, 1);
 
-        ScaleButton hnhscale = new ScaleButton("Scale", ELConfig.getHnhScale());
-        root.add(hnhscale, 1, 7, 6, 1);
+        WLabel hnh_color_opacity_label = new WLabel(new LiteralText("Opacity:-"));
+        hnh_color_opacity_label.setVerticalAlignment(VerticalAlignment.CENTER);
+        root.add(hnh_color_opacity_label, 5, 5, 3, 1);
 
-        WLabel hnhpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black"));
+        WTextField hnh_color_opacity_field = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhColorOpacity())));
+        root.add(hnh_color_opacity_field, 9, 5, 2, 1);
+
+        SubmitButton hnh_color_opacity_submit = new SubmitButton("Set", hnh_color_opacity_field, ELConfig.getHnhColorOpacity());
+        root.add(hnh_color_opacity_submit, 12, 5, 3, 1);
+
+        ScaleButton hnhscale = new ScaleButton("Scale", ELConfig.getHnhScale());
+        root.add(hnhscale, 1, 9, 6, 1);
+
+        WLabel hnhpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black",100));
         hnhpos.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhpos, 1, 5, 3, 1);
+        root.add(hnhpos, 1, 7, 3, 1);
 
         WLabel hnhx = new WLabel(new LiteralText("X="));
         hnhx.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhx, 5, 5, 1, 1);
+        root.add(hnhx, 5, 7, 1, 1);
 
         WTextField hnhxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionX())));
-        root.add(hnhxf, 6, 5, 2, 1);
+        root.add(hnhxf, 6, 7, 2, 1);
 
         WLabel hnhy = new WLabel(new LiteralText("Y="));
         hnhy.setVerticalAlignment(VerticalAlignment.CENTER);
-        root.add(hnhy, 9, 5, 1, 1);
+        root.add(hnhy, 9, 7, 1, 1);
 
         WTextField hnhyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getHnhPositionY())));
-        root.add(hnhyf, 10, 5, 2, 1);
+        root.add(hnhyf, 10, 7, 2, 1);
 
         DoubleSubmitButton hnhpossubmit = new DoubleSubmitButton("Submit",hnhxf,hnhyf,ELConfig.getHnhPositionX(),ELConfig.getHnhPositionY());
-        root.add(hnhpossubmit, 14, 5, 3, 1);
+        root.add(hnhpossubmit, 14, 7, 3, 1);
         
         root.validate(this);
     }
@@ -106,7 +117,7 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey")));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",100)));
     }
     
 }

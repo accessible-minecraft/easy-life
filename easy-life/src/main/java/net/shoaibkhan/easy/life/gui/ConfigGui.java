@@ -29,7 +29,7 @@ public class ConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 12, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red"));
+        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
@@ -37,7 +37,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(nsbutton, 3, 12, 7, 1);
 
 
-        WLabel pwlabel = new WLabel(new LiteralText("Player Warnings :-"), ClientMod.colors("black"));
+        WLabel pwlabel = new WLabel(new LiteralText("Player Warnings :-"), ClientMod.colors("black",100));
         root.add(pwlabel, 1, 2, 7 ,1);
 
         ConfigButton pwstatus = new ConfigButton("Status", ELConfig.getPlayerWarningKey());
@@ -48,7 +48,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(pwmore, 17, 2, 5, 1);
         
 
-        WLabel pclabel = new WLabel(new LiteralText("Player Coordinates :-"), ClientMod.colors("black"));
+        WLabel pclabel = new WLabel(new LiteralText("Player Coordinates :-"), ClientMod.colors("black",100));
         root.add(pclabel, 1, 4, 7 ,1);
 
         ConfigButton pcstatus = new ConfigButton("Status", ELConfig.getPlayerCoordinatesKey());
@@ -59,7 +59,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(pcmore, 17, 4, 5, 1);
 
 
-        WLabel pdlabel = new WLabel(new LiteralText("Player Direction :-"), ClientMod.colors("black"));
+        WLabel pdlabel = new WLabel(new LiteralText("Player Direction :-"), ClientMod.colors("black",100));
         root.add(pdlabel, 1, 6, 7 ,1);
 
         ConfigButton pdstatus = new ConfigButton("Status", ELConfig.getPlayerDirectionKey());
@@ -70,7 +70,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(pdmore, 17, 6, 5, 1);
 
 
-        WLabel hnhlabel = new WLabel(new LiteralText("Health n Hunger :-"), ClientMod.colors("black"));
+        WLabel hnhlabel = new WLabel(new LiteralText("Health n Hunger :-"), ClientMod.colors("black",100));
         root.add(hnhlabel, 1, 8, 7 ,1);
 
         ConfigButton hnhstatus = new ConfigButton("Status", ELConfig.getHealthNHungerKey());
@@ -81,7 +81,7 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(hnhmore, 17, 8, 5, 1);
 
 
-        WLabel hblabel = new WLabel(new LiteralText("Health Bar :-"), ClientMod.colors("black"));
+        WLabel hblabel = new WLabel(new LiteralText("Health Bar :-"), ClientMod.colors("black",100));
         root.add(hblabel, 1, 10, 7 ,1);
 
         ConfigButton hbstatus = new ConfigButton("Status", ELConfig.getHealthBarKey());
@@ -125,7 +125,7 @@ public class ConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey")));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",100)));
     }
 
 }
