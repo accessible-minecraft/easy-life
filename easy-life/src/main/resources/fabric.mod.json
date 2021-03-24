@@ -4,17 +4,17 @@
   "version": "${version}",
 
   "name": "Easy Life",
-  "description": "This mod alerts player when health  is decreased and also adds a button to check health and hunger manually!",
+  "description": "This mod alerts player when health is decreased and also adds a button to check health and hunger manually and much more features!",
   "authors": [
     "Shoaib Khan"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/easy-life",
+    "sources": "https://github.com/shoaib11120/easy-life"
   },
 
-  "license": "CC0-1.0",
-  "icon": "",
+  "license": "MIT",
+  "icon": "assets/icon.png",
 
   "environment": "*",
   "entrypoints": {
