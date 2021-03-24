@@ -90,7 +90,7 @@ Name | Values | Default Value | Usage
 
 ### Player Direction
 
-__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ . The Hotkey for position narrator is __'H'__.
+__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ . The Hotkey for direction narrator is __'H'__.
 
 <font size="5em"> **Demo:-** </font>
 
@@ -112,7 +112,7 @@ Name | Values | Default Value | Usage
 
 ### Health n Hunger
 
-__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __R__. Added narraotor plus support to this mod.
+__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __R__. Added accessibility plus support to this mod.
 
 <font size="5em"> **Demo:-** </font>
 
@@ -134,7 +134,7 @@ Name | Values | Default Value | Usage
 
 ### Player Warnings
 
-__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. Added narraotor plus support to this mod.
+__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. Added accessibility plus support to this mod.
 
 <font size="5em"> **Demo:-** </font>
 
@@ -161,7 +161,3 @@ Name | Values | Default Value | Usage
 **Air Threshold** | Double/Real Numbers | 3.0 | To change threshold value of air bubble warning.
 
 ___
-
-## License
-
-This project is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
