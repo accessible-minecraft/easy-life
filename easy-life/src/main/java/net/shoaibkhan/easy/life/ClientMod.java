@@ -22,6 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.ConfigGui;
 import net.shoaibkhan.easy.life.gui.ConfigScreen;
+import net.shoaibkhan.easy.life.gui.NarratorMenuGui;
 
 @Environment(EnvType.CLIENT)
 public class ClientMod {
@@ -37,7 +38,7 @@ public class ClientMod {
     public static String[] soundNames = {"anvil land"};
     GameOptions gameOptions;
 
-    public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator) {
+    public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator, KeyBinding narrator_menu) {
         client = MinecraftClient.getInstance();
         
 
@@ -46,6 +47,11 @@ public class ClientMod {
 
             while(CONFIG_KEY.wasPressed()){
                 client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
+                return;
+            }
+
+            while(narrator_menu.wasPressed()){
+                client.openScreen(new ConfigScreen(new NarratorMenuGui(client.player,client)));
                 return;
             }
 
@@ -58,6 +64,9 @@ public class ClientMod {
                 posX = posX.substring(0, posX.indexOf("."));
                 posY = posY.substring(0, posY.indexOf("."));
                 posZ = posZ.substring(0, posZ.indexOf("."));
+                if(posX.contains("-")) posX = posX.replace("-", "negative");
+                if(posY.contains("-")) posY = posY.replace("-", "negative");
+                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
                 String text = "Position is, "+posX+"x, "+posY+"y, "+posZ+"z";
                 player.sendMessage(new LiteralText(text), true);
             }

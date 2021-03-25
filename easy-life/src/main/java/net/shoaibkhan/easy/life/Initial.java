@@ -12,7 +12,7 @@ import net.minecraft.client.util.InputUtil;
 @Environment(EnvType.CLIENT)
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
-    public static KeyBinding kb,coord,CONFIG_KEY,position_narrator,direction_narrator;
+    public static KeyBinding kb,coord,CONFIG_KEY,position_narrator,direction_narrator,narrator_menu;
 
     @Override
     public void onInitialize() {
@@ -24,8 +24,9 @@ public class Initial implements ModInitializer {
         CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_J, "Easy Life"));
         position_narrator = KeyBindingHelper.registerKeyBinding(new KeyBinding("Position Narrator", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "Easy Life"));
         direction_narrator = KeyBindingHelper.registerKeyBinding(new KeyBinding("Direction Narrator", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "Easy Life"));
+        narrator_menu = KeyBindingHelper.registerKeyBinding(new KeyBinding("Narrator Menu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F4, "Easy Life"));
 
-        clientMod = new ClientMod(kb,coord,CONFIG_KEY,position_narrator,direction_narrator);
+        clientMod = new ClientMod(kb,coord,CONFIG_KEY,position_narrator,direction_narrator, narrator_menu);
     }
     
 }
