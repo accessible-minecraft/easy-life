@@ -2,7 +2,7 @@
 
 ## Discription
 
-This is a __Minecraft Fabric__ mod. This mod shows the current coordinates and the direction of the player. This mod also adds warns when health/food/air bubble is decreased.
+This is a __Minecraft Fabric__ mod. This mod shows the current coordinates and the direction of the player. This mod also warns the player when health/food/air bubble is decreased.
 
 [Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.2.jar)
 
@@ -159,5 +159,17 @@ Name | Values | Default Value | Usage
 **Health Threshold: Second** | Double/Real Numbers | 0 | To change threshold value of health warning.
 **Food Threshold** | Double/Real Numbers | 3.0 | To change threshold value of food warning.
 **Air Threshold** | Double/Real Numbers | 3.0 | To change threshold value of air bubble warning.
+
+### Narrator Menu
+
+__Enabled__ by default. This feature helps blind/partly blind people to use some of the __'F3'__ features through narration. The hotkey for this mod is __'F4'__.
+
+*Note:- This mod/feature requires [accessibility plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) mod.*
+
+<font size="5em"> **Demo:-** </font>
+
+![Narrator Menu](/readmeAssets/narrator_menu_mod_screen.png)
+
+
 
 ___
