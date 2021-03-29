@@ -1,14 +1,13 @@
 package net.shoaibkhan.easy.life;
 
 import net.minecraft.client.MinecraftClient;
-import net.shoaibkhan.easy.life.gui.NarratorMenuGui;
 
 public class CustomWait extends Thread {
     private int timeOut, val;
     private MinecraftClient client;
     private boolean running=false;
 
-    public void setWait(int timeOut, int val, MinecraftClient client) {
+    protected void setWait(int timeOut, int val, MinecraftClient client) {
         this.timeOut = timeOut;
         this.val = val;
         this.client = client;
@@ -105,16 +104,6 @@ public class CustomWait extends Thread {
                 ClientMod.airWarningAfterFlag--;
             }
 
-        } else if (val==7) {
-            NarratorMenuGui.timeout = timeOut;
-            while(NarratorMenuGui.timeout > 0 && running){
-                try {
-                    Thread.sleep(1);
-                } catch (Exception e) {
-                    
-                }
-                NarratorMenuGui.timeout--;
-            }
         }
     }
 

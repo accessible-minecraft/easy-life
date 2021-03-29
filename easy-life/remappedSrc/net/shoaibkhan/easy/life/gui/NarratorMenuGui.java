@@ -1,7 +1,5 @@
 package net.shoaibkhan.easy.life.gui;
 
-import java.util.Hashtable;
-
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -17,21 +15,11 @@ import net.shoaibkhan.easy.life.gui.widgets.NarratorMenuButton;
 
 public class NarratorMenuGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
-    public static MinecraftClient client;
-    public static Hashtable<String,Boolean> focused = new Hashtable<String,Boolean>();
-    public static int timeout = 0;
-    public static String curFocused = "";
+    private MinecraftClient client;
 
     public NarratorMenuGui(ClientPlayerEntity player,MinecraftClient client){
         this.player = player;
-        NarratorMenuGui.client = client;
-        focused.put("Target Block Type", false);
-        focused.put("Target Block Position", false);
-        focused.put("Chunk Position", false);
-        focused.put("Light Level", false);
-        focused.put("Target Entity", false);
-
-
+        this.client = client;
         WGridPanel root = new WGridPanel();
 
         setRootPanel(root);
@@ -40,7 +28,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         wb11.setOnClick(this::target_block_type);
         root.add(wb11, 8, 0, 7, 1);
 
-        NarratorMenuButton wb12 = new NarratorMenuButton(new LiteralText("Target Block Position"));
+        NarratorMenuButton wb12 = new NarratorMenuButton(new LiteralText("Target Block Postion"));
         wb12.setOnClick(this::target_block_position);
         root.add(wb12, 8, 4, 7, 1);
 
@@ -70,14 +58,14 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
     private void target_block_type(){
         this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
+        HitResult hit = this.client.crosshairTarget;
         switch (hit.getType()) {
             case MISS:
                 this.player.sendMessage(new LiteralText("Target is too far"), true);
                 break;
             case BLOCK:
                 BlockHitResult blockHitResult = (BlockHitResult) hit;
-                String name = NarratorMenuGui.client.world.getBlockState(blockHitResult.getBlockPos()).getBlock()+"";
+                String name = this.client.world.getBlockState(blockHitResult.getBlockPos()).getBlock()+"";
                 name = name.toLowerCase().trim();
                 if(name.contains("block{")) name = name.replace("block{", "");
                 if(name.contains("minecraft:")) name = name.replace("minecraft:", "");
@@ -93,7 +81,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
     private void target_block_position(){
         this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
+        HitResult hit = this.client.crosshairTarget;
         switch (hit.getType()) {
             case MISS:
                 this.player.sendMessage(new LiteralText("Target is too far"), true);
@@ -130,13 +118,13 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
     private void light_level(){
         this.player.closeScreen();
-        int light = NarratorMenuGui.client.world.getLightLevel(this.player.getBlockPos());
+        int light = this.client.world.getLightLevel(this.player.getBlockPos());
         this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
     }
 
     private void target_entity(){
         this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
+        HitResult hit = this.client.crosshairTarget;
         switch (hit.getType()) {
             case MISS:
                 this.player.sendMessage(new LiteralText("Target is too far"), true);
@@ -157,5 +145,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                 break;
         }
     }
+
 
 }

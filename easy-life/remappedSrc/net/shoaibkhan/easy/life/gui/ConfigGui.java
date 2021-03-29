@@ -23,17 +23,18 @@ public class ConfigGui extends LightweightGuiDescription {
         WGridPanel root = new WGridPanel();
 
         setRootPanel(root);
+        root.setSize(300, 240);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 10, 7, 1);
+        root.add(doneButton, 12, 12, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
         ConfigButton nsbutton = new ConfigButton("Narrator",ELConfig.getNarratorSupportKey());
-        root.add(nsbutton, 3, 10, 7, 1);
+        root.add(nsbutton, 3, 12, 7, 1);
 
 
         WLabel pwlabel = new WLabel(new LiteralText("Player Warnings :-"), ClientMod.colors("black",100));
@@ -80,15 +81,15 @@ public class ConfigGui extends LightweightGuiDescription {
         root.add(hnhmore, 17, 8, 5, 1);
 
 
-        // WLabel hblabel = new WLabel(new LiteralText("Health Bar :-"), ClientMod.colors("black",100));
-        // root.add(hblabel, 1, 10, 7 ,1);
+        WLabel hblabel = new WLabel(new LiteralText("Health Bar :-"), ClientMod.colors("black",100));
+        root.add(hblabel, 1, 10, 7 ,1);
 
-        // ConfigButton hbstatus = new ConfigButton("Status", ELConfig.getHealthBarKey());
-        // root.add(hbstatus, 9, 10, 6, 1);
+        ConfigButton hbstatus = new ConfigButton("Status", ELConfig.getHealthBarKey());
+        root.add(hbstatus, 9, 10, 6, 1);
 
-        // WButton hbmore = new WButton(new LiteralText("More.."));
-        // hbmore.setOnClick(this::hbClick);
-        // root.add(hbmore, 17, 10, 5, 1);
+        WButton hbmore = new WButton(new LiteralText("More.."));
+        hbmore.setOnClick(this::hbClick);
+        root.add(hbmore, 17, 10, 5, 1);
         
         root.validate(this);
 }
@@ -117,10 +118,10 @@ public class ConfigGui extends LightweightGuiDescription {
         this.client.openScreen(new ConfigScreen(new HNHConfigGui(client.player,client)));
     }
 
-    // private void hbClick(){
-    //     this.player.closeScreen();
-    //     this.client.openScreen(new ConfigScreen(new HBConfigGui(client.player,client)));
-    // }
+    private void hbClick(){
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new HBConfigGui(client.player,client)));
+    }
 
     @Override
     public void addPainters() {
