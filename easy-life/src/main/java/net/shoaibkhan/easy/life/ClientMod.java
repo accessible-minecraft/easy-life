@@ -111,8 +111,8 @@ public class ClientMod {
                 final MatrixStack matrixStack = new MatrixStack();
                 final TextRenderer textRenderer = client.textRenderer;
 
-                if (player != null && (ELConfig.get(ELConfig.Health_Bar_Key)
-                        || ELConfig.get(ELConfig.Player_Warning_Key)) ) {
+                if (player != null && ( /*ELConfig.get(ELConfig.Health_Bar_Key)
+                        ||*/ ELConfig.get(ELConfig.Player_Warning_Key)) ) {
 
                     
                     final int height = client.getWindow().getScaledHeight();
@@ -123,14 +123,14 @@ public class ClientMod {
                     final double food = player.getHungerManager().getFoodLevel();
                     final double air = player.getAir();
 
-                    if (ELConfig.get(ELConfig.Health_Bar_Key)) {
-                        matrixStack.push();
-                        matrixStack.scale(1, 1, inGameHud.getZOffset());
+                    // if (ELConfig.get(ELConfig.Health_Bar_Key)) {
+                    //     matrixStack.push();
+                    //     matrixStack.scale(1, 1, inGameHud.getZOffset());
 
-                        DrawableHelper.fill(matrixStack, 0, 0, width, Integer.parseInt(ELConfig.getString(ELConfig.getHbWidth())), getColor(health));
-                        matrixStack.pop();
+                    //     DrawableHelper.fill(matrixStack, 0, 0, width, Integer.parseInt(ELConfig.getString(ELConfig.getHbWidth())), getColor(health));
+                    //     matrixStack.pop();
 
-                    }
+                    // }
 
                     if (ELConfig.get(ELConfig.Player_Warning_Key)) {
                         healthWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
