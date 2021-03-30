@@ -27,7 +27,7 @@ ___
 Download the [easy-life-1.x.x.jar](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.4.jar) file and paste it in your mods folder located in :-
 
     %AppData%\.minecraft\mods
-
+    
 Your mod is now installed!
 ___
 
