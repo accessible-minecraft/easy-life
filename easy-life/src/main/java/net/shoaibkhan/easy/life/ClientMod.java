@@ -1,7 +1,6 @@
 package net.shoaibkhan.easy.life;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import io.github.cottonmc.cotton.gui.widget.data.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -179,17 +178,17 @@ public class ClientMod {
         return true;
     }
 
-    private int getColor(double health) {
-        if (health <= 20.0 && health > 12.0) {
-            return colors("green",100);
-        } else if (health <= 12.0 && health > 6.0) {
-            return colors("brown",100);
-        } else if (health <= 6.0) {
-            return colors("red",100);
-        }
-        return 0;
-
-    }
+//    private int getColor(double health) {
+//        if (health <= 20.0 && health > 12.0) {
+//            return colors("green",100);
+//        } else if (health <= 12.0 && health > 6.0) {
+//            return colors("brown",100);
+//        } else if (health <= 6.0) {
+//            return colors("red",100);
+//        }
+//        return 0;
+//
+//    }
 
     private void showCoord() {
         final PlayerEntity player = client.player;
@@ -212,13 +211,9 @@ public class ClientMod {
             posX = posX.substring(0, posX.indexOf("."));
             posY = posY.substring(0, posY.indexOf("."));
             posZ = posZ.substring(0, posZ.indexOf("."));
-            String posString= "Position: "+posX+" | "+posY+" | "+posZ;
-            matrixStack.push();
-            matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX())), Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY())), (posString.length()*5)-2, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+14, colors(ELConfig.getString(ELConfig.getPcBgColor()),ELConfig.getOpacity(ELConfig.getPcBgColorOpacity())));
-            matrixStack.pop();
-            matrixStack.push();
-            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            String posString= "Position: "+posX+" | "+posY+" | "+posZ+"  ";
+            int x = Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX())),y = Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()));
+            int bgColor = colors(ELConfig.getString(ELConfig.getPcBgColor()),ELConfig.getOpacity(ELConfig.getPcBgColorOpacity()));
             int color = colors(ELConfig.getString(ELConfig.getPcColor()),ELConfig.getOpacity(ELConfig.getPcColorOpacity()));
             try {
                 if(ELConfig.get(ELConfig.getPcColorCustom())){
@@ -227,26 +222,40 @@ public class ClientMod {
             } catch (Exception e) {
                 color = colors(ELConfig.getString(ELConfig.getPcColor()),ELConfig.getOpacity(ELConfig.getPcColorOpacity()));
             }
+            
+            
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            DrawableHelper.fill(matrixStack, x, y, (posString.length()*5)-2 + x , y+14, bgColor);
+            matrixStack.pop();
+
+
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
             textRenderer.draw(matrixStack, posString, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()))+3, color);
             matrixStack.pop();
 
         }
 
         if(ELConfig.get(ELConfig.getPlayerDirectionKey())){
-            String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")";
-            matrixStack.push();
-            matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX())), Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY())), (dirString.length()*5), Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+14, colors(ELConfig.getString(ELConfig.getPdBgColor()),ELConfig.getOpacity(ELConfig.getPdBgColorOpacity())));
-            matrixStack.pop();
-            matrixStack.push();
-            matrixStack.scale(1, 1, inGameHud.getZOffset());
+        	int x = Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX())),y = Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()));
+        	int bgColor = colors(ELConfig.getString(ELConfig.getPdBgColor()),ELConfig.getOpacity(ELConfig.getPdBgColorOpacity()));
             int color = colors(ELConfig.getString(ELConfig.getPdColor()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
             try {
                 if(ELConfig.get(ELConfig.getPdColorCustom())) color = colors(ELConfig.getString(ELConfig.getPdColorCustomVal()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
             } catch (Exception e) {
                 color = colors(ELConfig.getString(ELConfig.getPdColor()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
             }
-            textRenderer.draw(matrixStack, dirString, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX()))+3, Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()))+3, color);
+            
+            
+            String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")  ";
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            DrawableHelper.fill(matrixStack, x, y, (dirString.length()*5) + x, y+14, bgColor);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.scale(1, 1, inGameHud.getZOffset());
+            textRenderer.draw(matrixStack, dirString, x+3, y+3, color);
             matrixStack.pop();
         }
         
