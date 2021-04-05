@@ -1,7 +1,6 @@
 package net.shoaibkhan.easy.life;
 
 import net.minecraft.client.MinecraftClient;
-import net.shoaibkhan.easy.life.gui.NarratorMenuGui;
 
 public class CustomWait extends Thread {
     private int timeOut, val;
@@ -106,14 +105,14 @@ public class CustomWait extends Thread {
             }
 
         } else if (val==7) {
-            NarratorMenuGui.timeout = timeOut;
-            while(NarratorMenuGui.timeout > 0 && running){
+            Initial.waitFlag = timeOut;
+            while(Initial.waitFlag > 0 && running){
                 try {
                     Thread.sleep(1);
                 } catch (Exception e) {
                     
                 }
-                NarratorMenuGui.timeout--;
+                Initial.waitFlag--;
             }
         }
     }

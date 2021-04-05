@@ -6,6 +6,7 @@
     "mixins": [
     ],
     "client": [
+        "ButtonMixin"
     ],
     "injectors": {
       "defaultRequire": 1
