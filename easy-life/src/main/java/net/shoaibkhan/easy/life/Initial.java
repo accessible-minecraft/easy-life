@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.client.util.NarratorManager;
+import net.minecraft.text.LiteralText;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -35,12 +35,12 @@ public class Initial implements ModInitializer {
     }
 
     public static void narrateLabel(String label,int x, int y){
+        if (MinecraftClient.getInstance().player == null) return;
         if (label.equalsIgnoreCase(prevLabel) && waitFlag>0 && x==prevX && y==prevY) return;
         prevLabel = label;
         prevX = x;
         prevY = y;
-        NarratorManager.INSTANCE.clear();
-        NarratorManager.INSTANCE.narrate(label);
+        MinecraftClient.getInstance().player.sendMessage(new LiteralText(label),true);
         if(wait.isAlive()) wait.stopThread();
         wait = new CustomWait();
         wait.setWait(10000, 7, MinecraftClient.getInstance());

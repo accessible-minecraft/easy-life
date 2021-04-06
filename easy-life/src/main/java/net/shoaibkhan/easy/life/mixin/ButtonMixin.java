@@ -23,9 +23,3 @@ public abstract class ButtonMixin{
 
     }
 }
-
-//@Mixin(WButton.class)
-//abstract class BttonMixinAbstract {
-//    @Shadow
-//    public Text label;
-//}
