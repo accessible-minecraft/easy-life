@@ -10,18 +10,22 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.LiteralText;
 import org.lwjgl.glfw.GLFW;
 
+
 @Environment(EnvType.CLIENT)
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
     public static KeyBinding kb,coord,CONFIG_KEY,position_narrator,direction_narrator,narrator_menu;
-    private static String prevLabel = "";
     private static CustomWait wait;
     private static int prevX = -9999,prevY = -9999;
     public static int waitFlag = 0;
+//    public static boolean usingTab = false,usingMouse = false;
+    public static String usingTab = "",usingMouse = "";
 
+    /**
+     * Constructor which initializes the global variables/parameters. 
+     */
     @Override
     public void onInitialize() {
-        System.out.println("Mod is initializing!!");
         wait = new CustomWait();
 
         kb = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
@@ -33,17 +37,24 @@ public class Initial implements ModInitializer {
 
         clientMod = new ClientMod(kb,coord,CONFIG_KEY,position_narrator,direction_narrator, narrator_menu);
     }
-
-    public static void narrateLabel(String label,int x, int y){
-        if (MinecraftClient.getInstance().player == null) return;
-        if (label.equalsIgnoreCase(prevLabel) && waitFlag>0 && x==prevX && y==prevY) return;
-        prevLabel = label;
+    
+    /**
+     * A method/function which narrates the provided label of a libGui WButton. 
+     * 
+     * @param label : The string to be narrated.
+     * @param x : The x position of the button.
+     * @param y : The y position of the button.
+     */
+    public static void narrateLabel(String label,int x, int y,String using){
+        MinecraftClient instance = MinecraftClient.getInstance();
+		if (instance.player == null) return;
+        if (waitFlag>0 && x==prevX && y==prevY && (Initial.usingMouse.contains(using)||Initial.usingTab.contains(using)) ) return;
         prevX = x;
         prevY = y;
-        MinecraftClient.getInstance().player.sendMessage(new LiteralText(label),true);
+        instance.player.sendMessage(new LiteralText(label),true);
         if(wait.isAlive()) wait.stopThread();
         wait = new CustomWait();
-        wait.setWait(10000, 7, MinecraftClient.getInstance());
+        wait.setTabWait(5000, 7, instance, using);
         wait.start();
         wait.startThread();
     }

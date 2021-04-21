@@ -38,111 +38,116 @@ public class ClientMod {
     GameOptions gameOptions;
 
     public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator, KeyBinding narrator_menu) {
-        client = MinecraftClient.getInstance();
-        
+		client = MinecraftClient.getInstance();        
 
         HudRenderCallback.EVENT.register((__, ___) -> {
-            if(client.player== null) return;
+			if (client.player != null) {
 
-            while(CONFIG_KEY.wasPressed()){
-                client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
-                return;
-            }
-
-            while(narrator_menu.wasPressed()){
-                client.openScreen(new ConfigScreen(new NarratorMenuGui(client.player,client)));
-                return;
-            }
-
-            while(position_narrator.wasPressed()){
-                final PlayerEntity player = client.player;
-                Vec3d pos = player.getPos();
-                String posX = ((double)pos.x)+"";
-                String posY = ((double)pos.y)+"";
-                String posZ = ((double)pos.z)+"";
-                posX = posX.substring(0, posX.indexOf("."));
-                posY = posY.substring(0, posY.indexOf("."));
-                posZ = posZ.substring(0, posZ.indexOf("."));
-                if(posX.contains("-")) posX = posX.replace("-", "negative");
-                if(posY.contains("-")) posY = posY.replace("-", "negative");
-                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-                String text = "Position is, "+posX+"x, "+posY+"y, "+posZ+"z";
-                player.sendMessage(new LiteralText(text), true);
-            }
-
-            while(direction_narrator.wasPressed()){
-                final PlayerEntity player = client.player;
-                String text = "Player is facing, "+player.getHorizontalFacing().asString();
-                player.sendMessage(new LiteralText(text), true);
-            }
-            
-            if (tickCount > 0f) {
-                if (this.kbPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
-                    tickCount -= client.getTickDelta();
-                }
-            }
-
-            if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-                    || ELConfig.get(ELConfig.Player_Direction_Key))) {
-                showCoord();
-            }
-
-            while (coord.wasPressed()
-                    && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-                            || ELConfig.get(ELConfig.Player_Direction_Key))) {
-                coordFlag = !coordFlag;
-            }
-
-            while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
-                if (this.kbPressed()) {
-                    if(ELConfig.get(ELConfig.getNarratorSupportKey())){
-                        double health = client.player.getHealth();
-                        double hunger = client.player.getHungerManager().getFoodLevel();
-                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
-                    }
-                    tickCount = 120f;
-                }
-            }
-
-            if (!client.isPaused() && client.world.isClient) {
-                final PlayerEntity player = client.player;
-                final InGameHud inGameHud = client.inGameHud;
-                final MatrixStack matrixStack = new MatrixStack();
-                final TextRenderer textRenderer = client.textRenderer;
-
-                if (player != null && ( /*ELConfig.get(ELConfig.Health_Bar_Key)
-                        ||*/ ELConfig.get(ELConfig.Player_Warning_Key)) ) {
-
-                    
-                    final int height = client.getWindow().getScaledHeight();
-                    final int width = client.getWindow().getScaledWidth();
-                    final int reqHeight = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionY()));
-                    final int reqWidth = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionX()));
-                    final double health = player.getHealth();
-                    final double food = player.getHungerManager().getFoodLevel();
-                    final double air = player.getAir();
-
-                    // if (ELConfig.get(ELConfig.Health_Bar_Key)) {
-                    //     matrixStack.push();
-                    //     matrixStack.scale(1, 1, inGameHud.getZOffset());
-
-                    //     DrawableHelper.fill(matrixStack, 0, 0, width, Integer.parseInt(ELConfig.getString(ELConfig.getHbWidth())), getColor(health));
-                    //     matrixStack.pop();
-
-                    // }
-
-                    if (ELConfig.get(ELConfig.Player_Warning_Key)) {
-                        healthWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
-                                health);
-
-                        foodWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
-                                health, food);
-
-                        airWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth, air);
-
-                    }
-
-                }
+				if (client.currentScreen == null) {
+					if(!Initial.usingMouse.equals("")) Initial.usingMouse = "";
+					if(!Initial.usingTab.equals("")) Initial.usingTab= "";
+	            }
+	
+	            while(CONFIG_KEY.wasPressed()){
+	                client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
+	                return;
+	            }
+	
+	            while(narrator_menu.wasPressed()){
+	                client.openScreen(new ConfigScreen(new NarratorMenuGui(client.player,client)));
+	                return;
+	            }
+	
+	            while(position_narrator.wasPressed()){
+	                final PlayerEntity player = client.player;
+	                Vec3d pos = player.getPos();
+	                String posX = ((double)pos.x)+"";
+	                String posY = ((double)pos.y)+"";
+	                String posZ = ((double)pos.z)+"";
+	                posX = posX.substring(0, posX.indexOf("."));
+	                posY = posY.substring(0, posY.indexOf("."));
+	                posZ = posZ.substring(0, posZ.indexOf("."));
+	                if(posX.contains("-")) posX = posX.replace("-", "negative");
+	                if(posY.contains("-")) posY = posY.replace("-", "negative");
+	                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+	                String text = "Position is, "+posX+"x, "+posY+"y, "+posZ+"z";
+	                player.sendMessage(new LiteralText(text), true);
+	            }
+	
+	            while(direction_narrator.wasPressed()){
+	                final PlayerEntity player = client.player;
+	                String text = "Player is facing, "+player.getHorizontalFacing().asString();
+	                player.sendMessage(new LiteralText(text), true);
+	            }
+	            
+	            if (tickCount > 0f) {
+	                if (this.kbPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
+	                    tickCount -= client.getTickDelta();
+	                }
+	            }
+	
+	            if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
+	                    || ELConfig.get(ELConfig.Player_Direction_Key))) {
+	                showCoord();
+	            }
+	
+	            while (coord.wasPressed()
+	                    && (ELConfig.get(ELConfig.Player_Coordinates_Key)
+	                            || ELConfig.get(ELConfig.Player_Direction_Key))) {
+	                coordFlag = !coordFlag;
+	            }
+	
+	            while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
+	                if (this.kbPressed()) {
+	                    if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+	                        double health = client.player.getHealth();
+	                        double hunger = client.player.getHungerManager().getFoodLevel();
+	                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+	                    }
+	                    tickCount = 120f;
+	                }
+	            }
+	
+	            if (!client.isPaused() && client.world.isClient) {
+	                final PlayerEntity player = client.player;
+	                final InGameHud inGameHud = client.inGameHud;
+	                final MatrixStack matrixStack = new MatrixStack();
+	                final TextRenderer textRenderer = client.textRenderer;
+	
+	                if (player != null && ( /*ELConfig.get(ELConfig.Health_Bar_Key)
+	                        ||*/ ELConfig.get(ELConfig.Player_Warning_Key)) ) {
+	
+	                    
+	                    final int height = client.getWindow().getScaledHeight();
+	                    final int width = client.getWindow().getScaledWidth();
+	                    final int reqHeight = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionY()));
+	                    final int reqWidth = Integer.parseInt(ELConfig.getString(ELConfig.getPwPositionX()));
+	                    final double health = player.getHealth();
+	                    final double food = player.getHungerManager().getFoodLevel();
+	                    final double air = player.getAir();
+	
+	                    // if (ELConfig.get(ELConfig.Health_Bar_Key)) {
+	                    //     matrixStack.push();
+	                    //     matrixStack.scale(1, 1, inGameHud.getZOffset());
+	
+	                    //     DrawableHelper.fill(matrixStack, 0, 0, width, Integer.parseInt(ELConfig.getString(ELConfig.getHbWidth())), getColor(health));
+	                    //     matrixStack.pop();
+	
+	                    // }
+	
+	                    if (ELConfig.get(ELConfig.Player_Warning_Key)) {
+	                        healthWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
+	                                health);
+	
+	                        foodWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth,
+	                                health, food);
+	
+	                        airWarning(player, inGameHud, matrixStack, textRenderer, height, width, reqHeight, reqWidth, air);
+	
+	                    }
+	
+	                }
+	            }
             }
 
         });

@@ -7,11 +7,14 @@ import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.gui.widgets.NarratorMenuButton;
 
@@ -38,11 +41,11 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         
         NarratorMenuButton wb11 = new NarratorMenuButton(new LiteralText("Target Block Type"));
         wb11.setOnClick(this::target_block_type);
-        root.add(wb11, 8, 0, 7, 1);
+        root.add(wb11, 4, 0, 7, 1);
 
         NarratorMenuButton wb12 = new NarratorMenuButton(new LiteralText("Target Block Position"));
         wb12.setOnClick(this::target_block_position);
-        root.add(wb12, 8, 4, 7, 1);
+        root.add(wb12, 12, 0, 7, 1);
 
 
 
@@ -57,6 +60,16 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         NarratorMenuButton wb23 = new NarratorMenuButton(new LiteralText("Target Entity"));
         wb23.setOnClick(this::target_entity);
         root.add(wb23, 16, 2, 7, 1);
+        
+        
+        
+        NarratorMenuButton wb31 = new NarratorMenuButton(new LiteralText("Time Of Day"));
+        wb31.setOnClick(this::getTimeOfDay);
+        root.add(wb31, 4, 4, 7, 1);
+
+        NarratorMenuButton wb32 = new NarratorMenuButton(new LiteralText("Biome"));
+        wb32.setOnClick(this::getBiome);
+        root.add(wb32, 12, 4, 7, 1);
 
 
 
@@ -157,5 +170,29 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                 break;
         }
     }
-
+    
+    private void getBiome() {
+        this.player.closeScreen();
+    	Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
+    	String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
+    	this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
+    }
+    
+    private void getTimeOfDay() {
+        this.player.closeScreen();
+        String string = "";
+        long time = client.world.getTimeOfDay();
+        System.out.print(time);
+        int hour = (int)Math.floor(time/1000);
+        hour += 6;
+        if(hour>=24) hour-=24;
+        if(hour>=0 && hour<12) string += " " + hour + " A.M.";
+        else if(hour>=13 && hour<24) string += " " + ((int)hour-12) + " P.M.";
+        else if(hour==12) string += " 12 P.M.";
+        int minutes = (int)time%1000;
+        minutes = (int)(minutes/16.6);
+        if(minutes>=15) string += " " + minutes + " minutes";
+    	this.player.sendMessage(new LiteralText("Time is,"+string) ,true);
+    }
+    
 }

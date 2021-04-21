@@ -6,6 +6,7 @@ public class CustomWait extends Thread {
     private int timeOut, val;
     private MinecraftClient client;
     private boolean running=false;
+    private String usingString = "";
 
     public void setWait(int timeOut, int val, MinecraftClient client) {
         this.timeOut = timeOut;
@@ -13,6 +14,11 @@ public class CustomWait extends Thread {
         this.client = client;
     }
 
+    public void setTabWait(int timeOut, int val, MinecraftClient client,String using) {
+    	setWait(timeOut, val, client);
+    	usingString = using;
+	}
+    
     public void run() {
         if (val == 1) {
             ClientMod.healthWarningFlag = timeOut;
@@ -109,6 +115,10 @@ public class CustomWait extends Thread {
             while(Initial.waitFlag > 0 && running){
                 try {
                     Thread.sleep(1);
+                    if(Initial.waitFlag <= 500) {
+                    	if(Initial.usingMouse.contains(usingString)) Initial.usingMouse = Initial.usingMouse.replace(usingString, "");
+                    	if(Initial.usingTab.contains(usingString)) Initial.usingTab= Initial.usingTab.replace(usingString, "");
+                    }
                 } catch (Exception e) {
                     
                 }
@@ -120,6 +130,10 @@ public class CustomWait extends Thread {
     public void stopThread() {
         running = false;
         interrupt();
+        if(!usingString.equals("")) {
+        	if(Initial.usingMouse.contains(usingString)) Initial.usingMouse = Initial.usingMouse.replace(usingString, "");
+        	if(Initial.usingTab.contains(usingString)) Initial.usingTab= Initial.usingTab.replace(usingString, "");
+        }
     }
 
     public void startThread(){
