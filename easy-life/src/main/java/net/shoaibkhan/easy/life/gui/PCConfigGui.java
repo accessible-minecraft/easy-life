@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
@@ -30,18 +31,6 @@ public class PCConfigGui extends LightweightGuiDescription {
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
         root.setSize(320, 220);
-
-        WButton doneButton = new WButton(new LiteralText("Done"));
-        doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 13, 7, 1);
-
-        WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), ClientMod.colors("red",100));
-        label.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        root.add(label, 0, 0, 21, 1);
-
-        WButton nsbutton = new WButton(new LiteralText("Back"));
-        nsbutton.setOnClick(this::onBackClick);
-        root.add(nsbutton, 3, 13, 7, 1);
 
 
 
@@ -118,13 +107,29 @@ public class PCConfigGui extends LightweightGuiDescription {
 
         DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf,ELConfig.getPcPositionX(),ELConfig.getPcPositionY());
         root.add(pcpossubmit, 14, 11, 3, 1);
+        
+
+
+
+        WButton nsbutton = new WButton(new LiteralText("Back"));
+        nsbutton.setOnClick(this::onBackClick);
+        root.add(nsbutton, 3, 13, 7, 1);
+
+        WButton doneButton = new WButton(new LiteralText("Done"));
+        doneButton.setOnClick(this::onDoneClick);
+        root.add(doneButton, 12, 13, 7, 1);
+
+        WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), ClientMod.colors("red",100));
+        label.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        root.add(label, 0, 0, 21, 1);
 
         root.validate(this);
     }
 
     private void onBackClick(){
         this.player.closeScreen();
-        this.client.openScreen(new ConfigScreen(new ConfigGui(this.player,this.client)));        
+        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
+        this.client.openScreen(screen);        
     }
 
     private void onDoneClick() {

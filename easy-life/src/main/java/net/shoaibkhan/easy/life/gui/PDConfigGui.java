@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
@@ -125,7 +126,8 @@ public class PDConfigGui extends LightweightGuiDescription {
 
     private void onBackClick(){
         this.player.closeScreen();
-        this.client.openScreen(new ConfigScreen(new ConfigGui(this.player,this.client)));        
+        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
+        this.client.openScreen(screen);        
     }
 
     private void onDoneClick() {

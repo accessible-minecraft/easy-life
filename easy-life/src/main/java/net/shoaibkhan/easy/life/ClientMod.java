@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.math.MatrixStack;
@@ -49,12 +50,14 @@ public class ClientMod {
 	            }
 	
 	            while(CONFIG_KEY.wasPressed()){
-	                client.openScreen(new ConfigScreen(new ConfigGui(client.player,client)));
+	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
+	                client.openScreen(screen);
 	                return;
 	            }
 	
 	            while(narrator_menu.wasPressed()){
-	                client.openScreen(new ConfigScreen(new NarratorMenuGui(client.player,client)));
+	            	Screen screen = new ConfigScreen(new NarratorMenuGui(client.player,client), "F4 Menu", client.player);
+	                client.openScreen(screen);
 	                return;
 	            }
 	
