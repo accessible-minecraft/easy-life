@@ -4,7 +4,7 @@
 
 This is a __Minecraft Fabric__ mod. This mod shows the current coordinates and the direction of the player. This mod also warns the player when health/food/air bubble is decreased.
 
-[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.5.jar)
+[Download](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.6.jar)
 
 *Note: This is a client-side mod. So no need to install it to server.*
 
@@ -24,7 +24,7 @@ ___
 
 ## Mod Installation
 
-Download the [easy-life-1.x.x.jar](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.5.jar) file and paste it in your mods folder located in :-
+Download the [easy-life-1.x.x.jar](https://github.com/shoaib11120/easy-life/raw/1.16.x/easy-life-1.0.6.jar) file and paste it in your mods folder located in :-
 
     %AppData%\.minecraft\mods
     
