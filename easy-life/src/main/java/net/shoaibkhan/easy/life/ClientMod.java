@@ -79,35 +79,7 @@ public class ClientMod {
 	
 	            while(direction_narrator.wasPressed()){
 	                final PlayerEntity player = client.player;
-	                int angle = (int)player.getRotationClient().y;
-                    String string = "";
-                    
-                    while(angle>=360) angle -= 360;
-                    while(angle<=-360) angle += 360;
-                    
-                    if((angle>=-150&&angle<=-120)||(angle>=210&&angle<=240)){
-                    	// Looking North East
-                    	string = "North East";
-                    } else if((angle>=-60&&angle<=-30)||(angle>=300&&angle<=330)){
-                    	// Looking South East
-                    	string = "South East";
-                    } else if((angle>=30&&angle<=60)||(angle>=-330&&angle<=-300)){
-                    	// Looking South West
-                    	string = "South West";
-                    } else if((angle>=120&&angle<=150)||(angle>=-240&&angle<=-210)){
-                    	// Looking North West
-                    	string = "North West";
-                    } else {
-                        String dir = client.player.getHorizontalFacing().asString();
-                        dir = dir.toLowerCase().trim();
-                        if (dir.contains("north")) string = "North";
-                        else if (dir.contains("south")) string = "South";
-                        else if (dir.contains("east")) string = "East";
-                        else if (dir.contains("west")) string = "West";
-                        else string = "East";
-                    }
-                    
-	                String text = "Player is facing, "+string.toLowerCase();
+	                String text = "Player is facing, "+player.getHorizontalFacing().asString();
 	                player.sendMessage(new LiteralText(text), true);
 	            }
 	            
@@ -262,7 +234,7 @@ public class ClientMod {
             
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, x, y, (posString.length()*5) - 2 + x , y+14, bgColor);
+            DrawableHelper.fill(matrixStack, x, y, (posString.length()*5)-2 + x , y+14, bgColor);
             matrixStack.pop();
 
 
@@ -284,10 +256,10 @@ public class ClientMod {
             }
             
             
-            String dirString="Direction: "+getDirection(player.getHorizontalFacing().asString(),(int)player.getRotationClient().y);
+            String dirString="Direction: " + player.getHorizontalFacing().asString()+" ("+getDirection(player.getHorizontalFacing().asString())+")  ";
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
-            DrawableHelper.fill(matrixStack, x, y, (dirString.length()*5) + 5 + x, y+14, bgColor);
+            DrawableHelper.fill(matrixStack, x, y, (dirString.length()*5) + x, y+14, bgColor);
             matrixStack.pop();
             matrixStack.push();
             matrixStack.scale(1, 1, inGameHud.getZOffset());
@@ -298,29 +270,19 @@ public class ClientMod {
 
     }
 
-    private String getDirection(String dir,int angle){
+    private String getDirection(String dir){
         dir = dir.toLowerCase().trim();
-        while(angle>=360) angle -= 360;
-        while(angle<=-360) angle += 360;
-        
-        if((angle>=-150&&angle<=-120)||(angle>=210&&angle<=240)){
-        	// Looking North East
-        	return "North East (+X -Z)";
-        } else if((angle>=-60&&angle<=-30)||(angle>=300&&angle<=330)){
-        	// Looking South East
-        	return "South East (+X +Z)";
-        } else if((angle>=30&&angle<=60)||(angle>=-330&&angle<=-300)){
-        	// Looking South West
-        	return "South West (-X +Z)";
-        } else if((angle>=120&&angle<=150)||(angle>=-240&&angle<=-210)){
-        	// Looking North West
-        	return "North West (-X -Z)";
-        } else {
-            if (dir.contains("north")) return "North (-Z)";
-            else if (dir.contains("south")) return "South (+Z)";
-            else if (dir.contains("east")) return "East (+X)";
-            else if (dir.contains("west")) return "West (-X)";
-            else return "East (+X)";
+        switch (dir) {
+            case "north":
+                return "-Z";
+            case "south":
+                return "+Z";
+            case "west":
+                return "-X";
+            case "east":
+                return "+X";
+            default:
+                return "";
         }
     }
 
