@@ -88,10 +88,13 @@ public class ConfigGui extends LightweightGuiDescription {
 
         ConfigButton nsbutton = new ConfigButton("Narrator",ELConfig.getNarratorSupportKey());
         root.add(nsbutton, 3, 10, 7, 1);
+        
+        ConfigButton hinButton = new ConfigButton("Hotbar Item Narrator",ELConfig.getHelditemnarratorkey());
+        root.add(hinButton, 10, 10, 10, 1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 12, 10, 7, 1);
+        root.add(doneButton, 7, 12, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);

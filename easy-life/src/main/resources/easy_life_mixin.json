@@ -6,7 +6,8 @@
     "mixins": [
     ],
     "client": [
-        "ButtonMixin"
+        "ButtonMixin",
+        "Hotbar"
     ],
     "injectors": {
       "defaultRequire": 1

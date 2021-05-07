@@ -1,14 +1,14 @@
 package net.shoaibkhan.easy.life.config;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.Gson;
-
-import java.util.Scanner; // Import the Scanner class to read text files
 import java.io.File;
+import java.io.FileWriter; // Import the FileWriter class
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.io.FileWriter; // Import the FileWriter class
+import java.util.Scanner; // Import the Scanner class to read text files
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class ELConfig {
     private static JsonObject data;
@@ -20,8 +20,14 @@ public class ELConfig {
     public static final String Player_Warning_Key = "player_warning",PW_Color = "pw_color", PW_Scale = "pw_scale", PW_Position_X = "pw_position_x", PW_Position_Y = "pw_position_y",PW_Timeout = "pw_timeout",PW_HT_F_TH = "pw_ht_f_th",PW_HT_S_TH="pw_ht_s_th",PW_FTTH="PW_FTTH",PW_ATTH="pw_atth",PW_Sound_Status = "pw_sound_status";
     // public static final String Health_Bar_Key = "health_bar",HB_Width = "hb_width";
     public static final String Narrator_Support_Key = "narrator_support";
+    public static final String HeldItemNarratorKey = "held_item_narrator_key";
 
-    public ELConfig() {
+    public static String getHelditemnarratorkey() {
+		return HeldItemNarratorKey;
+	}
+
+
+	public ELConfig() {
     }
 
 
@@ -181,6 +187,7 @@ public class ELConfig {
         // data.add(HB_Width, new JsonPrimitive("3"));
         
         data.add(Narrator_Support_Key, new JsonPrimitive(true));
+        data.add(HeldItemNarratorKey, new JsonPrimitive(true));
 
         saveConfig(data);
         return data;

@@ -1,6 +1,7 @@
 package net.shoaibkhan.easy.life;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
 import io.github.cottonmc.cotton.gui.widget.data.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
