@@ -17,13 +17,13 @@ import net.shoaibkhan.easy.life.config.ELConfig;
 @Mixin(InGameHud.class)
 public class Hotbar {
 	
-	@Shadow(remap = false)
+	@Shadow
 	private int heldItemTooltipFade;
 	
-	@Shadow(remap = false)
+	@Shadow
 	private ItemStack currentStack;
 	
-	@Inject(at=@At("TAIL") ,method="renderHeldItemTooltip",remap = false)
+	@Inject(at=@At("TAIL") ,method="renderHeldItemTooltip")
 	public void renderHeldItemTooltipMixin(MatrixStack matrixStack,CallbackInfo callbackInfo) {
 		if (this.heldItemTooltipFade == 35 && !this.currentStack.isEmpty() && ELConfig.get(ELConfig.getHelditemnarratorkey())) {
 			MutableText mutableText = (new LiteralText("")).append(this.currentStack.getName()).formatted(this.currentStack.getRarity().formatting);
