@@ -13,6 +13,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -44,11 +45,48 @@ public class ClientMod {
 
         HudRenderCallback.EVENT.register((__, ___) -> {
 			if (client.player != null) {
-
+				
+				boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+				boolean isXPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.x").getCode()));
+				boolean isCPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
+				boolean isZPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.z").getCode()));
+				
 				if (client.currentScreen == null) {
 					if(!Initial.usingMouse.equals("")) Initial.usingMouse = "";
 					if(!Initial.usingTab.equals("")) Initial.usingTab= "";
 	            }
+				
+				if(isAltPressed) {
+					if(isXPressed) {
+						final PlayerEntity player = client.player;
+		                Vec3d pos = player.getPos();
+		                String posX = ((double)pos.x)+"";
+		                posX = posX.substring(0, posX.indexOf("."));
+		                if(posX.contains("-")) posX = posX.replace("-", "negative");
+		                String text = ""+posX+"x";
+		                player.sendMessage(new LiteralText(text), true);
+					}
+					
+					if(isCPressed) {
+						final PlayerEntity player = client.player;
+		                Vec3d pos = player.getPos();
+		                String posY = ((double)pos.y)+"";
+		                posY = posY.substring(0, posY.indexOf("."));
+		                if(posY.contains("-")) posY = posY.replace("-", "negative");
+		                String text = ""+posY+"y";
+		                player.sendMessage(new LiteralText(text), true);
+					}
+					
+					if(isZPressed) {
+						final PlayerEntity player = client.player;
+		                Vec3d pos = player.getPos();
+		                String posZ = ((double)pos.z)+"";
+		                posZ = posZ.substring(0, posZ.indexOf("."));
+		                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+		                String text = ""+posZ+"z";
+		                player.sendMessage(new LiteralText(text), true);
+					}
+				}
 	
 	            while(CONFIG_KEY.wasPressed()){
 	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
@@ -74,7 +112,7 @@ public class ClientMod {
 	                if(posX.contains("-")) posX = posX.replace("-", "negative");
 	                if(posY.contains("-")) posY = posY.replace("-", "negative");
 	                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-	                String text = "Position is, "+posX+"x, "+posY+"y, "+posZ+"z";
+	                String text = ""+posX+"x, "+posY+"y, "+posZ+"z";
 	                player.sendMessage(new LiteralText(text), true);
 	            }
 	
@@ -108,7 +146,7 @@ public class ClientMod {
                         else string = "East";
                     }
                     
-	                String text = "Player is facing, "+string.toLowerCase();
+	                String text = "Facing "+string.toLowerCase();
 	                player.sendMessage(new LiteralText(text), true);
 	            }
 	            
