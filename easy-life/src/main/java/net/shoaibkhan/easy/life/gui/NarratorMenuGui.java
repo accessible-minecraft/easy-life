@@ -5,13 +5,11 @@ import java.util.Hashtable;
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +22,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
@@ -108,9 +105,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     	double angleSize = fov/height;
     	Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
     	verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
-    	if(!verticalRotationAxis.normalize()) {
-    	    return;//The camera is pointing directly up or down, you'll have to fix this one
-    	}
     	 
     	Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
     	horizontalRotationAxis.cross(verticalRotationAxis);
@@ -147,13 +141,65 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 		        BlockState blockState = client.world.getBlockState(blockPos);
 		        Block block = blockState.getBlock();
 		        MutableText mutableText = new LiteralText("").append(block.getName());
+                String dir = client.player.getHorizontalFacing().asString();
+                dir = dir.toLowerCase().trim();
+		        
 		        String diffXBlockPos = ((double)player.getBlockPos().getX() - blockPos.getX()) + "";
-		        String diffYBlockPos = ((double)player.getBlockPos().getY() - blockPos.getY())+ "";
+		        String diffYBlockPos = ((double)(player.getBlockPos().getY()+1) - blockPos.getY())+ "";
 		        String diffZBlockPos = ((double)player.getBlockPos().getZ() - blockPos.getZ()) + "";
+		        
 		        diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
 		        diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
 		        diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
-		        String text = String.format("%s %s x %s y %s z", mutableText.getString(), diffXBlockPos, diffYBlockPos, diffZBlockPos);
+		        
+		        if(!diffXBlockPos.equalsIgnoreCase("0")) {
+		        	if(dir.contains("east")||dir.contains("west")) {
+		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+		        		diffXBlockPos += " blocks away";
+		        	} else if(dir.contains("north")) {
+		        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to left";
+		        		else diffXBlockPos += " blocks to right";
+		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+		        	} else if(dir.contains("south")) {
+		        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to right";
+		        		else diffXBlockPos += " blocks to left";
+		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+		        	}
+		        } else {
+		        	diffXBlockPos = "";
+		        }
+		        
+		        if(!diffYBlockPos.equalsIgnoreCase("0")) {
+		        	if(diffYBlockPos.contains("-")) {
+		        		diffYBlockPos = diffYBlockPos.replace("-", "");
+		        		diffYBlockPos += " blocks up";
+		        	} else {
+		        		diffYBlockPos += " blocks down";
+		        	}
+		        } else {
+		        	diffYBlockPos = "";
+		        }
+		        
+		        if(!diffZBlockPos.equalsIgnoreCase("0")) {
+		        	if(dir.contains("north")||dir.contains("south")) {
+		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+		        		diffZBlockPos += " blocks away";
+		        	} else if(dir.contains("east")) {
+		        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to right";
+		        		else diffZBlockPos += " blocks to left";
+		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+		        	} else if(dir.contains("west")) {
+		        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to left";
+		        		else diffZBlockPos += " blocks to right";
+		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+		        	}
+		        } else {
+		        	diffZBlockPos = "";
+		        }
+		        
+		        String text = "";
+		        if(dir.contains("north")||dir.contains("south")) text = String.format("%s, %s  %s  %s", mutableText.getString(), diffZBlockPos, diffYBlockPos, diffXBlockPos);
+		        else text = String.format("%s, %s  %s  %s", mutableText.getString(), diffXBlockPos, diffYBlockPos, diffZBlockPos);
 		        player.sendMessage(new LiteralText(text), true);
 		        break; 
 		    case ENTITY:
