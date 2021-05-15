@@ -1,9 +1,8 @@
 package net.shoaibkhan.easy.life.gui;
 
-import java.util.Hashtable;
-
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -27,186 +26,231 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
 import net.shoaibkhan.easy.life.ClientMod;
-import net.shoaibkhan.easy.life.gui.widgets.NarratorMenuButton;
 
 public class NarratorMenuGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
-    public static MinecraftClient client;
-    public static Hashtable<String,Boolean> focused = new Hashtable<String,Boolean>();
-    public static int timeout = 0;
-    public static String curFocused = "";
+    public MinecraftClient client;
 
     public NarratorMenuGui(ClientPlayerEntity player,MinecraftClient client){
         this.player = player;
-        NarratorMenuGui.client = client;
-        focused.put("Target Block Type", false);
-        focused.put("Target Block Position", false);
-        focused.put("Chunk Position", false);
-        focused.put("Light Level", false);
-        focused.put("Target Entity", false);
+        this.client = client;
 
 
         WGridPanel root = new WGridPanel();
 
         setRootPanel(root);
         
-        NarratorMenuButton wb11 = new NarratorMenuButton(new LiteralText("Target Block Distance"));
-        wb11.setOnClick(this::target_block_distance);
-        root.add(wb11, 0, 0, 7, 1);
+        WButton wb11 = new WButton(new LiteralText("Target Information"));
+        wb11.setOnClick(this::target_information);
+        root.add(wb11, 4, 0, 7, 1);
         
-        NarratorMenuButton wb12 = new NarratorMenuButton(new LiteralText("Target Block Type"));
-        wb12.setOnClick(this::target_block_type);
-        root.add(wb12, 8, 0, 7, 1);
-
-        NarratorMenuButton wb13 = new NarratorMenuButton(new LiteralText("Target Block Position"));
-        wb13.setOnClick(this::target_block_position);
-        root.add(wb13, 16, 0, 7, 1);
+        WButton wb12 = new WButton(new LiteralText("Target Position"));
+        wb12.setOnClick(this::target_position);
+        root.add(wb12, 12, 0, 7, 1);;
 
 
 
-        NarratorMenuButton wb21 = new NarratorMenuButton(new LiteralText("Chunk Position"));
+        WButton wb21 = new WButton(new LiteralText("Chunk Position"));
         wb21.setOnClick(this::chunk_position);
         root.add(wb21, 0, 2, 7, 1);
 
-        NarratorMenuButton wb22 = new NarratorMenuButton(new LiteralText("Light Level"));
+        WButton wb22 = new WButton(new LiteralText("Light Level"));
         wb22.setOnClick(this::light_level);
         root.add(wb22, 8, 2, 7, 1);
 
-        NarratorMenuButton wb23 = new NarratorMenuButton(new LiteralText("Target Entity"));
-        wb23.setOnClick(this::target_entity);
-        root.add(wb23, 16, 2, 7, 1);
+        WButton wb23 = new WButton(new LiteralText("Biome"));
+        wb23.setOnClick(this::getBiome);
+        root.add(wb23, 16, 2, 7, 1);       
         
         
-        
-        NarratorMenuButton wb31 = new NarratorMenuButton(new LiteralText("Time Of Day"));
-        wb31.setOnClick(this::getTimeOfDay);
-        root.add(wb31, 4, 4, 7, 1);
-
-        NarratorMenuButton wb32 = new NarratorMenuButton(new LiteralText("Biome"));
-        wb32.setOnClick(this::getBiome);
-        root.add(wb32, 12, 4, 7, 1);
-
-
-
         root.validate(this);
+        
+//        WButton wb31 = new WButton(new LiteralText("Time Of Day"));
+//        wb31.setOnClick(this::getTimeOfDay);
+//        root.add(wb31, 4, 4, 7, 1);
     }
 
     @Override
     public void addPainters() {
         this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
     }
+    
+    private void target_information() {
+    	try {
+			this.player.closeScreen();
 
-    private void target_block_distance() {
-    	this.player.closeScreen();
-		int width = client.getWindow().getScaledWidth();
-    	int height = client.getWindow().getScaledHeight();
-    	Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
-    	double fov = client.options.fov;
-    	double angleSize = fov/height;
-    	Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
-    	verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
-    	 
-    	Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
-    	horizontalRotationAxis.cross(verticalRotationAxis);
-    	horizontalRotationAxis.normalize();
-    	 
-    	verticalRotationAxis = new Vector3f(cameraDirection);
-    	verticalRotationAxis.cross(horizontalRotationAxis);
-    	
-    	int x = width/2;
-    	int y = height/2;
-
-		Vec3d direction = map(
-				(float) angleSize,
-				cameraDirection,
-				horizontalRotationAxis,
-				verticalRotationAxis,
-				x,
-				y,
-				width,
-				height
-		);
-		
-		
-		
-		HitResult hit = raycastInDirection(client, client.getTickDelta(), direction, 3f);
-		 
-		switch(hit.getType()) {
-		    case MISS:
-		        //nothing near enough
-		    	break; 
-		    case BLOCK:
-		        BlockHitResult blockHit = (BlockHitResult) hit;
-		        BlockPos blockPos = blockHit.getBlockPos();
-		        BlockState blockState = client.world.getBlockState(blockPos);
-		        Block block = blockState.getBlock();
-		        MutableText mutableText = new LiteralText("").append(block.getName());
-                String dir = client.player.getHorizontalFacing().asString();
-                dir = dir.toLowerCase().trim();
-		        
-		        String diffXBlockPos = ((double)player.getBlockPos().getX() - blockPos.getX()) + "";
-		        String diffYBlockPos = ((double)(player.getBlockPos().getY()+1) - blockPos.getY())+ "";
-		        String diffZBlockPos = ((double)player.getBlockPos().getZ() - blockPos.getZ()) + "";
-		        
-		        diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
-		        diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
-		        diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
-		        
-		        if(!diffXBlockPos.equalsIgnoreCase("0")) {
-		        	if(dir.contains("east")||dir.contains("west")) {
-		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-		        		diffXBlockPos += " blocks away";
-		        	} else if(dir.contains("north")) {
-		        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to left";
-		        		else diffXBlockPos += " blocks to right";
-		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-		        	} else if(dir.contains("south")) {
-		        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to right";
-		        		else diffXBlockPos += " blocks to left";
-		        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-		        	}
-		        } else {
-		        	diffXBlockPos = "";
-		        }
-		        
-		        if(!diffYBlockPos.equalsIgnoreCase("0")) {
-		        	if(diffYBlockPos.contains("-")) {
-		        		diffYBlockPos = diffYBlockPos.replace("-", "");
-		        		diffYBlockPos += " blocks up";
-		        	} else {
-		        		diffYBlockPos += " blocks down";
-		        	}
-		        } else {
-		        	diffYBlockPos = "";
-		        }
-		        
-		        if(!diffZBlockPos.equalsIgnoreCase("0")) {
-		        	if(dir.contains("north")||dir.contains("south")) {
-		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-		        		diffZBlockPos += " blocks away";
-		        	} else if(dir.contains("east")) {
-		        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to right";
-		        		else diffZBlockPos += " blocks to left";
-		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-		        	} else if(dir.contains("west")) {
-		        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to left";
-		        		else diffZBlockPos += " blocks to right";
-		        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-		        	}
-		        } else {
-		        	diffZBlockPos = "";
-		        }
-		        
-		        String text = "";
-		        if(dir.contains("north")||dir.contains("south")) text = String.format("%s, %s  %s  %s", mutableText.getString(), diffZBlockPos, diffYBlockPos, diffXBlockPos);
-		        else text = String.format("%s, %s  %s  %s", mutableText.getString(), diffXBlockPos, diffYBlockPos, diffZBlockPos);
-		        player.sendMessage(new LiteralText(text), true);
-		        break; 
-		    case ENTITY:
-		    	break;
+			HitResult hit = get_target();
+			 
+			switch(hit.getType()) {
+			    case MISS:
+	                this.player.sendMessage(new LiteralText("Too far"), true);
+			    	break; 
+			    case BLOCK:{
+			        try {
+						BlockHitResult blockHit = (BlockHitResult) hit;
+						BlockPos blockPos = blockHit.getBlockPos();
+						BlockState blockState = client.world.getBlockState(blockPos);
+						Block block = blockState.getBlock();
+						MutableText mutableText = new LiteralText("").append(block.getName());
+						String text = "" + mutableText.getString() + ", " + get_position_difference(blockPos);
+						player.sendMessage(new LiteralText(text), true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			        
+			        break;
+			    }
+			    case ENTITY:{
+			    	try {
+	                    EntityHitResult entityHitResult = (EntityHitResult) hit;
+	                    String name = "";
+	                    MutableText mutableText = new LiteralText("").append(entityHitResult.getEntity().getName());
+	                    name = mutableText.getString();
+	                    BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
+	                    String text = "" + name + ", " + get_position_difference(blockPos);
+	                    this.player.sendMessage(new LiteralText(text) ,true);
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+                    break;
+			    }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	
     	
+    }
+  
+    private void target_position(){
+        this.player.closeScreen();
+        HitResult hit = get_target();
+        switch (hit.getType()) {
+            case MISS:
+                this.player.sendMessage(new LiteralText("Too far"), true);
+                break;
+            case BLOCK: {
+                try {
+					BlockHitResult blockHitResult = (BlockHitResult) hit;
+					BlockPos blockPos = blockHitResult.getBlockPos();
+					this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+                break;
+            }
+            case ENTITY:{
+            	try {
+					EntityHitResult entityHitResult = (EntityHitResult) hit;
+					BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
+					this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+            }
+            default:
+                break;
+        }
+    }
+
+    private void chunk_position(){
+        this.player.closeScreen();
+        String posX = ""+this.player.chunkX;
+        String posY = ""+this.player.chunkY;
+        String posZ = ""+this.player.chunkZ;
+        if(posX.contains("-")) posX = posX.replace("-", "negative");
+        if(posY.contains("-")) posY = posY.replace("-", "negative");
+        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+        this.player.sendMessage(new LiteralText("Chunk Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
+    }
+
+    private void light_level(){
+        this.player.closeScreen();
+        int light = this.client.world.getLightLevel(this.player.getBlockPos());
+        this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
+    }
+
+    private void getBiome() {
+        this.player.closeScreen();
+    	Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
+    	String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
+    	this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
+    }
+
+    private String get_position_difference(BlockPos blockPos) {
+    	String dir = client.player.getHorizontalFacing().asString();
+        dir = dir.toLowerCase().trim();
+        
+        String diffXBlockPos = ((double)player.getBlockPos().getX() - blockPos.getX()) + "";
+        String diffYBlockPos = ((double)(player.getBlockPos().getY()+1) - blockPos.getY())+ "";
+        String diffZBlockPos = ((double)player.getBlockPos().getZ() - blockPos.getZ()) + "";
+        
+        diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
+        diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
+        diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
+        
+        if(!diffXBlockPos.equalsIgnoreCase("0")) {
+        	if(dir.contains("east")||dir.contains("west")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        		diffXBlockPos += " blocks away";
+        	} else if(dir.contains("north")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to left";
+        		else diffXBlockPos += " blocks to right";
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        	} else if(dir.contains("south")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to right";
+        		else diffXBlockPos += " blocks to left";
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        	}
+        } else {
+        	diffXBlockPos = "";
+        }
+        
+        if(!diffYBlockPos.equalsIgnoreCase("0")) {
+        	if(diffYBlockPos.contains("-")) {
+        		diffYBlockPos = diffYBlockPos.replace("-", "");
+        		diffYBlockPos += " blocks up";
+        	} else {
+        		diffYBlockPos += " blocks down";
+        	}
+        } else {
+        	diffYBlockPos = "";
+        }
+        
+        if(!diffZBlockPos.equalsIgnoreCase("0")) {
+        	if(dir.contains("north")||dir.contains("south")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        		diffZBlockPos += " blocks away";
+        	} else if(dir.contains("east")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to right";
+        		else diffZBlockPos += " blocks to left";
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        	} else if(dir.contains("west")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to left";
+        		else diffZBlockPos += " blocks to right";
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        	}
+        } else {
+        	diffZBlockPos = "";
+        }
+        
+        String text = "";
+        if(dir.contains("north")||dir.contains("south")) text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
+        else text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
+        return text;
+    }
+    
+    private String get_position(BlockPos blockPos) {
+    	String posX = ((double)blockPos.getX())+"";
+        String posY = ((double)blockPos.getY())+"";
+        String posZ = ((double)blockPos.getZ())+"";
+        posX = posX.substring(0, posX.indexOf("."));
+        posY = posY.substring(0, posY.indexOf("."));
+        posZ = posZ.substring(0, posZ.indexOf("."));
+        if(posX.contains("-")) posX = posX.replace("-", "negative");
+        if(posY.contains("-")) posY = posY.replace("-", "negative");
+        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+        return String.format("%d x %s y %s z", posX, posY, posZ);
     }
     
     private static HitResult raycastInDirection(MinecraftClient client, float tickDelta, Vec3d direction, float extendReachBy) {
@@ -296,107 +340,45 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     	    return new Vec3d(temp2);
     	}
     
-    private void target_block_type(){
-        this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
-        switch (hit.getType()) {
-            case MISS:
-                this.player.sendMessage(new LiteralText("Target is too far"), true);
-                break;
-            case BLOCK:
-                BlockHitResult blockHitResult = (BlockHitResult) hit;
-                String name = NarratorMenuGui.client.world.getBlockState(blockHitResult.getBlockPos()).getBlock()+"";
-                name = name.toLowerCase().trim();
-                if(name.contains("block{")) name = name.replace("block{", "");
-                if(name.contains("minecraft:")) name = name.replace("minecraft:", "");
-                if(name.contains("}")) name = name.replace("}", "");
-                if(name.contains("{")) name = name.replace("{", "");
-                if(name.contains("_")) name = name.replace("_", " ");
-                this.player.sendMessage(new LiteralText(""+name) ,true);
-                break;
-            default:
-                break;
-        }
+    private HitResult get_target() {
+		int width = client.getWindow().getScaledWidth();
+		int height = client.getWindow().getScaledHeight();
+		Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
+		double fov = client.options.fov;
+		double angleSize = fov/height;
+		Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
+		verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
+		 
+		Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
+		horizontalRotationAxis.cross(verticalRotationAxis);
+		horizontalRotationAxis.normalize();
+		 
+		verticalRotationAxis = new Vector3f(cameraDirection);
+		verticalRotationAxis.cross(horizontalRotationAxis);
+		
+		int x = width/2;
+		int y = height/2;
+
+		Vec3d direction = map(
+				(float) angleSize,
+				cameraDirection,
+				horizontalRotationAxis,
+				verticalRotationAxis,
+				x,
+				y,
+				width,
+				height
+		);
+		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
     }
 
-    private void target_block_position(){
-        this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
-        switch (hit.getType()) {
-            case MISS:
-                this.player.sendMessage(new LiteralText("Target is too far"), true);
-                break;
-            case BLOCK:
-                BlockHitResult blockHitResult = (BlockHitResult) hit;
-                Vec3d pos = blockHitResult.getPos();
-                String posX = ((double)pos.x)+"";
-                String posY = ((double)pos.y)+"";
-                String posZ = ((double)pos.z)+"";
-                posX = posX.substring(0, posX.indexOf("."));
-                posY = posY.substring(0, posY.indexOf("."));
-                posZ = posZ.substring(0, posZ.indexOf("."));
-                if(posX.contains("-")) posX = posX.replace("-", "negative");
-                if(posY.contains("-")) posY = posY.replace("-", "negative");
-                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-                this.player.sendMessage(new LiteralText("Block Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void chunk_position(){
-        this.player.closeScreen();
-        String posX = ""+this.player.chunkX;
-        String posY = ""+this.player.chunkY;
-        String posZ = ""+this.player.chunkZ;
-        if(posX.contains("-")) posX = posX.replace("-", "negative");
-        if(posY.contains("-")) posY = posY.replace("-", "negative");
-        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-        this.player.sendMessage(new LiteralText("Chunk Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
-    }
-
-    private void light_level(){
-        this.player.closeScreen();
-        int light = NarratorMenuGui.client.world.getLightLevel(this.player.getBlockPos());
-        this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
-    }
-
-    private void target_entity(){
-        this.player.closeScreen();
-        HitResult hit = NarratorMenuGui.client.crosshairTarget;
-        switch (hit.getType()) {
-            case MISS:
-                this.player.sendMessage(new LiteralText("Target is too far"), true);
-                break;
-            case ENTITY:
-                try {
-                    EntityHitResult entityHitResult = (EntityHitResult) hit;
-                    String name = entityHitResult.getEntity().getType()+"";
-                    if(name.contains("entity.minecraft.")) name = name.replace("entity.minecraft.", "");
-                    this.player.sendMessage(new LiteralText(""+name) ,true);
-                    break;
-                } catch (Exception e) {
-                    this.player.sendMessage(new LiteralText("No Entity Present") ,true);
-                    break;
-                }
-                
-            default:
-                break;
-        }
-    }
-    
-    private void getBiome() {
-        this.player.closeScreen();
-    	Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
-    	String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
-    	this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
-    }
-    
+	// TODO Fix This
+    /* 
     private void getTimeOfDay() {
         this.player.closeScreen();
         String string = "";
-        long time = client.world.getTimeOfDay();
+        long timeOfDay = client.world.getTimeOfDay();
+        long time= client.world.getTime();
         int hour = (int)Math.floor(time/1000);
         hour += 6;
         if(hour>=24) hour-=24;
@@ -406,7 +388,9 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         int minutes = (int)time%1000;
         minutes = (int)(minutes/16.6);
         if(minutes>=15) string += " " + minutes + " minutes";
-    	this.player.sendMessage(new LiteralText("Time is,"+string) ,true);
+        string = String.format("TimeOfDay: %d ,Time: %d",timeOfDay,time);
+    	this.player.sendMessage(new LiteralText(string) ,true);
     }
+    */
     
 }

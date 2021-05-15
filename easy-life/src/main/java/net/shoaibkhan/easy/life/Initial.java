@@ -1,5 +1,8 @@
 package net.shoaibkhan.easy.life;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.lwjgl.glfw.GLFW;
 
 import net.fabricmc.api.EnvType;
@@ -23,6 +26,8 @@ public class Initial implements ModInitializer {
     public static String pickedUpItems = "|"; 
 //    public static boolean usingTab = false,usingMouse = false;
     public static String usingTab = "",usingMouse = "";
+	public static Map<String, Integer> counterMap;
+	private static CustomWait countMapThread;
 
     /**
      * Constructor which initializes the global variables/parameters. 
@@ -38,6 +43,12 @@ public class Initial implements ModInitializer {
         direction_narrator = KeyBindingHelper.registerKeyBinding(new KeyBinding("Direction Narrator", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "Easy Life"));
         narrator_menu = KeyBindingHelper.registerKeyBinding(new KeyBinding("Narrator Menu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F4, "Easy Life"));
 
+        counterMap = new HashMap<String, Integer>();
+        countMapThread = new CustomWait();
+        countMapThread.setWait(999, 0, MinecraftClient.getInstance());
+        countMapThread.startThread();
+        countMapThread.start();
+        
         clientMod = new ClientMod(kb,coord,CONFIG_KEY,position_narrator,direction_narrator, narrator_menu);
     }
     

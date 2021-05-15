@@ -33,7 +33,6 @@ public class ClientMod {
     private boolean coordFlag = false;
     public static boolean kbFlag = false;
     public static boolean flag = true;
-    private CustomWait obj[] = {new CustomWait(),new CustomWait(),new CustomWait()};
     public static int healthWarningFlag = 0, foodWarningFlag = 0, airWarningFlag = 0;
     public static int healthWarningAfterFlag = 0, foodWarningAfterFlag = 0, airWarningAfterFlag = 0;
     public static String[] colorNames = {"black","white","red","blue","purple","green","grey","lightgrey","yellow","orange","brown","pink"};
@@ -43,8 +42,26 @@ public class ClientMod {
     public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator, KeyBinding narrator_menu) {
 		client = MinecraftClient.getInstance();        
 
-        HudRenderCallback.EVENT.register((__, ___) -> {
+        HudRenderCallback.EVENT.register((__, ___) -> {        	
 			if (client.player != null) {
+	        	
+	        	if(Initial.counterMap.containsKey("healthWarningFlag")) healthWarningFlag = Initial.counterMap.get("healthWarningFlag");
+	        	else healthWarningFlag = 0;
+	        	
+	        	if(Initial.counterMap.containsKey("foodWarningFlag")) foodWarningFlag = Initial.counterMap.get("foodWarningFlag");
+	        	else foodWarningFlag = 0;
+	        	
+	        	if(Initial.counterMap.containsKey("airWarningFlag")) airWarningFlag = Initial.counterMap.get("airWarningFlag");
+	        	else airWarningFlag = 0;
+	        	
+	        	if(Initial.counterMap.containsKey("healthWarningAfterFlag")) healthWarningAfterFlag = Initial.counterMap.get("healthWarningAfterFlag");
+	        	else healthWarningAfterFlag = 0;
+	        	
+	        	if(Initial.counterMap.containsKey("foodWarningAfterFlag")) foodWarningAfterFlag = Initial.counterMap.get("foodWarningAfterFlag");
+	        	else foodWarningAfterFlag = 0;
+	        	
+	        	if(Initial.counterMap.containsKey("airWarningAfterFlag")) airWarningAfterFlag = Initial.counterMap.get("airWarningAfterFlag");
+	        	else airWarningAfterFlag = 0;
 				
 				boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
 				boolean isXPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.x").getCode()));
@@ -252,18 +269,6 @@ public class ClientMod {
 
         return true;
     }
-
-//    private int getColor(double health) {
-//        if (health <= 20.0 && health > 12.0) {
-//            return colors("green",100);
-//        } else if (health <= 12.0 && health > 6.0) {
-//            return colors("brown",100);
-//        } else if (health <= 6.0) {
-//            return colors("red",100);
-//        }
-//        return 0;
-//
-//    }
 
     private void showCoord() {
         final PlayerEntity player = client.player;
@@ -664,13 +669,8 @@ public class ClientMod {
             firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) * 2;
             secondTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2; 
         }
-        if( health>=firstTH && health>=secondTH && healthWarningFlag>0 && obj[0].isAlive() && healthWarningAfterFlag<=0 ){
-            obj[0].stopThread();
-            healthWarningFlag = 0;
-            obj[0] = new CustomWait();
-            obj[0].setWait(10000, 4,this.client);
-            obj[0].startThread();
-            obj[0].start();
+        if( health>=firstTH && health>=secondTH && healthWarningFlag>0  && healthWarningAfterFlag<=0 ){
+            Initial.counterMap.put("healthWarningAfterFlag", 10000);
         }
         if (health < firstTH && health > secondTH && healthWarningFlag <= 0 && healthWarningAfterFlag<=0) {
             matrixStack.push();
@@ -687,11 +687,7 @@ public class ClientMod {
             }
                     
             matrixStack.pop();
-            if(obj[0].isAlive()) obj[0].stopThread();
-            obj[0] = new CustomWait();
-            obj[0].setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1,this.client);
-            obj[0].startThread();
-            obj[0].start();
+            Initial.counterMap.put("healthWarningFlag", Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000);
         }
 
         if (health < secondTH && health > 0 && healthWarningFlag<=0 && healthWarningAfterFlag<=0) {
@@ -707,11 +703,7 @@ public class ClientMod {
             if(ELConfig.get(ELConfig.getPwSoundStatus())){
                 player.playSound(getSoundEvent("anvil_land"),SoundCategory.PLAYERS,(float)1,(float) 1);
             }
-            if(obj[0].isAlive()) obj[0].stopThread();
-            obj[0] = new CustomWait();
-            obj[0].setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 1,this.client);
-            obj[0].startThread();
-            obj[0].start();
+            Initial.counterMap.put("healthWarningFlag", Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000);
             
         }
 
@@ -730,13 +722,8 @@ public class ClientMod {
     private void foodWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double health,double food){
         double foodTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwFtth())) * 2;
         double firstTH;
-        if(food>=foodTH && foodWarningFlag>0 && obj[1].isAlive() && foodWarningAfterFlag<=0){
-            obj[1].stopThread();
-            foodWarningFlag = 0;
-            obj[1] = new CustomWait();
-            obj[1].setWait(10000, 5,this.client);
-            obj[1].startThread();
-            obj[1].start();
+        if(food>=foodTH && foodWarningFlag>0 && foodWarningAfterFlag<=0){
+            Initial.counterMap.put("foodWarningAfterFlag", 10000);
         }
         if( Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) > Double.parseDouble(ELConfig.getString(ELConfig.getPwHtSTh())) ){
             firstTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwHtFTh())) * 2;
@@ -756,11 +743,7 @@ public class ClientMod {
             if(ELConfig.get(ELConfig.getPwSoundStatus())) {
                 player.playSound(getSoundEvent("anvil_land"),SoundCategory.PLAYERS,(float)1,(float) 1);
             }
-            if(obj[1].isAlive()) obj[1].stopThread();
-            obj[1] = new CustomWait();
-            obj[1].setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 2,this.client);
-            obj[1].startThread();
-            obj[1].start();
+            Initial.counterMap.put("foodWarningFlag", Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000);
         }
 
         if (foodWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) && healthWarningFlag<=0 && foodWarningAfterFlag<=0 ){
@@ -778,13 +761,8 @@ public class ClientMod {
     private void airWarning(PlayerEntity player,InGameHud inGameHud,MatrixStack matrixStack,TextRenderer textRenderer,int height,int width,int reqHeight,int reqWidth,double air){
         double airTH = Double.parseDouble(ELConfig.getString(ELConfig.getPwAtth())) * 30;
 
-        if(air>=airTH && airWarningFlag>0 && obj[2].isAlive() && airWarningAfterFlag<=0){
-            obj[2].stopThread();
-            airWarningFlag = 0;
-            obj[2] = new CustomWait();
-            obj[2].setWait(10000, 6,this.client);
-            obj[2].startThread();
-            obj[2].start();
+        if(air>=airTH && airWarningFlag>0 && airWarningAfterFlag<=0){
+            Initial.counterMap.put("airWarningAfterFlag", 10000);
         }
 
         if (air < airTH && air > 0 && foodWarningFlag<(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1500 && healthWarningFlag<(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1500 && airWarningFlag <=0 && airWarningAfterFlag<=0 ) {
@@ -800,12 +778,7 @@ public class ClientMod {
             if(ELConfig.get(ELConfig.getPwSoundStatus())) {
                 player.playSound(getSoundEvent("anvil_land"),SoundCategory.PLAYERS,(float)1,(float) 1);
             }
-            
-            if(obj[2].isAlive()) obj[2].stopThread();
-            obj[2] = new CustomWait();
-            obj[2].setWait(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000, 3,this.client);
-            obj[2].startThread();
-            obj[2].start();
+            Initial.counterMap.put("airWarningFlag", Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000);
         }
 
         if (airWarningFlag >= ((Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1000) && foodWarningFlag<(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1500 && healthWarningFlag<(Integer.parseInt(ELConfig.getString(ELConfig.getPwTimeout()))*1000)-1500 && airWarningAfterFlag<=0 ){

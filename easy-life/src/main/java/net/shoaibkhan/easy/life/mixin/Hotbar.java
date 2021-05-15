@@ -25,7 +25,7 @@ public class Hotbar {
 	
 	@Inject(at=@At("TAIL") ,method="renderHeldItemTooltip")
 	public void renderHeldItemTooltipMixin(MatrixStack matrixStack,CallbackInfo callbackInfo) {
-		if (this.heldItemTooltipFade == 35 && !this.currentStack.isEmpty() && ELConfig.get(ELConfig.getHelditemnarratorkey())) {
+		if (this.heldItemTooltipFade == 38 && !this.currentStack.isEmpty() && ELConfig.get(ELConfig.getHelditemnarratorkey())) {
 			MutableText mutableText = (new LiteralText("")).append(this.currentStack.getName()).formatted(this.currentStack.getRarity().formatting);
 			MinecraftClient.getInstance().player.sendMessage(new LiteralText(mutableText.getString()), true);
 		}
