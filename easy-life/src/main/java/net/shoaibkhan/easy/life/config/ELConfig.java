@@ -181,7 +181,7 @@ public class ELConfig {
         data.add(PW_HT_S_TH, new JsonPrimitive("0"));
         data.add(PW_FTTH, new JsonPrimitive("3.0"));
         data.add(PW_ATTH, new JsonPrimitive("3.0"));
-        data.add(PW_Sound_Status, new JsonPrimitive("on"));
+        data.add(PW_Sound_Status, new JsonPrimitive(true));
         
         // data.add(Health_Bar_Key, new JsonPrimitive(false));
         // data.add(HB_Width, new JsonPrimitive("3"));
