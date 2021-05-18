@@ -123,58 +123,74 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     }
   
     private void target_position(){
-        this.player.closeScreen();
-        HitResult hit = get_target();
-        switch (hit.getType()) {
-            case MISS:
-                this.player.sendMessage(new LiteralText("Too far"), true);
-                break;
-            case BLOCK: {
-                try {
-					BlockHitResult blockHitResult = (BlockHitResult) hit;
-					BlockPos blockPos = blockHitResult.getBlockPos();
-					this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-                break;
-            }
-            case ENTITY:{
-            	try {
-					EntityHitResult entityHitResult = (EntityHitResult) hit;
-					BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
-					this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-            }
-            default:
-                break;
-        }
+        try {
+			this.player.closeScreen();
+			HitResult hit = get_target();
+			switch (hit.getType()) {
+			    case MISS:
+			        	this.player.sendMessage(new LiteralText("Too far"), true);
+			        break;
+			    case BLOCK: {
+			        try {
+						BlockHitResult blockHitResult = (BlockHitResult) hit;
+						BlockPos blockPos = blockHitResult.getBlockPos();
+						this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			        break;
+			    }
+			    case ENTITY: {
+			    	try {
+						EntityHitResult entityHitResult = (EntityHitResult) hit;
+						BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
+						this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+			    }
+			    default:
+			        break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     private void chunk_position(){
-        this.player.closeScreen();
-        String posX = ""+this.player.chunkX;
-        String posY = ""+this.player.chunkY;
-        String posZ = ""+this.player.chunkZ;
-        if(posX.contains("-")) posX = posX.replace("-", "negative");
-        if(posY.contains("-")) posY = posY.replace("-", "negative");
-        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-        this.player.sendMessage(new LiteralText("Chunk Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
+        try {
+			this.player.closeScreen();
+			String posX = ""+this.player.chunkX;
+			String posY = ""+this.player.chunkY;
+			String posZ = ""+this.player.chunkZ;
+			if(posX.contains("-")) posX = posX.replace("-", "negative");
+			if(posY.contains("-")) posY = posY.replace("-", "negative");
+			if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+			this.player.sendMessage(new LiteralText("Chunk Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     private void light_level(){
-        this.player.closeScreen();
-        int light = this.client.world.getLightLevel(this.player.getBlockPos());
-        this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
+        try {
+			this.player.closeScreen();
+			int light = this.client.world.getLightLevel(this.player.getBlockPos());
+			this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     private void getBiome() {
-        this.player.closeScreen();
-    	Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
-    	String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
-    	this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
+        try {
+			this.player.closeScreen();
+			Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
+			String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
+			this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     private String get_position_difference(BlockPos blockPos) {
@@ -241,16 +257,21 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     }
     
     private String get_position(BlockPos blockPos) {
-    	String posX = ((double)blockPos.getX())+"";
-        String posY = ((double)blockPos.getY())+"";
-        String posZ = ((double)blockPos.getZ())+"";
-        posX = posX.substring(0, posX.indexOf("."));
-        posY = posY.substring(0, posY.indexOf("."));
-        posZ = posZ.substring(0, posZ.indexOf("."));
-        if(posX.contains("-")) posX = posX.replace("-", "negative");
-        if(posY.contains("-")) posY = posY.replace("-", "negative");
-        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-        return String.format("%d x %s y %s z", posX, posY, posZ);
+    	try {
+			String posX = ((double)blockPos.getX())+"";
+			String posY = ((double)blockPos.getY())+"";
+			String posZ = ((double)blockPos.getZ())+"";
+			posX = posX.substring(0, posX.indexOf("."));
+			posY = posY.substring(0, posY.indexOf("."));
+			posZ = posZ.substring(0, posZ.indexOf("."));
+			if(posX.contains("-")) posX = posX.replace("-", "negative");
+			if(posY.contains("-")) posY = posY.replace("-", "negative");
+			if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+			return String.format("%s x %s y %s z", posX, posY, posZ);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
     }
     
     private static HitResult raycastInDirection(MinecraftClient client, float tickDelta, Vec3d direction, float extendReachBy) {
