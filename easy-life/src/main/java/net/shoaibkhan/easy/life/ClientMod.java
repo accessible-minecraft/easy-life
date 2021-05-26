@@ -38,6 +38,7 @@ public class ClientMod {
     public static String[] colorNames = {"black","white","red","blue","purple","green","grey","lightgrey","yellow","orange","brown","pink"};
     public static String[] soundNames = {"anvil land"};
     GameOptions gameOptions;
+    private boolean isAltPressed,isXPressed, isCPressed, isZPressed;
 
     public ClientMod(KeyBinding kb, KeyBinding coord, KeyBinding CONFIG_KEY,KeyBinding position_narrator,KeyBinding direction_narrator, KeyBinding narrator_menu) {
 		client = MinecraftClient.getInstance();        
@@ -63,22 +64,18 @@ public class ClientMod {
 	        	if(Initial.counterMap.containsKey("airWarningAfterFlag")) airWarningAfterFlag = Initial.counterMap.get("airWarningAfterFlag");
 	        	else airWarningAfterFlag = 0;
 				
-				boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
-				boolean isXPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.x").getCode()));
-				boolean isCPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
-				boolean isZPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.z").getCode()));
+				isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+				isXPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.x").getCode()));
+				isCPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
+				isZPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.z").getCode()));
 				
-				if (client.currentScreen == null) {
-					if(!Initial.usingMouse.equals("")) Initial.usingMouse = "";
-					if(!Initial.usingTab.equals("")) Initial.usingTab= "";
-	            }
 				
 				if(isAltPressed) {
 					if(isXPressed) {
 						final PlayerEntity player = client.player;
 		                Vec3d pos = player.getPos();
 		                String posX = ((double)pos.x)+"";
-		                posX = posX.substring(0, posX.indexOf("."));
+		                posX = posX.substring(0, posX.indexOf(".")+2);
 		                if(posX.contains("-")) posX = posX.replace("-", "negative");
 		                String text = ""+posX+"x";
 		                player.sendMessage(new LiteralText(text), true);
@@ -88,7 +85,7 @@ public class ClientMod {
 						final PlayerEntity player = client.player;
 		                Vec3d pos = player.getPos();
 		                String posY = ((double)pos.y)+"";
-		                posY = posY.substring(0, posY.indexOf("."));
+		                posY = posY.substring(0, posY.indexOf(".")+2);
 		                if(posY.contains("-")) posY = posY.replace("-", "negative");
 		                String text = ""+posY+"y";
 		                player.sendMessage(new LiteralText(text), true);
@@ -98,102 +95,105 @@ public class ClientMod {
 						final PlayerEntity player = client.player;
 		                Vec3d pos = player.getPos();
 		                String posZ = ((double)pos.z)+"";
-		                posZ = posZ.substring(0, posZ.indexOf("."));
+		                posZ = posZ.substring(0, posZ.indexOf(".")+2);
 		                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
 		                String text = ""+posZ+"z";
 		                player.sendMessage(new LiteralText(text), true);
 					}
 				}
-	
-	            while(CONFIG_KEY.wasPressed()){
-	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
-	                client.openScreen(screen);
-	                return;
-	            }
-	
-	            while(narrator_menu.wasPressed()){
-	            	Screen screen = new ConfigScreen(new NarratorMenuGui(client.player,client), "F4 Menu", client.player);
-	                client.openScreen(screen);
-	                return;
-	            }
-	
-	            while(position_narrator.wasPressed()){
-	                final PlayerEntity player = client.player;
-	                Vec3d pos = player.getPos();
-	                String posX = ((double)pos.x)+"";
-	                String posY = ((double)pos.y)+"";
-	                String posZ = ((double)pos.z)+"";
-	                posX = posX.substring(0, posX.indexOf("."));
-	                posY = posY.substring(0, posY.indexOf("."));
-	                posZ = posZ.substring(0, posZ.indexOf("."));
-	                if(posX.contains("-")) posX = posX.replace("-", "negative");
-	                if(posY.contains("-")) posY = posY.replace("-", "negative");
-	                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-	                String text = ""+posX+"x, "+posY+"y, "+posZ+"z";
-	                player.sendMessage(new LiteralText(text), true);
-	            }
-	
-	            while(direction_narrator.wasPressed()){
-	                final PlayerEntity player = client.player;
-	                int angle = (int)player.getRotationClient().y;
-                    String string = "";
-                    
-                    while(angle>=360) angle -= 360;
-                    while(angle<=-360) angle += 360;
-                    
-                    if((angle>=-150&&angle<=-120)||(angle>=210&&angle<=240)){
-                    	// Looking North East
-                    	string = "North East";
-                    } else if((angle>=-60&&angle<=-30)||(angle>=300&&angle<=330)){
-                    	// Looking South East
-                    	string = "South East";
-                    } else if((angle>=30&&angle<=60)||(angle>=-330&&angle<=-300)){
-                    	// Looking South West
-                    	string = "South West";
-                    } else if((angle>=120&&angle<=150)||(angle>=-240&&angle<=-210)){
-                    	// Looking North West
-                    	string = "North West";
-                    } else {
-                        String dir = client.player.getHorizontalFacing().asString();
-                        dir = dir.toLowerCase().trim();
-                        if (dir.contains("north")) string = "North";
-                        else if (dir.contains("south")) string = "South";
-                        else if (dir.contains("east")) string = "East";
-                        else if (dir.contains("west")) string = "West";
-                        else string = "East";
-                    }
-                    
-	                String text = "Facing "+string.toLowerCase();
-	                player.sendMessage(new LiteralText(text), true);
-	            }
-	            
-	            if (tickCount > 0f) {
-	                if (this.kbPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
-	                    tickCount -= client.getTickDelta();
-	                }
-	            }
-	
-	            if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-	                    || ELConfig.get(ELConfig.Player_Direction_Key))) {
-	                showCoord();
-	            }
-	
-	            while (coord.wasPressed()
-	                    && (ELConfig.get(ELConfig.Player_Coordinates_Key)
-	                            || ELConfig.get(ELConfig.Player_Direction_Key))) {
-	                coordFlag = !coordFlag;
-	            }
-	
-	            while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
-	                if (this.kbPressed()) {
-	                    if(ELConfig.get(ELConfig.getNarratorSupportKey())){
-	                        double health = client.player.getHealth();
-	                        double hunger = client.player.getHungerManager().getFoodLevel();
-	                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+				
+				if(client.currentScreen == null) {
+		            while(CONFIG_KEY.wasPressed()){
+		            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
+		                client.openScreen(screen);
+		                return;
+		            }
+		
+		            while(narrator_menu.wasPressed()){
+		            	Screen screen = new ConfigScreen(new NarratorMenuGui(client.player,client), "F4 Menu", client.player);
+		                client.openScreen(screen);
+		                return;
+		            }
+		
+		            while(position_narrator.wasPressed()){
+		                final PlayerEntity player = client.player;
+		                Vec3d pos = player.getPos();
+		                String posX = ((double)pos.x)+"";
+		                String posY = ((double)pos.y)+"";
+		                String posZ = ((double)pos.z)+"";
+		                posX = posX.substring(0, posX.indexOf("."));
+		                posY = posY.substring(0, posY.indexOf("."));
+		                posZ = posZ.substring(0, posZ.indexOf("."));
+		                if(posX.contains("-")) posX = posX.replace("-", "negative");
+		                if(posY.contains("-")) posY = posY.replace("-", "negative");
+		                if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+		                String text = ""+posX+"x, "+posY+"y, "+posZ+"z";
+		                player.sendMessage(new LiteralText(text), true);
+		            }
+		
+		            while(direction_narrator.wasPressed()){
+		                final PlayerEntity player = client.player;
+		                int angle = (int)player.getRotationClient().y;
+	                    String string = "";
+	                    
+	                    while(angle>=360) angle -= 360;
+	                    while(angle<=-360) angle += 360;
+	                    
+	                    if((angle>=-150&&angle<=-120)||(angle>=210&&angle<=240)){
+	                    	// Looking North East
+	                    	string = "North East";
+	                    } else if((angle>=-60&&angle<=-30)||(angle>=300&&angle<=330)){
+	                    	// Looking South East
+	                    	string = "South East";
+	                    } else if((angle>=30&&angle<=60)||(angle>=-330&&angle<=-300)){
+	                    	// Looking South West
+	                    	string = "South West";
+	                    } else if((angle>=120&&angle<=150)||(angle>=-240&&angle<=-210)){
+	                    	// Looking North West
+	                    	string = "North West";
+	                    } else {
+	                        String dir = client.player.getHorizontalFacing().asString();
+	                        dir = dir.toLowerCase().trim();
+	                        if (dir.contains("north")) string = "North";
+	                        else if (dir.contains("south")) string = "South";
+	                        else if (dir.contains("east")) string = "East";
+	                        else if (dir.contains("west")) string = "West";
+	                        else string = "East";
 	                    }
-	                    tickCount = 120f;
-	                }
-	            }
+	                    
+		                String text = "Facing "+string.toLowerCase();
+		                player.sendMessage(new LiteralText(text), true);
+		            }
+		            
+		            if (tickCount > 0f) {
+		                if (this.kbPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
+		                    tickCount -= client.getTickDelta();
+		                }
+		            }
+		
+		            if (coordFlag && (ELConfig.get(ELConfig.Player_Coordinates_Key)
+		                    || ELConfig.get(ELConfig.Player_Direction_Key))) {
+		                showCoord();
+		            }
+		
+		            while (coord.wasPressed()
+		                    && (ELConfig.get(ELConfig.Player_Coordinates_Key)
+		                            || ELConfig.get(ELConfig.Player_Direction_Key))) {
+		                coordFlag = !coordFlag;
+		            }
+		
+		            while (kb.wasPressed() && ELConfig.get(ELConfig.Health_n_Hunger_Key)) {
+		                if (this.kbPressed()) {
+		                    if(ELConfig.get(ELConfig.getNarratorSupportKey())){
+		                        double health = client.player.getHealth();
+		                        double hunger = client.player.getHungerManager().getFoodLevel();
+		                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+		                    }
+		                    tickCount = 120f;
+		                }
+		            }
+				}
+	
 	
 	            if (!client.isPaused() && client.world.isClient) {
 	                final PlayerEntity player = client.player;
@@ -239,7 +239,7 @@ public class ClientMod {
 
         });
     }
-
+    
     private boolean kbPressed() {
         final PlayerEntity player = client.player;
         final InGameHud inGameHud = client.inGameHud;
