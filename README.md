@@ -112,9 +112,7 @@ ___
 ## Contact
 
 - Discord Server - https://discord.gg/yQjjsDqWQX
-
 - Discord - Shoaib#9319
-
 - Email - mdshoaibkhan.1999@gmail.com
 
 ___
