@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
@@ -23,6 +22,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
 import net.shoaibkhan.easy.life.ClientMod;
@@ -47,12 +47,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         WButton wb12 = new WButton(new LiteralText("Target Position"));
         wb12.setOnClick(this::target_position);
         root.add(wb12, 12, 0, 7, 1);;
-
-
-
-        WButton wb21 = new WButton(new LiteralText("Chunk Position"));
-        wb21.setOnClick(this::chunk_position);
-        root.add(wb21, 0, 2, 7, 1);
 
         WButton wb22 = new WButton(new LiteralText("Light Level"));
         wb22.setOnClick(this::light_level);
@@ -152,21 +146,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			    default:
 			        break;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-
-    private void chunk_position(){
-        try {
-			this.player.closeScreen();
-			String posX = ""+this.player.chunkX;
-			String posY = ""+this.player.chunkY;
-			String posZ = ""+this.player.chunkZ;
-			if(posX.contains("-")) posX = posX.replace("-", "negative");
-			if(posY.contains("-")) posY = posY.replace("-", "negative");
-			if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-			this.player.sendMessage(new LiteralText("Chunk Position is, "+ posX + "x, " + posY + "y, " + posZ + "z") ,true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -349,34 +328,33 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                 entity
         ));
     }
-    
-    private static Vec3d map(float anglePerPixel, Vec3d center, Vector3f horizontalRotationAxis,
-    	    Vector3f verticalRotationAxis, int x, int y, int width, int height) {
+
+    private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
     	    float horizontalRotation = (x - width/2f) * anglePerPixel;
     	    float verticalRotation = (y - height/2f) * anglePerPixel;
-    	 
-    	    final Vector3f temp2 = new Vector3f(center);
+
+    	    final Vec3f temp2 = new Vec3f(center);
     	    temp2.rotate(verticalRotationAxis.getDegreesQuaternion(verticalRotation));
     	    temp2.rotate(horizontalRotationAxis.getDegreesQuaternion(horizontalRotation));
     	    return new Vec3d(temp2);
     	}
-    
+
     private HitResult get_target() {
 		int width = client.getWindow().getScaledWidth();
 		int height = client.getWindow().getScaledHeight();
 		Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
 		double fov = client.options.fov;
 		double angleSize = fov/height;
-		Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
-		verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
-		 
-		Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
+		Vec3f verticalRotationAxis = new Vec3f(cameraDirection);
+		verticalRotationAxis.cross(Vec3f.POSITIVE_Y);
+
+		Vec3f horizontalRotationAxis = new Vec3f(cameraDirection);
 		horizontalRotationAxis.cross(verticalRotationAxis);
 		horizontalRotationAxis.normalize();
-		 
-		verticalRotationAxis = new Vector3f(cameraDirection);
+
+		verticalRotationAxis = new Vec3f(cameraDirection);
 		verticalRotationAxis.cross(horizontalRotationAxis);
-		
+
 		int x = width/2;
 		int y = height/2;
 

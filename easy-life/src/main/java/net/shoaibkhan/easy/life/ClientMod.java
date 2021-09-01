@@ -11,8 +11,10 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.options.KeyBinding;
+//import net.minecraft.client.options.GameOptions;
+//import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -132,37 +134,44 @@ public class ClientMod {
 		            }
 		
 		            while(direction_narrator.wasPressed()){
-		                final PlayerEntity player = client.player;
-		                int angle = (int)player.getRotationClient().y;
-	                    String string = "";
-	                    
-	                    while(angle>=360) angle -= 360;
-	                    while(angle<=-360) angle += 360;
-	                    
-	                    if((angle>=-150&&angle<=-120)||(angle>=210&&angle<=240)){
-	                    	// Looking North East
-	                    	string = "North East";
-	                    } else if((angle>=-60&&angle<=-30)||(angle>=300&&angle<=330)){
-	                    	// Looking South East
-	                    	string = "South East";
-	                    } else if((angle>=30&&angle<=60)||(angle>=-330&&angle<=-300)){
-	                    	// Looking South West
-	                    	string = "South West";
-	                    } else if((angle>=120&&angle<=150)||(angle>=-240&&angle<=-210)){
-	                    	// Looking North West
-	                    	string = "North West";
-	                    } else {
-	                        String dir = client.player.getHorizontalFacing().asString();
-	                        dir = dir.toLowerCase().trim();
-	                        if (dir.contains("north")) string = "North";
-	                        else if (dir.contains("south")) string = "South";
-	                        else if (dir.contains("east")) string = "East";
-	                        else if (dir.contains("west")) string = "West";
-	                        else string = "East";
-	                    }
-	                    
-		                String text = "Facing "+string.toLowerCase();
-		                player.sendMessage(new LiteralText(text), true);
+                        final PlayerEntity player = client.player;
+                        if(isAltPressed){
+                            int angle = (int) player.getRotationClient().x;
+                            String text = "" + angle;
+                            if(text.contains("-")) text = text.replace("-", "negative ");
+                            player.sendMessage(new LiteralText(text), true);
+                        } else {
+                            int angle = (int) player.getRotationClient().y;
+                            String string = "";
+
+                            while (angle >= 360) angle -= 360;
+                            while (angle <= -360) angle += 360;
+
+                            if ((angle >= -150 && angle <= -120) || (angle >= 210 && angle <= 240)) {
+                                // Looking North East
+                                string = "North East";
+                            } else if ((angle >= -60 && angle <= -30) || (angle >= 300 && angle <= 330)) {
+                                // Looking South East
+                                string = "South East";
+                            } else if ((angle >= 30 && angle <= 60) || (angle >= -330 && angle <= -300)) {
+                                // Looking South West
+                                string = "South West";
+                            } else if ((angle >= 120 && angle <= 150) || (angle >= -240 && angle <= -210)) {
+                                // Looking North West
+                                string = "North West";
+                            } else {
+                                String dir = client.player.getHorizontalFacing().asString();
+                                dir = dir.toLowerCase().trim();
+                                if (dir.contains("north")) string = "North";
+                                else if (dir.contains("south")) string = "South";
+                                else if (dir.contains("east")) string = "East";
+                                else if (dir.contains("west")) string = "West";
+                                else string = "East";
+                            }
+
+                            String text = "Facing " + string.toLowerCase();
+                            player.sendMessage(new LiteralText(text), true);
+                        }
 		            }
 		            
 		            if (tickCount > 0f) {
