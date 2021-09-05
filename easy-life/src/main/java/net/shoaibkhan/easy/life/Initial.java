@@ -1,25 +1,25 @@
 package net.shoaibkhan.easy.life;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.lwjgl.glfw.GLFW;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-//import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.option.KeyBinding;
+//import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.NarratorManager;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 @Environment(EnvType.CLIENT)
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
-    public static KeyBinding kb,coord,CONFIG_KEY,position_narrator,direction_narrator,narrator_menu;
+    public KeyBinding healthNhungerKey,coord,CONFIG_KEY,position_narrator,direction_narrator,narrator_menu;
     private static CustomWait wait;
     private static int prevX = -9999,prevY = -9999;
     public static int waitFlag = 0;
@@ -28,7 +28,6 @@ public class Initial implements ModInitializer {
 //    public static boolean usingTab = false,usingMouse = false;
     public static String usingTab = "",usingMouse = "";
 	public static Map<String, Integer> counterMap;
-	private static CustomWait countMapThread;
 
     /**
      * Constructor which initializes the global variables/parameters. 
@@ -37,20 +36,20 @@ public class Initial implements ModInitializer {
     public void onInitialize() {
         wait = new CustomWait();
 
-        kb = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
+        healthNhungerKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Health n Hunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "Easy Life"));
         coord = KeyBindingHelper.registerKeyBinding(new KeyBinding("Co-ordinates", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F6, "Easy Life"));
         CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_M, "Easy Life"));
         position_narrator = KeyBindingHelper.registerKeyBinding(new KeyBinding("Position Narrator", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "Easy Life"));
         direction_narrator = KeyBindingHelper.registerKeyBinding(new KeyBinding("Direction Narrator", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "Easy Life"));
         narrator_menu = KeyBindingHelper.registerKeyBinding(new KeyBinding("Narrator Menu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F4, "Easy Life"));
 
-        counterMap = new HashMap<String, Integer>();
-        countMapThread = new CustomWait();
+        counterMap = new HashMap<>();
+        CustomWait countMapThread = new CustomWait();
         countMapThread.setWait(999, 0, MinecraftClient.getInstance());
         countMapThread.startThread();
         countMapThread.start();
         
-        clientMod = new ClientMod(kb,coord,CONFIG_KEY,position_narrator,direction_narrator, narrator_menu);
+        clientMod = new ClientMod(healthNhungerKey,coord,CONFIG_KEY,position_narrator,direction_narrator, narrator_menu);
     }
     
     /**

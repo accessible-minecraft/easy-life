@@ -14,22 +14,19 @@ public class ELConfig {
     private static JsonObject data;
     private static String CONFIG_PATH = Paths.get("config", "easylife", "config.json").toString();
 
-    public static final String Health_n_Hunger_Key = "health_n_hunger",HNH_Color_Opacity = "hnh_color_opacity", HNH_Color = "hnh_color" ,HNH_Color_Custom = "hnh_color_custom",HNH_Color_Custom_val = "hnh_color_custom_val", HNH_Scale = "hnh_scale", HNH_Position_X = "hnh_position_x", HNH_Position_Y = "hnh_position_y";
-    public static final String Player_Coordinates_Key = "player_coordinates",PC_Color_Opacity = "pc_color_opacity",PC_Color = "pc_color",PC_Color_Custom = "pc_color_custom",PC_Color_Custom_val = "pc_color_custom_val",PC_Bg_Color_Opacity = "pc_bg_color_opacity", PC_Bg_Color = "pc_bg_color",PC_Position_X = "pc_position_x",PC_Position_Y = "pc_position_y";
-    public static final String Player_Direction_Key = "player_direction",PD_Color_Opacity = "pd_color_opacity",PD_Color = "pd_color",PD_Color_Custom = "pd_color_custom",PD_Color_Custom_val = "pd_color_custom_val",PD_Bg_Color_Opacity = "pd_bg_color_opacity", PD_Bg_Color = "pd_bg_color",PD_Position_X = "pd_position_x",PD_Position_Y = "pd_position_y";
-    public static final String Player_Warning_Key = "player_warning",PW_Color = "pw_color", PW_Scale = "pw_scale", PW_Position_X = "pw_position_x", PW_Position_Y = "pw_position_y",PW_timeout = "player_warnings_timeout",PW_HT_F_TH = "pw_ht_f_th",PW_HT_S_TH="pw_ht_s_th",PW_FTTH="PW_FTTH",PW_ATTH="pw_atth",PW_Sound_Status = "pw_sound_status";
-    // public static final String Health_Bar_Key = "health_bar",HB_Width = "hb_width";
-    public static final String Narrator_Support_Key = "narrator_support";
-    public static final String HeldItemNarratorKey = "held_item_narrator_key";
-
-    public static String getHelditemnarratorkey() {
-		return HeldItemNarratorKey;
-	}
-
+    private static final String Health_n_Hunger_Key = "health_n_hunger",HNH_Color_Opacity = "hnh_color_opacity", HNH_Color = "hnh_color" ,HNH_Color_Custom = "hnh_color_custom",HNH_Color_Custom_val = "hnh_color_custom_val", HNH_Scale = "hnh_scale", HNH_Position_X = "hnh_position_x", HNH_Position_Y = "hnh_position_y";
+    private static final String Player_Coordinates_Key = "player_coordinates",PC_Color_Opacity = "pc_color_opacity",PC_Color = "pc_color",PC_Color_Custom = "pc_color_custom",PC_Color_Custom_val = "pc_color_custom_val",PC_Bg_Color_Opacity = "pc_bg_color_opacity", PC_Bg_Color = "pc_bg_color",PC_Position_X = "pc_position_x",PC_Position_Y = "pc_position_y";
+    private static final String Player_Direction_Key = "player_direction",PD_Color_Opacity = "pd_color_opacity",PD_Color = "pd_color",PD_Color_Custom = "pd_color_custom",PD_Color_Custom_val = "pd_color_custom_val",PD_Bg_Color_Opacity = "pd_bg_color_opacity", PD_Bg_Color = "pd_bg_color",PD_Position_X = "pd_position_x",PD_Position_Y = "pd_position_y";
+    private static final String Player_Warning_Key = "player_warning",PW_Color = "pw_color", PW_Scale = "pw_scale", PW_Position_X = "pw_position_x", PW_Position_Y = "pw_position_y",PW_timeout = "player_warnings_timeout",PW_HT_F_TH = "pw_ht_f_th",PW_HT_S_TH="pw_ht_s_th",PW_FTTH="PW_FTTH",PW_ATTH="pw_atth",PW_Sound_Status = "pw_sound_status";
+    private static final String Narrator_Support_Key = "narrator_support";
+    private static final String HeldItemNarratorKey = "held_item_narrator_key";
+    private static final String Cardinal_to_Degrees_Key = "cardinal_to_degrees_key";
+    private static final String Replace_y_to_z_key = "replace_y_to_z_key";
+    private static String Biome_Indicator_Key = "biome_indicator_key";
+    private static String Narrator_Message_key = "narrator_message_key";
 
 	public ELConfig() {
     }
-
 
     public static boolean get(String key) {
         if (data == null) {
@@ -189,6 +186,11 @@ public class ELConfig {
         data.add(Narrator_Support_Key, new JsonPrimitive(true));
         data.add(HeldItemNarratorKey, new JsonPrimitive(true));
 
+        data.add(getCardinal_to_Degrees_Key(), new JsonPrimitive(true));
+        data.add(getReplace_y_to_z_key(), new JsonPrimitive(true));
+        data.add(getBiome_Indicator_Key(), new JsonPrimitive(true));
+        data.add(getNarrator_Message_key(), new JsonPrimitive(true));
+
         saveConfig(data);
         return data;
     }
@@ -210,174 +212,89 @@ public class ELConfig {
         data = newConfig;
     }
 
-    public static String getHealthNHungerKey() {
-        return Health_n_Hunger_Key;
-    }
+    public static String getBiome_Indicator_Key() { return Biome_Indicator_Key; }
 
-    public static String getPlayerCoordinatesKey() {
-        return Player_Coordinates_Key;
-    }
+    public static String getNarrator_Message_key() { return Narrator_Message_key; }
 
-    public static String getPlayerWarningKey() {
-        return Player_Warning_Key;
-    }
+    public static String getReplace_y_to_z_key() { return Replace_y_to_z_key; }
 
-    // public static String getHealthBarKey() {
-    //     return Health_Bar_Key;
-    // }
+    public static String getCardinal_to_Degrees_Key() { return Cardinal_to_Degrees_Key; }
 
-    public static String getPlayerDirectionKey() {
-        return Player_Direction_Key;
-    }
+    public static String getHelditemnarratorkey() { return HeldItemNarratorKey; }
 
-    public static String getNarratorSupportKey() {
-        return Narrator_Support_Key;
-    }
+    public static String getHealthNHungerKey() { return Health_n_Hunger_Key; }
 
-    public static String getHnhColor() {
-        return HNH_Color;
-    }
+    public static String getPlayerCoordinatesKey() { return Player_Coordinates_Key; }
 
-    public static String getHnhScale() {
-        return HNH_Scale;
-    }
+    public static String getPlayerWarningKey() { return Player_Warning_Key; }
 
-    public static String getHnhPositionX() {
-        return HNH_Position_X;
-    }
+    public static String getPlayerDirectionKey() { return Player_Direction_Key; }
 
-    public static String getHnhPositionY() {
-        return HNH_Position_Y;
-    }
+    public static String getNarratorSupportKey() { return Narrator_Support_Key; }
 
-    public static String getPcColor() {
-        return PC_Color;
-    }
+    public static String getHnhColor() { return HNH_Color; }
 
-    public static String getPcBgColor() {
-        return PC_Bg_Color;
-    }
+    public static String getHnhScale() { return HNH_Scale; }
 
-    public static String getPcPositionX() {
-        return PC_Position_X;
-    }
+    public static String getHnhPositionX() { return HNH_Position_X; }
 
-    public static String getPcPositionY() {
-        return PC_Position_Y;
-    }
+    public static String getHnhPositionY() { return HNH_Position_Y; }
 
-    public static String getPdColor() {
-        return PD_Color;
-    }
+    public static String getPcColor() { return PC_Color; }
 
-    public static String getPdBgColor() {
-        return PD_Bg_Color;
-    }
+    public static String getPcBgColor() { return PC_Bg_Color; }
 
-    public static String getPdPositionX() {
-        return PD_Position_X;
-    }
+    public static String getPcPositionX() { return PC_Position_X; }
 
-    public static String getPdPositionY() {
-        return PD_Position_Y;
-    }
+    public static String getPcPositionY() { return PC_Position_Y; }
 
-    public static String getPwColor() {
-        return PW_Color;
-    }
+    public static String getPdColor() { return PD_Color; }
 
-    public static String getPwScale() {
-        return PW_Scale;
-    }
+    public static String getPdBgColor() { return PD_Bg_Color; }
 
-    public static String getPwPositionX() {
-        return PW_Position_X;
-    }
+    public static String getPdPositionX() { return PD_Position_X; }
 
-    public static String getPwPositionY() {
-        return PW_Position_Y;
-    }
+    public static String getPdPositionY() { return PD_Position_Y; }
 
-    public static String getPwTimeout() {
-        return PW_timeout;
-    }
+    public static String getPwColor() { return PW_Color; }
 
-    // public static String getHbWidth() {
-    //     return HB_Width;
-    // }
+    public static String getPwScale() { return PW_Scale; }
 
-    public static String getPwHtFTh() {
-        return PW_HT_F_TH;
-    }
+    public static String getPwPositionX() { return PW_Position_X; }
 
-    public static String getPwHtSTh() {
-        return PW_HT_S_TH;
-    }
+    public static String getPwPositionY() { return PW_Position_Y; }
 
-    public static String getPwFtth() {
-        return PW_FTTH;
-    }
+    public static String getPwTimeout() { return PW_timeout; }
 
-    public static String getPwAtth() {
-        return PW_ATTH;
-    }
+    public static String getPwHtFTh() { return PW_HT_F_TH; }
 
-    public static String getPwSoundStatus() {
-        return PW_Sound_Status;
-    }
+    public static String getPwHtSTh() { return PW_HT_S_TH; }
 
+    public static String getPwFtth() { return PW_FTTH; }
 
-    public static String getPcColorCustom() {
-        return PC_Color_Custom;
-    }
+    public static String getPwAtth() { return PW_ATTH; }
 
+    public static String getPwSoundStatus() { return PW_Sound_Status; }
 
-    public static String getPcColorCustomVal() {
-        return PC_Color_Custom_val;
-    }
+    public static String getPcColorCustom() { return PC_Color_Custom; }
 
+    public static String getPcColorCustomVal() { return PC_Color_Custom_val; }
 
-    public static String getPdColorCustom() {
-        return PD_Color_Custom;
-    }
+    public static String getPdColorCustom() { return PD_Color_Custom; }
 
+    public static String getPdColorCustomVal() { return PD_Color_Custom_val; }
 
-    public static String getPdColorCustomVal() {
-        return PD_Color_Custom_val;
-    }
+    public static String getHnhColorCustom() { return HNH_Color_Custom; }
 
+    public static String getHnhColorCustomVal() { return HNH_Color_Custom_val; }
 
-    public static String getHnhColorCustom() {
-        return HNH_Color_Custom;
-    }
+    public static String getHnhColorOpacity() { return HNH_Color_Opacity; }
 
+    public static String getPcColorOpacity() { return PC_Color_Opacity; }
 
-    public static String getHnhColorCustomVal() {
-        return HNH_Color_Custom_val;
-    }
+    public static String getPcBgColorOpacity() { return PC_Bg_Color_Opacity; }
 
+    public static String getPdColorOpacity() { return PD_Color_Opacity; }
 
-    public static String getHnhColorOpacity() {
-        return HNH_Color_Opacity;
-    }
-
-
-    public static String getPcColorOpacity() {
-        return PC_Color_Opacity;
-    }
-
-
-    public static String getPcBgColorOpacity() {
-        return PC_Bg_Color_Opacity;
-    }
-
-
-    public static String getPdColorOpacity() {
-        return PD_Color_Opacity;
-    }
-
-
-    public static String getPdBgColorOpacity() {
-        return PD_Bg_Color_Opacity;
-    }
+    public static String getPdBgColorOpacity() { return PD_Bg_Color_Opacity; }
 }

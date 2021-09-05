@@ -20,10 +20,11 @@ import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
+import net.shoaibkhan.easy.life.utils.Colors;
 
 public class HNHConfigGui extends LightweightGuiDescription {
-    private ClientPlayerEntity player;
-    private MinecraftClient client;
+    private final ClientPlayerEntity player;
+    private final MinecraftClient client;
     
     public HNHConfigGui(ClientPlayerEntity player,MinecraftClient client){
         this.player = player;
@@ -35,7 +36,7 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
 
 
-        WLabel hnh_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black",100));
+        WLabel hnh_color_label = new WLabel(new LiteralText("Text Color :-"), Colors.colors("black",100));
         hnh_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(hnh_color_label, 1, 1, 3, 1);
 
@@ -71,7 +72,7 @@ public class HNHConfigGui extends LightweightGuiDescription {
         ScaleButton hnhscale = new ScaleButton("Scale", ELConfig.getHnhScale());
         root.add(hnhscale, 1, 9, 6, 1);
 
-        WLabel hnhpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black",100));
+        WLabel hnhpos = new WLabel(new LiteralText("Position :-"), Colors.colors("black",100));
         hnhpos.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(hnhpos, 1, 7, 3, 1);
 
@@ -102,7 +103,7 @@ public class HNHConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 11, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), ClientMod.colors("red",100));
+        WLabel label = new WLabel(new LiteralText("Health n Hunger Configuration"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
         
@@ -121,7 +122,7 @@ public class HNHConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
     }
     
 }

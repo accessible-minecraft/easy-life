@@ -25,7 +25,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
-import net.shoaibkhan.easy.life.ClientMod;
+import net.shoaibkhan.easy.life.utils.Colors;
 
 public class NarratorMenuGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -66,7 +66,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
     }
     
     private void target_information() {

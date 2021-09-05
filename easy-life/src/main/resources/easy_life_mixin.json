@@ -7,9 +7,10 @@
     ],
     "client": [
         "ButtonMixin",
-        "Hotbar"
+        "Hotbar",
+        "ScreenAccessorMixin"
     ],
     "injectors": {
-      "defaultRequire": 1
+        "defaultRequire": 1
     }
-  }
+}

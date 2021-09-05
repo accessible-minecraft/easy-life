@@ -12,13 +12,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitColorButton;
+import net.shoaibkhan.easy.life.utils.Colors;
 
 public class PCConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -34,7 +34,7 @@ public class PCConfigGui extends LightweightGuiDescription {
 
 
 
-        WLabel pc_color_label = new WLabel(new LiteralText("Text Color :-"), ClientMod.colors("black",100));
+        WLabel pc_color_label = new WLabel(new LiteralText("Text Color :-"), Colors.colors("black",100));
         pc_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_color_label, 1, 1, 3, 1);
 
@@ -68,7 +68,7 @@ public class PCConfigGui extends LightweightGuiDescription {
         root.add(pc_color_opacity_submit, 12, 5, 3, 1);
 
 
-        WLabel pc_background_color_label = new WLabel(new LiteralText("Background Color :-"), ClientMod.colors("black",100));
+        WLabel pc_background_color_label = new WLabel(new LiteralText("Background Color :-"), Colors.colors("black",100));
         pc_background_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_background_color_label, 1, 7, 5, 1);
 
@@ -87,7 +87,7 @@ public class PCConfigGui extends LightweightGuiDescription {
 
 
 
-        WLabel pcpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black",100));
+        WLabel pcpos = new WLabel(new LiteralText("Position :-"), Colors.colors("black",100));
         pcpos.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pcpos, 1, 11, 3, 1);
 
@@ -119,7 +119,7 @@ public class PCConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 13, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), ClientMod.colors("red",100));
+        WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
@@ -138,7 +138,7 @@ public class PCConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
     }
     
 }

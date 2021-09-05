@@ -12,7 +12,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
@@ -21,6 +20,7 @@ import net.shoaibkhan.easy.life.gui.widgets.ScaleButton;
 import net.shoaibkhan.easy.life.gui.widgets.SubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.THDoubleSubmitButton;
 import net.shoaibkhan.easy.life.gui.widgets.THSubmitButton;
+import net.shoaibkhan.easy.life.utils.Colors;
 
 public class PWConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -44,7 +44,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         ConfigButton pwsound = new ConfigButton("Sounds",ELConfig.getPwSoundStatus());
         root.add(pwsound, 13, 1, 5, 1);
 
-        WLabel pwpos = new WLabel(new LiteralText("Position :-"), ClientMod.colors("black",100));
+        WLabel pwpos = new WLabel(new LiteralText("Position :-"), Colors.colors("black",100));
         pwpos.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwpos, 1, 3, 3, 1);
 
@@ -65,7 +65,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf,ELConfig.getPwPositionX(),ELConfig.getPwPositionY());
         root.add(pwpossubmit, 14, 3, 3, 1);
 
-        WLabel pwtimeout = new WLabel(new LiteralText("Timeout (in seconds) :-"), ClientMod.colors("black",100));
+        WLabel pwtimeout = new WLabel(new LiteralText("Timeout (in seconds) :-"), Colors.colors("black",100));
         pwtimeout.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwtimeout, 1, 5, 5, 1);
 
@@ -75,7 +75,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         SubmitButton pwtosubmit = new SubmitButton("Submit",pwtof,ELConfig.getPwTimeout());
         root.add(pwtosubmit, 12, 5, 3, 1);
 
-        WLabel pwht = new WLabel(new LiteralText("Health Threshold :-"), ClientMod.colors("black",100));
+        WLabel pwht = new WLabel(new LiteralText("Health Threshold :-"), Colors.colors("black",100));
         pwht.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwht, 1, 7, 5, 1);
 
@@ -96,7 +96,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         THDoubleSubmitButton pwhtsubmit = new THDoubleSubmitButton("Submit",pwhtftf,pwhtstf,ELConfig.getPwHtFTh(),ELConfig.getPwHtSTh());
         root.add(pwhtsubmit, 18, 7, 3, 1);
 
-        WLabel pwft = new WLabel(new LiteralText("Food Threshold :-"), ClientMod.colors("black",100));
+        WLabel pwft = new WLabel(new LiteralText("Food Threshold :-"), Colors.colors("black",100));
         pwft.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwft, 1, 9, 4, 1);
 
@@ -106,7 +106,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         THSubmitButton pwftsubmit = new THSubmitButton("Submit",pwftf,ELConfig.getPwFtth());
         root.add(pwftsubmit, 10, 9, 3, 1);
 
-        WLabel pwat = new WLabel(new LiteralText("Air Threshold :-"), ClientMod.colors("black",100));
+        WLabel pwat = new WLabel(new LiteralText("Air Threshold :-"), Colors.colors("black",100));
         pwat.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwat, 1, 11, 4, 1);
 
@@ -126,7 +126,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 13, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Player Warnings Configuration"), ClientMod.colors("red",100));
+        WLabel label = new WLabel(new LiteralText("Player Warnings Configuration"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
         
@@ -145,6 +145,6 @@ public class PWConfigGui extends LightweightGuiDescription {
     
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
     }
 }

@@ -10,13 +10,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.config.ELConfig;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
+import net.shoaibkhan.easy.life.utils.Colors;
 
 public class ConfigGui extends LightweightGuiDescription {
-    private ClientPlayerEntity player;
-    private MinecraftClient client;
+    private final ClientPlayerEntity player;
+    private final MinecraftClient client;
 
     public ConfigGui(ClientPlayerEntity player,MinecraftClient client) {
         this.player = player;
@@ -96,7 +96,7 @@ public class ConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 7, 12, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Easy Life"), ClientMod.colors("red",100));
+        WLabel label = new WLabel(new LiteralText("Easy Life"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
         
@@ -138,7 +138,7 @@ public class ConfigGui extends LightweightGuiDescription {
 
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(ClientMod.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
     }
 
 }
