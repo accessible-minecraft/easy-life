@@ -63,4 +63,50 @@ public class PlayerPosition {
         if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
         return ""+posZ+"z";
     }
+
+    public int getVerticalFacingDirection(){
+        assert player != null;
+        return (int) player.getRotationClient().x;
+    }
+
+    public int getHorizontalFacingDirectionInDegrees(){
+        assert player != null;
+        int angle = (int) player.getRotationClient().y;
+
+        while (angle >= 360) angle -= 360;
+        while (angle <= -360) angle += 360;
+
+        return angle;
+    }
+
+    public String getHorizontalFacingDirectionInCardinal(){
+        assert player != null;
+
+        int angle  = getHorizontalFacingDirectionInDegrees();
+        String cardinal = "";
+
+        if ((angle >= -150 && angle <= -120) || (angle >= 210 && angle <= 240)) {
+            // Looking North East
+            cardinal = "North East";
+        } else if ((angle >= -60 && angle <= -30) || (angle >= 300 && angle <= 330)) {
+            // Looking South East
+            cardinal = "South East";
+        } else if ((angle >= 30 && angle <= 60) || (angle >= -330 && angle <= -300)) {
+            // Looking South West
+            cardinal = "South West";
+        } else if ((angle >= 120 && angle <= 150) || (angle >= -240 && angle <= -210)) {
+            // Looking North West
+            cardinal = "North West";
+        } else {
+            String dir = player.getHorizontalFacing().asString();
+            dir = dir.toLowerCase().trim();
+            if (dir.contains("north")) cardinal = "North";
+            else if (dir.contains("south")) cardinal = "South";
+            else if (dir.contains("east")) cardinal = "East";
+            else if (dir.contains("west")) cardinal = "West";
+            else cardinal = "East";
+        }
+
+        return cardinal;
+    }
 }

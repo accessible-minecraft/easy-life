@@ -3,10 +3,10 @@ package net.shoaibkhan.easy.life;
 import java.util.Map;
 
 import net.minecraft.client.MinecraftClient;
+import net.shoaibkhan.easy.life.utils.NarrateLabel;
 
 public class CustomWait extends Thread {
     private int timeOut, val;
-    @SuppressWarnings("unused")
 	private MinecraftClient client;
     private boolean running=false;
     private String usingString = "";
@@ -23,22 +23,22 @@ public class CustomWait extends Thread {
 	}
     
     public void run() {
-        if (val==7) {
-            Initial.waitFlag = timeOut;
-            while(Initial.waitFlag > 0 && running){
+        if (val==1) {
+            NarrateLabel.waitFlag = timeOut;
+            while(NarrateLabel.waitFlag > 0 && running && client!=null){
                 try {
                     Thread.sleep(1);
-                    if(Initial.waitFlag <= 500) {
-                    	if(Initial.usingMouse.contains(usingString)) Initial.usingMouse = Initial.usingMouse.replace(usingString, "");
-                    	if(Initial.usingTab.contains(usingString)) Initial.usingTab= Initial.usingTab.replace(usingString, "");
+                    if(NarrateLabel.waitFlag <= 500) {
+                    	if(NarrateLabel.usingMouse.contains(usingString)) NarrateLabel.usingMouse = NarrateLabel.usingMouse.replace(usingString, "");
+                    	if(NarrateLabel.usingTab.contains(usingString)) NarrateLabel.usingTab= NarrateLabel.usingTab.replace(usingString, "");
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                     
                 }
-                Initial.waitFlag--;
+                NarrateLabel.waitFlag--;
             }
         } else if(val==0) {
-        	while(running) {
+        	while(running && client!=null) {
         		try {
 					if(!Initial.counterMap.isEmpty()) {
 						for (Map.Entry<String, Integer> entry : Initial.counterMap.entrySet()) {
@@ -50,7 +50,7 @@ public class CustomWait extends Thread {
 						}
 					}
 					Thread.sleep(1);
-				} catch (Exception e) {
+				} catch (Exception ignored) {
 				}
         	}
         }
@@ -60,8 +60,8 @@ public class CustomWait extends Thread {
         running = false;
         interrupt();
         if(!usingString.equals("")) {
-        	if(Initial.usingMouse.contains(usingString)) Initial.usingMouse = Initial.usingMouse.replace(usingString, "");
-        	if(Initial.usingTab.contains(usingString)) Initial.usingTab= Initial.usingTab.replace(usingString, "");
+        	if(NarrateLabel.usingMouse.contains(usingString)) NarrateLabel.usingMouse = NarrateLabel.usingMouse.replace(usingString, "");
+        	if(NarrateLabel.usingTab.contains(usingString)) NarrateLabel.usingTab= NarrateLabel.usingTab.replace(usingString, "");
         }
     }
 
