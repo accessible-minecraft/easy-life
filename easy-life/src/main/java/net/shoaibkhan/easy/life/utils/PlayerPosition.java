@@ -3,7 +3,7 @@ package net.shoaibkhan.easy.life.utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 
 public class PlayerPosition {
     private final PlayerEntity player;
@@ -27,7 +27,7 @@ public class PlayerPosition {
         Vec3d pos = player.getPos();
 
         String tempPosY;
-        if(ELConfig.get(ELConfig.getReplace_y_to_z_key())) tempPosY = pos.z +"";
+        if(Config.get(Config.getReplace_y_to_z_key())) tempPosY = pos.z +"";
         else tempPosY = pos.y +"";
         tempPosY = tempPosY.substring(0, tempPosY.indexOf(".")+2);
 
@@ -39,7 +39,7 @@ public class PlayerPosition {
         Vec3d pos = player.getPos();
 
         String tempPosZ;
-        if(ELConfig.get(ELConfig.getReplace_y_to_z_key())) tempPosZ = pos.y +"";
+        if(Config.get(Config.getReplace_y_to_z_key())) tempPosZ = pos.y +"";
         else tempPosZ = pos.z +"";
         tempPosZ = tempPosZ.substring(0, tempPosZ.indexOf(".")+2);
 

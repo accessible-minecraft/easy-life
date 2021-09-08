@@ -3,15 +3,14 @@ package net.shoaibkhan.easy.life.utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.NarratorManager;
 import net.shoaibkhan.easy.life.CustomWait;
+import net.shoaibkhan.easy.life.Initial;
 
 public class NarrateLabel {
-    private static CustomWait wait;
     private static int prevX = -9999,prevY = -9999;
     public static int waitFlag = 0;
-    public static String usingTab = "",usingMouse = "";
+    public static String usingTab = "", usingMouse = "";
 
     public NarrateLabel(){
-        wait = new CustomWait();
     }
 
     /**
@@ -29,10 +28,10 @@ public class NarrateLabel {
         prevY = y;
         NarratorManager.INSTANCE.clear();
         NarratorManager.INSTANCE.narrate(label);
-        if(wait.isAlive()) wait.stopThread();
-        wait = new CustomWait();
-        wait.setTabWait(5000, 1, instance, using);
-        wait.start();
-        wait.startThread();
+        if(Initial.wait.isAlive()) Initial.wait.stopThread();
+        Initial.wait = new CustomWait();
+        Initial.wait.setTabWait(5000, 1, instance, using);
+        Initial.wait.start();
+        Initial.wait.startThread();
     }
 }

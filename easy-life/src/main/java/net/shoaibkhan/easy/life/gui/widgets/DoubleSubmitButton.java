@@ -4,7 +4,7 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 
 public class DoubleSubmitButton extends WButton{
     private String jsonkeyx,jsonkeyy;
@@ -23,13 +23,13 @@ public class DoubleSubmitButton extends WButton{
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
 //        if(this.isEnabled()){
-//            if(posx.getText().equals(""))posx.setText(ELConfig.getString(jsonkeyx));
-//            if(posy.getText().equals(""))posy.setText(ELConfig.getString(jsonkeyy));
-//            if( ELConfig.setInt(jsonkeyx, posx.getText()) && ELConfig.setInt(jsonkeyy, posy.getText()) ) {
+//            if(posx.getText().equals(""))posx.setText(Config.getString(jsonkeyx));
+//            if(posy.getText().equals(""))posy.setText(Config.getString(jsonkeyy));
+//            if( Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText()) ) {
 //                posx.setText("");
 //                posy.setText("");
-//                posx.setSuggestion(ELConfig.getString(jsonkeyx));
-//                posy.setSuggestion(ELConfig.getString(jsonkeyy));
+//                posx.setSuggestion(Config.getString(jsonkeyx));
+//                posy.setSuggestion(Config.getString(jsonkeyy));
 //            }
 //        }
 //    }
@@ -39,13 +39,13 @@ public class DoubleSubmitButton extends WButton{
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         if (this.isEnabled()) {
-            if (posx.getText().equals("")) posx.setText(ELConfig.getString(jsonkeyx));
-            if (posy.getText().equals("")) posy.setText(ELConfig.getString(jsonkeyy));
-            if (ELConfig.setInt(jsonkeyx, posx.getText()) && ELConfig.setInt(jsonkeyy, posy.getText())) {
+            if (posx.getText().equals("")) posx.setText(Config.getString(jsonkeyx));
+            if (posy.getText().equals("")) posy.setText(Config.getString(jsonkeyy));
+            if (Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText())) {
                 posx.setText("");
                 posy.setText("");
-                posx.setSuggestion(ELConfig.getString(jsonkeyx));
-                posy.setSuggestion(ELConfig.getString(jsonkeyy));
+                posx.setSuggestion(Config.getString(jsonkeyx));
+                posy.setSuggestion(Config.getString(jsonkeyy));
             }
         }
         return InputResult.PROCESSED;

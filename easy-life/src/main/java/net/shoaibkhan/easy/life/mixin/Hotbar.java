@@ -1,5 +1,6 @@
 package net.shoaibkhan.easy.life.mixin;
 
+import net.shoaibkhan.easy.life.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +13,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
-import net.shoaibkhan.easy.life.config.ELConfig;
 
 @Mixin(InGameHud.class)
 public class Hotbar {
@@ -25,7 +25,7 @@ public class Hotbar {
 	
 	@Inject(at=@At("TAIL") ,method="renderHeldItemTooltip")
 	public void renderHeldItemTooltipMixin(MatrixStack matrixStack,CallbackInfo callbackInfo) {
-		if (this.heldItemTooltipFade == 38 && !this.currentStack.isEmpty() && ELConfig.get(ELConfig.getHelditemnarratorkey())) {
+		if (this.heldItemTooltipFade == 38 && !this.currentStack.isEmpty() && Config.get(Config.getHelditemnarratorkey())) {
 			MutableText mutableText = (new LiteralText("")).append(this.currentStack.getName()).formatted(this.currentStack.getRarity().formatting);
 			MinecraftClient.getInstance().player.sendMessage(new LiteralText(mutableText.getString()), true);
 		}

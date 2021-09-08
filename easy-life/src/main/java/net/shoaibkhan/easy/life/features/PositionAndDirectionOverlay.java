@@ -6,7 +6,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.utils.PlayerPosition;
 
 import static net.shoaibkhan.easy.life.utils.Colors.colors;
@@ -30,9 +30,9 @@ public class PositionAndDirectionOverlay {
     private void main(){
         RenderSystem.enableBlend();
 
-        if(ELConfig.get(ELConfig.getPlayerCoordinatesKey())) printPlayerCoordinatesOnScreen();
+        if(Config.get(Config.getPlayerCoordinatesKey())) printPlayerCoordinatesOnScreen();
 
-        if(ELConfig.get(ELConfig.getPlayerDirectionKey())) printPlayerDirectionOnScreen();
+        if(Config.get(Config.getPlayerDirectionKey())) printPlayerDirectionOnScreen();
     }
 
     private void printPlayerCoordinatesOnScreen() {
@@ -41,15 +41,15 @@ public class PositionAndDirectionOverlay {
         String posZ = new PlayerPosition(client).getNarratableZPos();
         String posString = "Position: " + posX + " | " + posY + " | " + posZ + "  ";
 
-        int x = Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX())), y = Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY()));
-        int bgColor = colors(ELConfig.getString(ELConfig.getPcBgColor()), ELConfig.getOpacity(ELConfig.getPcBgColorOpacity()));
-        int color = colors(ELConfig.getString(ELConfig.getPcColor()), ELConfig.getOpacity(ELConfig.getPcColorOpacity()));
+        int x = Integer.parseInt(Config.getString(Config.getPcPositionX())), y = Integer.parseInt(Config.getString(Config.getPcPositionY()));
+        int bgColor = colors(Config.getString(Config.getPcBgColor()), Config.getOpacity(Config.getPcBgColorOpacity()));
+        int color = colors(Config.getString(Config.getPcColor()), Config.getOpacity(Config.getPcColorOpacity()));
         try {
-            if (ELConfig.get(ELConfig.getPcColorCustom())) {
-                color = colors(ELConfig.getString(ELConfig.getPcColorCustomVal()), ELConfig.getOpacity(ELConfig.getPcColorOpacity()));
+            if (Config.get(Config.getPcColorCustom())) {
+                color = colors(Config.getString(Config.getPcColorCustomVal()), Config.getOpacity(Config.getPcColorOpacity()));
             }
         } catch (Exception e) {
-            color = colors(ELConfig.getString(ELConfig.getPcColor()), ELConfig.getOpacity(ELConfig.getPcColorOpacity()));
+            color = colors(Config.getString(Config.getPcColor()), Config.getOpacity(Config.getPcColorOpacity()));
         }
 
         matrixStack.push();
@@ -59,18 +59,18 @@ public class PositionAndDirectionOverlay {
 
         matrixStack.push();
         matrixStack.scale(1, 1, inGameHud.getZOffset());
-        textRenderer.draw(matrixStack, posString, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionX())) + 3, Integer.parseInt(ELConfig.getString(ELConfig.getPcPositionY())) + 3, color);
+        textRenderer.draw(matrixStack, posString, Integer.parseInt(Config.getString(Config.getPcPositionX())) + 3, Integer.parseInt(Config.getString(Config.getPcPositionY())) + 3, color);
         matrixStack.pop();
     }
 
     private void printPlayerDirectionOnScreen(){
-        int x = Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionX())),y = Integer.parseInt(ELConfig.getString(ELConfig.getPdPositionY()));
-        int bgColor = colors(ELConfig.getString(ELConfig.getPdBgColor()),ELConfig.getOpacity(ELConfig.getPdBgColorOpacity()));
-        int color = colors(ELConfig.getString(ELConfig.getPdColor()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
+        int x = Integer.parseInt(Config.getString(Config.getPdPositionX())),y = Integer.parseInt(Config.getString(Config.getPdPositionY()));
+        int bgColor = colors(Config.getString(Config.getPdBgColor()), Config.getOpacity(Config.getPdBgColorOpacity()));
+        int color = colors(Config.getString(Config.getPdColor()), Config.getOpacity(Config.getPdColorOpacity()));
         try {
-            if(ELConfig.get(ELConfig.getPdColorCustom())) color = colors(ELConfig.getString(ELConfig.getPdColorCustomVal()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
+            if(Config.get(Config.getPdColorCustom())) color = colors(Config.getString(Config.getPdColorCustomVal()), Config.getOpacity(Config.getPdColorOpacity()));
         } catch (Exception e) {
-            color = colors(ELConfig.getString(ELConfig.getPdColor()),ELConfig.getOpacity(ELConfig.getPdColorOpacity()));
+            color = colors(Config.getString(Config.getPdColor()), Config.getOpacity(Config.getPdColorOpacity()));
         }
 
         String dirString="Direction: " + new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();

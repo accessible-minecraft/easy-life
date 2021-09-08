@@ -16,7 +16,9 @@ import java.util.Map;
 @Environment(EnvType.CLIENT)
 public class Initial implements ModInitializer {
     public static ClientMod clientMod;
+    public static CustomWait wait;
 	public static Map<String, Integer> counterMap;
+    public static String biomeIndicatorString = "";
 
     @Override
     public void onInitialize() {
@@ -30,6 +32,7 @@ public class Initial implements ModInitializer {
         countMapThread.start();
         
         clientMod = new ClientMod();
+        wait = new CustomWait();
     }
 
     private void initializeKeyBinds(){

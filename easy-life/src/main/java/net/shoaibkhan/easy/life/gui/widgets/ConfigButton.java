@@ -3,14 +3,14 @@ package net.shoaibkhan.easy.life.gui.widgets;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.TranslatableText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 
 public class ConfigButton extends WButton {
     private String translateKey;
     private String jsonKey;
 
     public ConfigButton(String translationKey, String jsonKey) {
-        super(new TranslatableText(translationKey + (ELConfig.get(jsonKey) ? " : on" : " : off")));
+        super(new TranslatableText(translationKey + (Config.get(jsonKey) ? " : on" : " : off")));
         this.translateKey = translationKey;
         this.jsonKey = jsonKey;
 
@@ -21,7 +21,7 @@ public class ConfigButton extends WButton {
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
 //        if(this.isEnabled()){
-//            boolean enabled = ELConfig.toggle(this.jsonKey);
+//            boolean enabled = Config.toggle(this.jsonKey);
 //            TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
 //            this.setLabel(newButtonText);
 //        }
@@ -32,7 +32,7 @@ public class ConfigButton extends WButton {
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         if(this.isEnabled()){
-            boolean enabled = ELConfig.toggle(this.jsonKey);
+            boolean enabled = Config.toggle(this.jsonKey);
             TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
             this.setLabel(newButtonText);
         }

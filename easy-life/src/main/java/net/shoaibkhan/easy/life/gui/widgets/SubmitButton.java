@@ -4,7 +4,7 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 
 public class SubmitButton extends WButton{
     private String jsonKey;
@@ -22,7 +22,7 @@ public class SubmitButton extends WButton{
 //        super.onClick(x, y, button);
 //        if(this.isEnabled()){
 //            String value = this.textField.getText();
-//            if(ELConfig.setInt(jsonKey, value)) {
+//            if(Config.setInt(jsonKey, value)) {
 //                this.textField.setText("");
 //                this.textField.setSuggestion(value);
 //            }
@@ -35,7 +35,7 @@ public class SubmitButton extends WButton{
         super.onClick(x, y, button);
         if(this.isEnabled()){
             String value = this.textField.getText();
-            if(ELConfig.setInt(jsonKey, value)) {
+            if(Config.setInt(jsonKey, value)) {
                 this.textField.setText("");
                 this.textField.setSuggestion(value);
             }

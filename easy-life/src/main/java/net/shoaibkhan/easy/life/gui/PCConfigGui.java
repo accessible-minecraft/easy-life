@@ -12,7 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.DoubleSubmitButton;
@@ -38,33 +38,33 @@ public class PCConfigGui extends LightweightGuiDescription {
         pc_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_color_label, 1, 1, 3, 1);
 
-        ColorButton pccolor = new ColorButton("Color",ELConfig.getPcColor());
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pccolor.setEnabled(false);
+        ColorButton pccolor = new ColorButton("Color", Config.getPcColor());
+        if(Config.get(Config.getPcColorCustom())) pccolor.setEnabled(false);
         else pccolor.setEnabled(true);
         root.add(pccolor, 12, 1, 5, 1);
 
-        WTextField pccolortf = new WTextField(new LiteralText(""+ELConfig.getString(ELConfig.getPcColorCustomVal())));
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pccolortf.setEditable(true);
+        WTextField pccolortf = new WTextField(new LiteralText(""+ Config.getString(Config.getPcColorCustomVal())));
+        if(Config.get(Config.getPcColorCustom())) pccolortf.setEditable(true);
         else pccolortf.setEditable(false);
         pccolortf.setDisabledColor(0x2c2c2c);
         root.add(pccolortf, 5, 3, 4, 1);
 
-        SubmitColorButton pccolorsubmit = new SubmitColorButton("Set", pccolortf, ELConfig.getPcColorCustomVal());
-        if(ELConfig.get(ELConfig.getPcColorCustom())) pccolorsubmit.setEnabled(true);
+        SubmitColorButton pccolorsubmit = new SubmitColorButton("Set", pccolortf, Config.getPcColorCustomVal());
+        if(Config.get(Config.getPcColorCustom())) pccolorsubmit.setEnabled(true);
         else pccolorsubmit.setEnabled(false);
         root.add(pccolorsubmit, 11, 3, 2, 1);
 
-        CustomColorButton pc_color_custom_button = new CustomColorButton("Custom Color", ELConfig.getPcColorCustom(), pccolor, pccolortf, pccolorsubmit);
+        CustomColorButton pc_color_custom_button = new CustomColorButton("Custom Color", Config.getPcColorCustom(), pccolor, pccolortf, pccolorsubmit);
         root.add(pc_color_custom_button, 5, 1, 6, 1);
 
         WLabel pc_color_opacity_label = new WLabel(new LiteralText("Opacity:-"));
         pc_color_opacity_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_color_opacity_label, 5, 5, 3, 1);
 
-        WTextField pc_color_opacity_field = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcColorOpacity())));
+        WTextField pc_color_opacity_field = new WTextField(new LiteralText(Config.getString(Config.getPcColorOpacity())));
         root.add(pc_color_opacity_field, 9, 5, 2, 1);
 
-        SubmitButton pc_color_opacity_submit = new SubmitButton("Set", pc_color_opacity_field, ELConfig.getPcColorOpacity());
+        SubmitButton pc_color_opacity_submit = new SubmitButton("Set", pc_color_opacity_field, Config.getPcColorOpacity());
         root.add(pc_color_opacity_submit, 12, 5, 3, 1);
 
 
@@ -72,17 +72,17 @@ public class PCConfigGui extends LightweightGuiDescription {
         pc_background_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_background_color_label, 1, 7, 5, 1);
 
-        ColorButton pcbgcolor = new ColorButton("Color",ELConfig.getPcBgColor());
+        ColorButton pcbgcolor = new ColorButton("Color", Config.getPcBgColor());
         root.add(pcbgcolor, 7, 7, 5, 1);
 
         WLabel pc_bg_color_opacity_label = new WLabel(new LiteralText("Opacity:-"));
         pc_bg_color_opacity_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_bg_color_opacity_label, 5, 9, 3, 1);
 
-        WTextField pc_bg_color_opacity_field = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcBgColorOpacity())));
+        WTextField pc_bg_color_opacity_field = new WTextField(new LiteralText(Config.getString(Config.getPcBgColorOpacity())));
         root.add(pc_bg_color_opacity_field, 9, 9, 2, 1);
 
-        SubmitButton pc_bg_color_opacity_submit = new SubmitButton("Set", pc_bg_color_opacity_field, ELConfig.getPcBgColorOpacity());
+        SubmitButton pc_bg_color_opacity_submit = new SubmitButton("Set", pc_bg_color_opacity_field, Config.getPcBgColorOpacity());
         root.add(pc_bg_color_opacity_submit, 12, 9, 3, 1);
 
 
@@ -95,17 +95,17 @@ public class PCConfigGui extends LightweightGuiDescription {
         pcx.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pcx, 5, 11, 1, 1);
 
-        WTextField pcxf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionX())));
+        WTextField pcxf = new WTextField(new LiteralText(Config.getString(Config.getPcPositionX())));
         root.add(pcxf, 6, 11, 2, 1);
 
         WLabel pcy = new WLabel(new LiteralText("Y="));
         pcy.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pcy, 9, 11, 1, 1);
 
-        WTextField pcyf = new WTextField(new LiteralText(ELConfig.getString(ELConfig.getPcPositionY())));
+        WTextField pcyf = new WTextField(new LiteralText(Config.getString(Config.getPcPositionY())));
         root.add(pcyf, 10, 11, 2, 1);
 
-        DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf,ELConfig.getPcPositionX(),ELConfig.getPcPositionY());
+        DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf, Config.getPcPositionX(), Config.getPcPositionY());
         root.add(pcpossubmit, 14, 11, 3, 1);
         
 

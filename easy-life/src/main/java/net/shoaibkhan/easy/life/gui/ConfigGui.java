@@ -10,7 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
 import net.shoaibkhan.easy.life.utils.Colors;
 
@@ -25,43 +25,49 @@ public class ConfigGui extends LightweightGuiDescription {
 
         setRootPanel(root);
 
-        ConfigButton pwstatus = new ConfigButton("Player Warnings", ELConfig.getPlayerWarningKey());
-        root.add(pwstatus,1, 2, 10 ,1);
+        ConfigButton playerWarnings = new ConfigButton("Player Warnings", Config.getPlayerWarningKey());
+        root.add(playerWarnings,1, 3, 10 ,1);
 
-        WButton pwmore = new WButton(new LiteralText("More.."));
-        pwmore.setOnClick(this::pwClick);
-        root.add(pwmore, 12, 2, 5, 1);
+        ConfigButton hotbarItemNarrator = new ConfigButton("Hotbar Item Narrator", Config.getHelditemnarratorkey());
+        root.add(hotbarItemNarrator, 13, 3, 10, 1);
 
-        ConfigButton pcstatus = new ConfigButton("Player Coordinates", ELConfig.getPlayerCoordinatesKey());
-        root.add(pcstatus, 1, 4, 10 ,1);
+        ConfigButton biomeIndicator = new ConfigButton("Biome Indicator", Config.getBiome_Indicator_Key());
+        root.add(biomeIndicator, 1, 5, 10, 1);
 
-        WButton pcmore = new WButton(new LiteralText("More.."));
-        pcmore.setOnClick(this::pcClick);
-        root.add(pcmore, 12, 4, 5, 1);
+        ConfigButton cardinalToDegrees = new ConfigButton("Cardinal to Degrees", Config.getCardinal_to_Degrees_Key());
+        root.add(cardinalToDegrees, 13,5, 10, 1);
 
-        ConfigButton pdstatus = new ConfigButton("Player Direction", ELConfig.getPlayerDirectionKey());
-        root.add(pdstatus, 1, 6, 10 ,1);
+        ConfigButton replaceYtoZ = new ConfigButton("Replace Y to Z", Config.getReplace_y_to_z_key());
+        root.add(replaceYtoZ, 1, 7, 10, 1);
 
-        WButton pdmore = new WButton(new LiteralText("More.."));
-        pdmore.setOnClick(this::pdClick);
-        root.add(pdmore, 12, 6, 5, 1);
+        WButton playerWarningsSettings = new WButton(new LiteralText("Player Warnings Settings"));
+        playerWarningsSettings.setOnClick(this::pwClick);
+        root.add(playerWarningsSettings, 13, 7, 10, 1);
 
-        ConfigButton hnhstatus = new ConfigButton("Health n Hunger", ELConfig.getHealthNHungerKey());
-        root.add(hnhstatus, 1, 8, 10 ,1);
+        ConfigButton playerCoordinates = new ConfigButton("Player Coordinates Overlay", Config.getPlayerCoordinatesKey());
+        root.add(playerCoordinates, 1, 9, 10 ,1);
 
-        ConfigButton nsbutton = new ConfigButton("Narrator",ELConfig.getNarratorSupportKey());
-        root.add(nsbutton, 3, 10, 7, 1);
+        ConfigButton playerDirection = new ConfigButton("Player Direction Overlay", Config.getPlayerDirectionKey());
+        root.add(playerDirection, 13, 9, 10 ,1);
 
-        ConfigButton hinButton = new ConfigButton("Hotbar Item Narrator",ELConfig.getHelditemnarratorkey());
-        root.add(hinButton, 10, 10, 10, 1);
+        WButton playerCoordinatesOverlaySettings = new WButton(new LiteralText("Player Coordinates Overlay Settings"));
+        playerCoordinatesOverlaySettings.setOnClick(this::pcClick);
+        root.add(playerCoordinatesOverlaySettings, 1, 11, 10, 1);
+
+        WButton playerDirectionOverlaySettings = new WButton(new LiteralText("Player Direction Overlay Settings"));
+        playerDirectionOverlaySettings.setOnClick(this::pdClick);
+        root.add(playerDirectionOverlaySettings, 13, 11, 10, 1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 7, 12, 7, 1);
+        root.add(doneButton, 7, 13, 7, 1);
+
+        WLabel labelForPadding = new WLabel(new LiteralText(""), Colors.colors("red",100));
+        root.add(labelForPadding, 0, 14, 21, 1);
 
         WLabel label = new WLabel(new LiteralText("Easy Life"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        root.add(label, 0, 0, 21, 1);
+        root.add(label, 0, 1, 21, 1);
 
         root.validate(this);
 }

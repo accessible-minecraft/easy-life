@@ -8,11 +8,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
-import net.shoaibkhan.easy.life.features.DirectionNarrator;
-import net.shoaibkhan.easy.life.features.PlayerWarnings;
-import net.shoaibkhan.easy.life.features.PositionAndDirectionOverlay;
-import net.shoaibkhan.easy.life.features.PositionNarrator;
+import net.shoaibkhan.easy.life.config.Config;
+import net.shoaibkhan.easy.life.features.*;
 import net.shoaibkhan.easy.life.gui.ConfigGui;
 import net.shoaibkhan.easy.life.gui.ConfigScreen;
 import net.shoaibkhan.easy.life.gui.NarratorMenuGui;
@@ -24,6 +21,7 @@ import net.shoaibkhan.easy.life.utils.KeyBinds;
 @Environment(EnvType.CLIENT)
 public class ClientMod {
     private final MinecraftClient client;
+    private BiomeIndicator biomeIndicator = new BiomeIndicator();
     private boolean coordFlag = false;
     public static boolean isAltPressed,isXPressed, isCPressed, isZPressed;
 
@@ -44,19 +42,34 @@ public class ClientMod {
 
             new PositionNarrator(client);
 
-            if (coordFlag && (ELConfig.get(ELConfig.getPlayerCoordinatesKey()) || ELConfig.get(ELConfig.getPlayerDirectionKey()))) {
+            if (coordFlag && (Config.get(Config.getPlayerCoordinatesKey()) || Config.get(Config.getPlayerDirectionKey()))) {
                 new PositionAndDirectionOverlay(client);
             }
 
             new DirectionNarrator(client);
 
+            biomeIndicatorHandler();
+
         }
 
+    }
+
+    private void biomeIndicatorHandler() {
+        if(Config.get(Config.getBiome_Indicator_Key())) {
+            if (!biomeIndicator.isAlive()) {
+                biomeIndicator = new BiomeIndicator();
+                biomeIndicator.startThread();
+            }
+        } else if(biomeIndicator.isAlive()){
+            biomeIndicator.stopThread();
+            biomeIndicator = new BiomeIndicator();
+        }
     }
 
     private void keyPressHandler(){
 
         if(client.currentScreen == null) {
+            assert client.player != null;
             if(KeyBinds.CONFIG_MENU_KEY.getKeyBind().wasPressed()){
                 Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
                 client.openScreen(screen);
@@ -70,17 +83,15 @@ public class ClientMod {
             }
 
             // Toggle Position and Direction Overlay
-            while (KeyBinds.PLAYER_COORDINATES_AND_DIRECTION_OVERLAY_KEY.getKeyBind().wasPressed() && (ELConfig.get(ELConfig.getPlayerCoordinatesKey()) || ELConfig.get(ELConfig.getPlayerDirectionKey()))) {
+            if (KeyBinds.PLAYER_COORDINATES_AND_DIRECTION_OVERLAY_KEY.getKeyBind().wasPressed() && (Config.get(Config.getPlayerCoordinatesKey()) || Config.get(Config.getPlayerDirectionKey()))) {
                 coordFlag = !coordFlag;
             }
 
-            while (KeyBinds.HEALTH_N_HUNGER_KEY.getKeyBind().wasPressed() && ELConfig.get(ELConfig.getHealthNHungerKey())) {
-                if (ELConfig.get(ELConfig.getNarratorSupportKey())) {
-                    assert client.player != null;
-                    double health = client.player.getHealth();
-                    double hunger = client.player.getHungerManager().getFoodLevel();
-                    client.player.sendMessage(new LiteralText("health is " + ((double) Math.round((health / 2) * 10) / 10) + " Hunger is " + ((double) Math.round((hunger / 2) * 10) / 10)), true);
-                }
+            if (KeyBinds.HEALTH_N_HUNGER_KEY.getKeyBind().wasPressed()) {
+                assert client.player != null;
+                double health = client.player.getHealth();
+                double hunger = client.player.getHungerManager().getFoodLevel();
+                client.player.sendMessage(new LiteralText("health is " + ((double) Math.round((health / 2) * 10) / 10) + " Hunger is " + ((double) Math.round((hunger / 2) * 10) / 10)), true);
             }
         }
     }

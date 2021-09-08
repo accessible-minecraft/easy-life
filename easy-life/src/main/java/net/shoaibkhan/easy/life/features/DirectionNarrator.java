@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.utils.KeyBinds;
 import net.shoaibkhan.easy.life.utils.PlayerPosition;
 
@@ -29,7 +29,7 @@ public class DirectionNarrator {
         } else {
             int angle = new PlayerPosition(client).getHorizontalFacingDirectionInDegrees();
 
-            if(ELConfig.get(ELConfig.getCardinal_to_Degrees_Key())){
+            if(Config.get(Config.getCardinal_to_Degrees_Key())){
                 text += angle;
             } else {
                 String string = new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();

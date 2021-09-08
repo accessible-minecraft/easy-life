@@ -4,7 +4,7 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.easy.life.config.ELConfig;
+import net.shoaibkhan.easy.life.config.Config;
 
 
 public class THDoubleSubmitButton  extends WButton{
@@ -24,13 +24,13 @@ public class THDoubleSubmitButton  extends WButton{
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
 //        if(this.isEnabled()){
-//            if(a.getText().equals(""))a.setText(ELConfig.getString(jsonkeya));
-//            if(b.getText().equals(""))b.setText(ELConfig.getString(jsonkeyb));
-//            if( ELConfig.setDouble(jsonkeya, a.getText()) && ELConfig.setDouble(jsonkeyb, b.getText()) ) {
+//            if(a.getText().equals(""))a.setText(Config.getString(jsonkeya));
+//            if(b.getText().equals(""))b.setText(Config.getString(jsonkeyb));
+//            if( Config.setDouble(jsonkeya, a.getText()) && Config.setDouble(jsonkeyb, b.getText()) ) {
 //                a.setText("");
 //                b.setText("");
-//                a.setSuggestion(ELConfig.getString(jsonkeya));
-//                b.setSuggestion(ELConfig.getString(jsonkeyb));
+//                a.setSuggestion(Config.getString(jsonkeya));
+//                b.setSuggestion(Config.getString(jsonkeyb));
 //            }
 //        }
 //    }
@@ -40,13 +40,13 @@ public class THDoubleSubmitButton  extends WButton{
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         if(this.isEnabled()){
-            if(a.getText().equals(""))a.setText(ELConfig.getString(jsonkeya));
-            if(b.getText().equals(""))b.setText(ELConfig.getString(jsonkeyb));
-            if( ELConfig.setDouble(jsonkeya, a.getText()) && ELConfig.setDouble(jsonkeyb, b.getText()) ) {
+            if(a.getText().equals(""))a.setText(Config.getString(jsonkeya));
+            if(b.getText().equals(""))b.setText(Config.getString(jsonkeyb));
+            if( Config.setDouble(jsonkeya, a.getText()) && Config.setDouble(jsonkeyb, b.getText()) ) {
                 a.setText("");
                 b.setText("");
-                a.setSuggestion(ELConfig.getString(jsonkeya));
-                b.setSuggestion(ELConfig.getString(jsonkeyb));
+                a.setSuggestion(Config.getString(jsonkeya));
+                b.setSuggestion(Config.getString(jsonkeyb));
             }
         }
         return InputResult.PROCESSED;
