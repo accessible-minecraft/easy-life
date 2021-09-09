@@ -4,11 +4,14 @@ import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WLabel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
+//import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
@@ -22,7 +25,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
 import net.shoaibkhan.easy.life.utils.Colors;
@@ -42,22 +44,24 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         
         WButton wb11 = new WButton(new LiteralText("Target Information"));
         wb11.setOnClick(this::target_information);
-        root.add(wb11, 4, 0, 7, 1);
+        root.add(wb11, 1, 1, 7, 1);
         
         WButton wb12 = new WButton(new LiteralText("Target Position"));
         wb12.setOnClick(this::target_position);
-        root.add(wb12, 12, 0, 7, 1);;
+        root.add(wb12, 9, 1, 7, 1);;
 
         WButton wb22 = new WButton(new LiteralText("Light Level"));
         wb22.setOnClick(this::light_level);
-        root.add(wb22, 8, 2, 7, 1);
+        root.add(wb22, 1, 3, 7, 1);
 
         WButton wb23 = new WButton(new LiteralText("Biome"));
         wb23.setOnClick(this::getBiome);
-        root.add(wb23, 16, 2, 7, 1);       
-        
-        
-        root.validate(this);
+        root.add(wb23, 9, 3, 7, 1);
+
+		WLabel labelForPadding = new WLabel(new LiteralText(""), Colors.colors("red",100));
+		root.add(labelForPadding, 0, 4, 17, 1);
+
+		root.validate(this);
         
 //        WButton wb31 = new WButton(new LiteralText("Time Of Day"));
 //        wb31.setOnClick(this::getTimeOfDay);
@@ -329,17 +333,64 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         ));
     }
 
-    private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
+	// 1.16
+	/*
+    private static Vec3d map(float anglePerPixel, Vec3d center, Vector3f horizontalRotationAxis, Vector3f verticalRotationAxis, int x, int y, int width, int height) {
     	    float horizontalRotation = (x - width/2f) * anglePerPixel;
     	    float verticalRotation = (y - height/2f) * anglePerPixel;
 
-    	    final Vec3f temp2 = new Vec3f(center);
+    	    final Vector3f temp2 = new Vector3f(center);
     	    temp2.rotate(verticalRotationAxis.getDegreesQuaternion(verticalRotation));
     	    temp2.rotate(horizontalRotationAxis.getDegreesQuaternion(horizontalRotation));
     	    return new Vec3d(temp2);
     	}
 
     private HitResult get_target() {
+		int width = client.getWindow().getScaledWidth();
+		int height = client.getWindow().getScaledHeight();
+		Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
+		double fov = client.options.fov;
+		double angleSize = fov/height;
+		Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
+		verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
+
+		Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
+		horizontalRotationAxis.cross(verticalRotationAxis);
+		horizontalRotationAxis.normalize();
+
+		verticalRotationAxis = new Vector3f(cameraDirection);
+		verticalRotationAxis.cross(horizontalRotationAxis);
+
+		int x = width/2;
+		int y = height/2;
+
+		Vec3d direction = map(
+				(float) angleSize,
+				cameraDirection,
+				horizontalRotationAxis,
+				verticalRotationAxis,
+				x,
+				y,
+				width,
+				height
+		);
+		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
+    }
+	 */
+
+	// 1.17
+
+	private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
+		float horizontalRotation = (x - width/2f) * anglePerPixel;
+		float verticalRotation = (y - height/2f) * anglePerPixel;
+
+		final Vec3f temp2 = new Vec3f(center);
+		temp2.rotate(verticalRotationAxis.getDegreesQuaternion(verticalRotation));
+		temp2.rotate(horizontalRotationAxis.getDegreesQuaternion(horizontalRotation));
+		return new Vec3d(temp2);
+	}
+
+	private HitResult get_target() {
 		int width = client.getWindow().getScaledWidth();
 		int height = client.getWindow().getScaledHeight();
 		Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
@@ -369,27 +420,5 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 				height
 		);
 		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
-    }
-
-	// TODO Fix This
-    /* 
-    private void getTimeOfDay() {
-        this.player.closeScreen();
-        String string = "";
-        long timeOfDay = client.world.getTimeOfDay();
-        long time= client.world.getTime();
-        int hour = (int)Math.floor(time/1000);
-        hour += 6;
-        if(hour>=24) hour-=24;
-        if(hour>=0 && hour<12) string += " " + hour + " A.M.";
-        else if(hour>=13 && hour<24) string += " " + ((int)hour-12) + " P.M.";
-        else if(hour==12) string += " 12 P.M.";
-        int minutes = (int)time%1000;
-        minutes = (int)(minutes/16.6);
-        if(minutes>=15) string += " " + minutes + " minutes";
-        string = String.format("TimeOfDay: %d ,Time: %d",timeOfDay,time);
-    	this.player.sendMessage(new LiteralText(string) ,true);
-    }
-    */
-    
+	}
 }

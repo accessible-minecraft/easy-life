@@ -22,7 +22,7 @@ public class ColorButton extends WButton {
         }
     }
 
-    // 1.16
+//    // 1.16
 //    @Override
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);

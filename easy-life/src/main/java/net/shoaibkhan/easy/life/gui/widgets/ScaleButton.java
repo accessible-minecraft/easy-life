@@ -17,7 +17,7 @@ public class ScaleButton extends WButton {
         this.value = Integer.parseInt(Config.getString(jsonKey));
     }
 
-    // 1.16
+//    // 1.16
 //    @Override
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
