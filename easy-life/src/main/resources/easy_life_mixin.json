@@ -5,8 +5,11 @@
     "compatibilityLevel": "JAVA_8",
     "mixins": [
     ],
-    "client": [],
+    "client": [
+        "ButtonMixin",
+        "Hotbar"
+    ],
     "injectors": {
-      "defaultRequire": 1
+        "defaultRequire": 1
     }
-  }
+}

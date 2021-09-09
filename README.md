@@ -1,159 +1,141 @@
-# Health n Hunger Mod
+# Easy Life Mod
 
 ## Discription
 
-This is a __fabric__ mod. This mod shows the player the current coordinates and the direction. This mod also adds warns when health/food/air bubble is decreased.
+This is a __*Minecraft Fabric*__ mod. This mod adds features like player coordinates, direction, health, etc narrator and more. Join the discord server to get updates, request feature or report bugs.
 
-[Download]()
+| [Discord](https://discord.gg/yQjjsDqWQX) | [Issues](https://github.com/shoaib11120/easy-life/issues) | [Download](https://www.curseforge.com/minecraft/mc-mods/easy-life/files) | [GitHub](https://github.com/shoaib11120/easy-life) |
 
-*Note: This is a client-side mod. So no need to install it to server.*
+___
 
-If you have any issues with the mod, you can describe your issues in the [issues]() tab.
+## Changelog
+
+### 1.4.0
+
+- Removed settings for Health n Hunger from the config, it is now enabled by default. Also the Health n Hunger overlay is removed as well cuz it was pretty useless.
+- Added Biome Indicator, enabled by default it narrates the biome name when entering a biome.
+- Added option to switch between degrees or cardinal directions for the direction narrator.
+- Added option to invert y to z axis.
+
+### 1.13.0
+
+- Added new keyinding, alt + h, it narrates the vertical direction of the player. If it narrates the direction as 0, then the player is facing straigh, if the it narrates 90, then the player is facing straight down and if it narrates negative 90, then the player is facing straight up.
+
 
 ___
 
 ## Requirements
 
-#### These are the current requirements of the mod:-
+These are the current requirements of the mod:-
 
-1. Minecraft Java (1.16.x)
-2. [Fabric](https://fabricmc.net/wiki/install)
-3. [WinRar](https://www.win-rar.com/download.html) (Only for mod customization)
+- Minecraft Java (1.16.x or 1.17.x)
+- [Fabric](https://fabricmc.net/wiki/install)
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) or [Accessibility Plus Extended](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended) (For narrator support)
 
 ___
 
 ## Mod Installation
 
-Download the [easy-life-1.x.x.jar]() file and paste it in your mods folder located in :-
->%AppData%\\.minecraft\mods
+Download the [easy-life-1.x.x.jar](https://www.curseforge.com/minecraft/mc-mods/easy-life/files) file and paste it in your mods folder located in :-
+
+    %AppData%\.minecraft\mods
 
 Your mod is now installed!
 ___
 
-## Mod Customization
+## New Keybindings/Hotkeys
 
-### Step 1: Navigate to your mods folder
+- **M** = Open configuration menu.
+- **F6** = Enable player position/direction overlay.
+- **G** = Narrate player position.
+- **H** = Narrate player direction.
+- **R** = Narrate health and hunger.
+- **F4** = Open f4 menu.
+- **Alt + z** = Narrate z coordinate.
+- **Alt + x** = Narrate x coordinate.
+- **Alt + c** = Narrate y coordinate.
 
->%AppData%\\.minecraft\mods
-
-![Mods Folder](/readmeAssets/mods_folder.png)
-
-### Step 2: Open the mod jar file with WinRar
-
-![Open with WinRar](/readmeAssets/openWithWinrar.png)
-
-### Step 3: Navigate to assets folder
-
-![Navigate to assets folder](/readmeAssets/navigate_to_assets.png)
-
-### Step 4: Open config.txt file and change the configuration
-
-![Open config.txt](/readmeAssets/config.png)
-
-### Step 5: Save the new configurations
-
-To save the configuration save the file and when you will close the file you will get a prompt to update the archive, hit ok!
-![Save new configurations](/readmeAssets/save_prompt.png)
-
-Your new configurations for the mod are saved.
-
-__*Note:You can only change the configurations when Minecraft is closed.*__
-
-#### In-Built Colors
-
-Below are the in-built colors that you can use in the mod:-
-
-1. Red
-1. Grey
-1. Purple
-1. White
-1. Black
-1. Pink
-1. Blue
-1. Green
-1. Yellow
-1. Orange
-1. Brown
-
-___
+*\**Note:- These keybindings can be changed from the in-game controls menu.*\**
 
 ## Mod Features
 
 ### Player Coordinates
 
-__Enabled__ by default. This feature/mod will show the current coordinates/position of the player. The Hotkey for this mod is __F6__ .
-
-#### Demo:-
-
-![Player Coordinates Demo](/readmeAssets/player_coordinates.png)
-
-#### Configurations:-
-
-Name | Values | Default Value | Usage
----- | ------ | ------------- | -----
-player-coordination-status | on/off | on | To enable/disble this mod
-player-coordination-color | [In-Built Colors](#in-built-colors) | White | To change the text color
-player-coordination-background | [In-Built Colors](#in-built-colors) | Black | To change the background color
-player-coordination-positionx | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
-player-coordination-positiony | Integers/Real numbers | 40 | To change the Y(vertical) position of the overlay
+This feature narrates the current coordinates/position of the player. The Hotkey for this feature is __'G'__ . You can also invert the y to z axis if you want from the config menu.
 
 ### Player Direction
 
-__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ .
-
-#### Demo:-
-
-![Player Coordinates Demo](/readmeAssets/player_direction.png)
-
-#### Configurations:-
-
-Name | Values | Default Value | Usage
----- | ------ | ------------- | -----
-player-direction-status | on/off | on | To enable/disble this mod
-player-direction-color | [In-Built Colors](#in-built-colors) | White | To change the text color
-player-direction-background | [In-Built Colors](#in-built-colors) | Black | To change the background color
-player-direction-positionx | Integers/Real numbers | 0 | To change the X(horizontal) position of the overlay
-player-direction-positiony | Integers/Real numbers | 57 | To change the Y(vertical) position of the overlay
+This feature narrate the current horizontal or vertical direction of the player. The Hotkey for horizontal direction is __'H'__ and that of vertical direction is __'Alt + H'__. You can change the cardinal form to degrees for the horizontal direction narration. 
 
 ### Health n Hunger
 
-__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __R__.
-
-#### Demo:-
-
-![Health n Hunger](/readmeAssets/health_n_hunger.png)
-
-#### Configurations:-
-
-Name | Values | Default Value | Usage
----- | ------ | ------------- | -----
-health-n-hunger-status | on/off | on | To enable/disble this mod
-health-n-hunger-color | [In-Built Colors](#in-built-colors) | Red | To change the text color
-health-n-hunger-scale | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
-health-n-hunger-positionx | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
-health-n-hunger-positiony | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
+This feature narrates the current health and hunger and food level of the player. The Hotkey for this mod is __'R'__.
 
 ### Player Warnings
 
-__Disabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low.
+__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. You can modify certain things like thresholds for health or food or air levels from the config menu. The player warning settings menu it is not very accessible right now but it will in the next few updates.
 
-#### Demo:-
+### Narrator Menu
 
-![Player Warnings](/readmeAssets/player_warning.png)
+The hotkey for this mod is __'F4'__. This menu has four options in it:-
 
-#### Configurations:-
+1. Target Information - It narrates the name of the block you're targetting and the relative position of the block to the player.
+2. Target Position - It narrate the coordinates of the block you're targetting.
+3. Light Level - It narrates the light level at the player's position.
+4. Biome - It narrates the name of the biome the player is currently at.
 
-Name | Values | Default Value | Usage
----- | ------ | ------------- | -----
-player-warnings-status | on/off | on | To enable/disble this mod
-player-warnings-color | [In-Built Colors](#in-built-colors) | Yellow | To change the text color
-player-warnings-scale | Integer/Real numbers | 2 |To change the scale/font size of the overlay. __*Note:Changing the value will result in change in x and y position of the overlay!*__
-player-warnings-positionx | Integers/Real numbers | 10 | To change the X(horizontal) position of the overlay
-player-warnings-positiony | Integers/Real numbers | 35 | To change the Y(vertical) position of the overlay
-player-warnings-timeout | Time(in seconds) | 300 |To change the cooldown of the mod.
+### Player Position and Direction Overlay
+
+This feature add a minecraft bedrock like position and direction overlay, position and size of the overlay can be changed from the config menu. The Hotkey to enable or disable this feature is __'F6'__.
+
+*Note:- This feature will soon be remmoved.*
 
 ___
 
-## License
+## Mod Customization
 
-This project is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+The hotkey to open config menu is **'M'**.
+
+### In-Built Colors
+
+Below are the in-built colors that you can use in the mod:-
+
+- Red
+- Grey
+- Purple
+- White
+- Black
+- Pink
+- Blue
+- Green
+- Yellow
+- Orange
+- Brown
+
+### Custom Colors
+
+Now you can use custom colors in place of in-built colors. You can find custom colors from this website - [Color Picker](https://htmlcolorcodes.com/color-picker/).
+
+*___Note:- You can only use hex color codes___*
+
+___
+
+## Contact
+
+- Discord Server - https://discord.gg/yQjjsDqWQX
+- Discord - Shoaib#9319
+- Email - mdshoaibkhan.1999@gmail.com
+
+___
+
+## Mod Recommendation
+
+- [MAmbience](https://www.curseforge.com/minecraft/mc-mods/mambience) - This mod adds sound effects to vanilla minecraft like walking on sand, stone, dirt, etc. and many more.
+
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) - This mod adds accessibility options like crosshair block narrator, read tooltip, inventory keyboard navigation. This mod also allows user to use NVDA instead of default narrator.
+
+- [Accessibility Plus Extended](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended) - This mod adds more accessibility options like fall detector, ore detector, durability checker, etc.
+
+- [Numpad/Keypad Camera Controls](https://www.curseforge.com/minecraft/mc-mods/numpad-keypad-camera-controls) - This mod enables numpad to control mouse movements. 
+
+___
