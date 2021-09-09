@@ -2,7 +2,7 @@
 
 ## Discription
 
-This is a __*Minecraft Fabric*__ mod. This mod shows the current coordinates and the direction of the player. This mod also warns the player when health/food/air bubble is decreased. Join the discord server to get updates, request feature or report bugs.
+This is a __*Minecraft Fabric*__ mod. This mod adds features like player coordinates, direction, health, etc narrator and more. Join the discord server to get updates, request feature or report bugs.
 
 | [Discord](https://discord.gg/yQjjsDqWQX) | [Issues](https://github.com/shoaib11120/easy-life/issues) | [Download](https://www.curseforge.com/minecraft/mc-mods/easy-life/files) | [GitHub](https://github.com/shoaib11120/easy-life) |
 
@@ -10,17 +10,17 @@ ___
 
 ## Changelog
 
-### 1.0.11
+### 1.4.0
 
-New keybindings to narrate x, y and z coordinate individually.
+- Removed settings for Health n Hunger from the config, it is now enabled by default. Also the Health n Hunger overlay is removed as well cuz it was pretty useless.
+- Added Biome Indicator, enabled by default it narrates the biome name when entering a biome.
+- Added option to switch between degrees or cardinal directions for the direction narrator.
+- Added option to invert y to z axis.
 
-- **Alt + z** = Narrate z coordinate.
-- **Alt + x** = Narrate x coordinate.
-- **Alt + c** = Narrate y coordinate.
+### 1.13.0
 
-### 1.0.10
+- Added new keyinding, alt + h, it narrates the vertical direction of the player. If it narrates the direction as 0, then the player is facing straigh, if the it narrates 90, then the player is facing straight down and if it narrates negative 90, then the player is facing straight up.
 
-- Bug fixed in target position. Bug reported by AudioGamesFortnite.
 
 ___
 
@@ -28,9 +28,9 @@ ___
 
 These are the current requirements of the mod:-
 
-- Minecraft Java (1.16.x)
+- Minecraft Java (1.16.x or 1.17.x)
 - [Fabric](https://fabricmc.net/wiki/install)
-- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) (Only for narrator support. Don't download it if you don't want the narrator support.)
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) or [Accessibility Plus Extended](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended) (For narrator support)
 
 ___
 
@@ -55,35 +55,46 @@ ___
 - **Alt + x** = Narrate x coordinate.
 - **Alt + c** = Narrate y coordinate.
 
+*\**Note:- These keybindings can be changed from the in-game controls menu.*\**
+
 ## Mod Features
 
 ### Player Coordinates
 
-__Enabled__ by default. This feature/mod will show the current coordinates/position of the player. The Hotkey for this mod is __'F6'__ . The Hotkey for position narrator is __'G'__.
+This feature narrates the current coordinates/position of the player. The Hotkey for this feature is __'G'__ . You can also invert the y to z axis if you want from the config menu.
 
 ### Player Direction
 
-__Enabled__ by default. This feature/mod will show the current direction the player is facing. The Hotkey for this mod is also __F6__ . The Hotkey for direction narrator is __'H'__.
+This feature narrate the current horizontal or vertical direction of the player. The Hotkey for horizontal direction is __'H'__ and that of vertical direction is __'Alt + H'__. You can change the cardinal form to degrees for the horizontal direction narration. 
 
 ### Health n Hunger
 
-__Enabled__ by default. This feature/mod shows the current health and hunger/food level of the player. The Hotkey for this mod is __'R'__. Added accessibility plus support to this mod.
+This feature narrates the current health and hunger and food level of the player. The Hotkey for this mod is __'R'__.
 
 ### Player Warnings
 
-__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. Added accessibility plus support to this mod.
+__Enabled__ by default. This feature/mod warns the player when the health/food level/air bubble is low. You can modify certain things like thresholds for health or food or air levels from the config menu. The player warning settings menu it is not very accessible right now but it will in the next few updates.
 
 ### Narrator Menu
 
-__Enabled__ by default. This feature helps blind/partly blind people to use some of the __'F3'__ features through narration. The hotkey for this mod is __'F4'__.
+The hotkey for this mod is __'F4'__. This menu has four options in it:-
 
-*Note:- This mod/feature requires [accessibility plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) mod.*
+1. Target Information - It narrates the name of the block you're targetting and the relative position of the block to the player.
+2. Target Position - It narrate the coordinates of the block you're targetting.
+3. Light Level - It narrates the light level at the player's position.
+4. Biome - It narrates the name of the biome the player is currently at.
+
+### Player Position and Direction Overlay
+
+This feature add a minecraft bedrock like position and direction overlay, position and size of the overlay can be changed from the config menu. The Hotkey to enable or disable this feature is __'F6'__.
+
+*Note:- This feature will soon be remmoved.*
 
 ___
 
 ## Mod Customization
 
-The hotkey to open Customization menu is **'M'**. Now you can configure the mod in-game.
+The hotkey to open config menu is **'M'**.
 
 ### In-Built Colors
 
