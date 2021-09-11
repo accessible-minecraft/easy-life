@@ -93,7 +93,7 @@ public class PlayerWarnings {
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
                     width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
 
-            player.sendMessage(new LiteralText("Health Low"), true);
+            Initial.narrate("Health Low");
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
@@ -110,7 +110,7 @@ public class PlayerWarnings {
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
 
             matrixStack.pop();
-            player.sendMessage(new LiteralText("Health Low"), true);
+            Initial.narrate("Health Low");
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
             }
@@ -148,7 +148,7 @@ public class PlayerWarnings {
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
                     width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
             matrixStack.pop();
-            player.sendMessage(new LiteralText("Food Low"), true);
+            Initial.narrate("Food Low");
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
@@ -181,7 +181,7 @@ public class PlayerWarnings {
 
             DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
             matrixStack.pop();
-            player.sendMessage(new LiteralText("Air Low"), true);
+            Initial.narrate("Air Low");
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);

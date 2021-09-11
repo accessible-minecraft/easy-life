@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
+import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.utils.KeyBinds;
 import net.shoaibkhan.easy.life.utils.PlayerPosition;
@@ -37,6 +38,6 @@ public class DirectionNarrator {
             }
         }
 
-        player.sendMessage(new LiteralText(text), true);
+        Initial.narrate(text);
     }
 }

@@ -2,7 +2,7 @@ package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
-import io.github.cottonmc.cotton.gui.widget.data.InputResult;
+//import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.config.Config;
 
@@ -18,36 +18,36 @@ public class DoubleSubmitButton extends WButton{
         this.jsonkeyy = jsonkeyy;
     }
 
-//    // 1.16
-//    @Override
-//    public void onClick(int x, int y, int button) {
-//        super.onClick(x, y, button);
-//        if(this.isEnabled()){
-//            if(posx.getText().equals(""))posx.setText(Config.getString(jsonkeyx));
-//            if(posy.getText().equals(""))posy.setText(Config.getString(jsonkeyy));
-//            if( Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText()) ) {
-//                posx.setText("");
-//                posy.setText("");
-//                posx.setSuggestion(Config.getString(jsonkeyx));
-//                posy.setSuggestion(Config.getString(jsonkeyy));
-//            }
-//        }
-//    }
-
-    // 1.17
+    // 1.16
     @Override
-    public InputResult onClick(int x, int y, int button) {
+    public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if (this.isEnabled()) {
-            if (posx.getText().equals("")) posx.setText(Config.getString(jsonkeyx));
-            if (posy.getText().equals("")) posy.setText(Config.getString(jsonkeyy));
-            if (Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText())) {
+        if(this.isEnabled()){
+            if(posx.getText().equals(""))posx.setText(Config.getString(jsonkeyx));
+            if(posy.getText().equals(""))posy.setText(Config.getString(jsonkeyy));
+            if( Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText()) ) {
                 posx.setText("");
                 posy.setText("");
                 posx.setSuggestion(Config.getString(jsonkeyx));
                 posy.setSuggestion(Config.getString(jsonkeyy));
             }
         }
-        return InputResult.PROCESSED;
     }
+
+//    // 1.17
+//    @Override
+//    public InputResult onClick(int x, int y, int button) {
+//        super.onClick(x, y, button);
+//        if (this.isEnabled()) {
+//            if (posx.getText().equals("")) posx.setText(Config.getString(jsonkeyx));
+//            if (posy.getText().equals("")) posy.setText(Config.getString(jsonkeyy));
+//            if (Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText())) {
+//                posx.setText("");
+//                posy.setText("");
+//                posx.setSuggestion(Config.getString(jsonkeyx));
+//                posy.setSuggestion(Config.getString(jsonkeyy));
+//            }
+//        }
+//        return InputResult.PROCESSED;
+//    }
 }

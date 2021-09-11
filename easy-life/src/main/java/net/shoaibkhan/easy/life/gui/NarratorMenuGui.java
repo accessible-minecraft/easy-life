@@ -10,8 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
-//import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.client.util.math.Vector3f;
+//import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
@@ -27,6 +27,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
+import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.utils.Colors;
 
 public class NarratorMenuGui extends LightweightGuiDescription {
@@ -81,7 +82,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			 
 			switch(hit.getType()) {
 			    case MISS:
-	                this.player.sendMessage(new LiteralText("Too far"), true);
+	                Initial.narrate("Too far");;
 			    	break; 
 			    case BLOCK:{
 			        try {
@@ -91,7 +92,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 						Block block = blockState.getBlock();
 						MutableText mutableText = new LiteralText("").append(block.getName());
 						String text = "" + mutableText.getString() + ", " + get_position_difference(blockPos);
-						player.sendMessage(new LiteralText(text), true);
+						Initial.narrate(text);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -106,7 +107,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 	                    name = mutableText.getString();
 	                    BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
 	                    String text = "" + name + ", " + get_position_difference(blockPos);
-	                    this.player.sendMessage(new LiteralText(text) ,true);
+						Initial.narrate(text);
 	                } catch (Exception e) {
 	                    e.printStackTrace();
 	                }
@@ -126,13 +127,13 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			HitResult hit = get_target();
 			switch (hit.getType()) {
 			    case MISS:
-			        	this.player.sendMessage(new LiteralText("Too far"), true);
+			        	Initial.narrate("Too far");;
 			        break;
 			    case BLOCK: {
 			        try {
 						BlockHitResult blockHitResult = (BlockHitResult) hit;
 						BlockPos blockPos = blockHitResult.getBlockPos();
-						this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+						Initial.narrate(get_position(blockPos));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -142,7 +143,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			    	try {
 						EntityHitResult entityHitResult = (EntityHitResult) hit;
 						BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
-						this.player.sendMessage(new LiteralText(get_position(blockPos)) ,true);
+						Initial.narrate(get_position(blockPos));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -159,7 +160,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         try {
 			this.player.closeScreen();
 			int light = this.client.world.getLightLevel(this.player.getBlockPos());
-			this.player.sendMessage(new LiteralText("Light level is, "+ light) ,true);
+			Initial.narrate("Light level is, "+ light);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,7 +171,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			this.player.closeScreen();
 			Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
 			String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
-			this.player.sendMessage(new LiteralText(""+name+" biome") ,true);
+			Initial.narrate(""+name+" biome");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -334,7 +335,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     }
 
 	// 1.16
-	/*
     private static Vec3d map(float anglePerPixel, Vec3d center, Vector3f horizontalRotationAxis, Vector3f verticalRotationAxis, int x, int y, int width, int height) {
     	    float horizontalRotation = (x - width/2f) * anglePerPixel;
     	    float verticalRotation = (y - height/2f) * anglePerPixel;
@@ -376,10 +376,9 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 		);
 		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
     }
-	 */
 
 	// 1.17
-
+	/*
 	private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
 		float horizontalRotation = (x - width/2f) * anglePerPixel;
 		float verticalRotation = (y - height/2f) * anglePerPixel;
@@ -421,4 +420,5 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 		);
 		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
 	}
+	 */
 }

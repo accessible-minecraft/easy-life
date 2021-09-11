@@ -102,7 +102,8 @@ public class ClientMod {
                     if(ELConfig.get(ELConfig.getNarratorSupportKey())){
                         double health = client.player.getHealth();
                         double hunger = client.player.getHungerManager().getFoodLevel();
-                        client.player.sendMessage(new LiteralText("health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10)),true);
+                        String toNarrate = "health is "+((double) Math.round((health / 2) * 10) / 10)+" Hunger is "+((double) Math.round((hunger / 2) * 10) / 10);
+                        Initial.narrate(toNarrate);
                     }
                     tickCount = 120f;
                 }

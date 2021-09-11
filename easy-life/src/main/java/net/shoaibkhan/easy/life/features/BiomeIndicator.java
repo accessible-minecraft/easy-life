@@ -31,7 +31,8 @@ public class BiomeIndicator extends Thread {
 
                 if (!Initial.biomeIndicatorString.equalsIgnoreCase(name)) {
                     Initial.biomeIndicatorString = name;
-                    client.player.sendMessage(new LiteralText(name + " biome entered."), true);
+                    String toNarrate =name + " biome entered.";
+                    Initial.narrate(toNarrate);
                 }
 
                 Thread.sleep(1);

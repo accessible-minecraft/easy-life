@@ -1,5 +1,6 @@
 package net.shoaibkhan.easy.life.mixin;
 
+import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +28,7 @@ public class Hotbar {
 	public void renderHeldItemTooltipMixin(MatrixStack matrixStack,CallbackInfo callbackInfo) {
 		if (this.heldItemTooltipFade == 38 && !this.currentStack.isEmpty() && Config.get(Config.getHelditemnarratorkey())) {
 			MutableText mutableText = (new LiteralText("")).append(this.currentStack.getName()).formatted(this.currentStack.getRarity().formatting);
-			MinecraftClient.getInstance().player.sendMessage(new LiteralText(mutableText.getString()), true);
+			Initial.narrate(mutableText.getString());
 		}
 	}
 }
