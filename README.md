@@ -4,11 +4,15 @@
 
 This is a __*Minecraft Fabric*__ mod. This mod adds features like player coordinates, direction, health, etc narrator and more. Join the discord server to get updates, request feature or report bugs.
 
-| [Discord](https://discord.gg/yQjjsDqWQX) | [Issues](https://github.com/shoaib11120/easy-life/issues) | [Download](https://www.curseforge.com/minecraft/mc-mods/easy-life/files) | [GitHub](https://github.com/shoaib11120/easy-life) |
+| [Discord](https://discord.gg/yQjjsDqWQX) | [Issues](https://github.com/shoaib11120/easy-life/issues) | [Download](https://www.curseforge.com/minecraft/mc-mods/easy-life/files) | [CurseForge](https://www.curseforge.com/minecraft/mc-mods/easy-life) |
 
 ___
 
 ## Changelog
+
+### 1.4.1
+
+- Made the mod independent of accessibility plus to narrate stuff.
 
 ### 1.4.0
 
@@ -16,11 +20,6 @@ ___
 - Added Biome Indicator, enabled by default it narrates the biome name when entering a biome.
 - Added option to switch between degrees or cardinal directions for the direction narrator.
 - Added option to invert y to z axis.
-
-### 1.13.0
-
-- Added new keyinding, alt + h, it narrates the vertical direction of the player. If it narrates the direction as 0, then the player is facing straigh, if the it narrates 90, then the player is facing straight down and if it narrates negative 90, then the player is facing straight up.
-
 
 ___
 
@@ -30,7 +29,6 @@ These are the current requirements of the mod:-
 
 - Minecraft Java (1.16.x or 1.17.x)
 - [Fabric](https://fabricmc.net/wiki/install)
-- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) or [Accessibility Plus Extended](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended) (For narrator support)
 
 ___
 
