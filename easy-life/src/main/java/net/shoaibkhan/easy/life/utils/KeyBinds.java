@@ -1,7 +1,7 @@
 package net.shoaibkhan.easy.life.utils;
 
-//import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
+//import net.minecraft.client.options.KeyBinding;
 
 public enum KeyBinds {
     CONFIG_MENU_KEY(null),

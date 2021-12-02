@@ -5,11 +5,10 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-//import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
+//import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.NarratorManager;
-import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.utils.KeyBinds;
 import org.lwjgl.glfw.GLFW;
 

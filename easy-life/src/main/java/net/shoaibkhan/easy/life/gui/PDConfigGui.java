@@ -127,7 +127,7 @@ public class PDConfigGui extends LightweightGuiDescription {
     private void onBackClick(){
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
-        this.client.openScreen(screen);        
+        this.client.setScreen(screen);
     }
 
     private void onDoneClick() {
