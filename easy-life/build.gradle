@@ -1,18 +1,33 @@
-// 1.17
-//plugins {
-//	id 'fabric-loom' version '0.9.+'
-//	id 'maven-publish'
-//}
-
-// 1.16
+// 1.18
 plugins {
-	id 'fabric-loom' version '0.7-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
+//// 1.17
+// plugins {
+// 	id 'fabric-loom' version '0.9.+'
+// 	id 'maven-publish'
+// }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+// 1.16
+// plugins {
+// 	id 'fabric-loom' version '0.7-SNAPSHOT'
+// 	id 'maven-publish'
+// }
+
+
+// 1.18
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+//// 1.17
+//sourceCompatibility = JavaVersion.VERSION_16
+//targetCompatibility = JavaVersion.VERSION_16
+
+// 1.16
+//sourceCompatibility = JavaVersion.VERSION_1_8
+//targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -25,17 +40,17 @@ repositories {
     }
 }
 
-// 1.16
-dependencies {
-	minecraft "com.mojang:minecraft:1.16.5"
-	mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
-	modImplementation "net.fabricmc:fabric-loader:0.11.3"
-
-	//Fabric api
-	modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
-	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
-	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
-}
+//// 1.16
+//dependencies {
+//	minecraft "com.mojang:minecraft:1.16.5"
+//	mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
+//	modImplementation "net.fabricmc:fabric-loader:0.11.3"
+//
+//	//Fabric api
+//	modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
+//	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
+//	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
+//}
 
 
 // 1.17
@@ -50,6 +65,18 @@ dependencies {
 //	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
 //}
 
+ 1.18
+dependencies {
+	minecraft "com.mojang:minecraft:1.18"
+	mappings "net.fabricmc:yarn:1.18+build.1:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.12.6"
+
+	//Fabric api
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.43.1+1.18"
+
+	modImplementation include("io.github.cottonmc:LibGui:5.0.0-beta.2+1.18-rc1")
+}
+
 
 processResources {
 	inputs.property "version", project.version
@@ -60,16 +87,13 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
 
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 8
+	def targetVersion = 17 // 1.18
+
+//	def targetVersion = 16 // 1.17
+
+//	def targetVersion = 8 // 1.16
 	if (JavaVersion.current().isJava9Compatible()) {
 		 it.options.release = targetVersion
 	}

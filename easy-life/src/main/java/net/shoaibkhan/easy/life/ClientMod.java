@@ -7,7 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.features.*;
 import net.shoaibkhan.easy.life.gui.ConfigGui;
@@ -15,7 +14,6 @@ import net.shoaibkhan.easy.life.gui.ConfigScreen;
 import net.shoaibkhan.easy.life.gui.NarratorMenuGui;
 import net.shoaibkhan.easy.life.utils.KeyBinds;
 
-//import net.minecraft.client.options.KeyBinding;
 
 
 @Environment(EnvType.CLIENT)
@@ -72,13 +70,13 @@ public class ClientMod {
             assert client.player != null;
             if(KeyBinds.CONFIG_MENU_KEY.getKeyBind().wasPressed()){
                 Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "Easy Life Configuration", client.player);
-                client.openScreen(screen);
+                client.setScreen(screen);
                 return;
             }
 
             if(KeyBinds.F4_MENU_KEY.getKeyBind().wasPressed()){
                 Screen screen = new ConfigScreen(new NarratorMenuGui(client.player,client), "F4 Menu", client.player);
-                client.openScreen(screen);
+                client.setScreen(screen);
                 return;
             }
 

@@ -11,4 +11,9 @@ public class ConfigScreen extends CottonClientScreen {
         super(description);
         Initial.narrate(title);
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return true;
+    }
 }

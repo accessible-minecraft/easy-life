@@ -10,8 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.Vector3f;
-//import net.minecraft.util.math.Vec3f;
+//import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
@@ -335,6 +335,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
     }
 
 	// 1.16
+	/*
     private static Vec3d map(float anglePerPixel, Vec3d center, Vector3f horizontalRotationAxis, Vector3f verticalRotationAxis, int x, int y, int width, int height) {
     	    float horizontalRotation = (x - width/2f) * anglePerPixel;
     	    float verticalRotation = (y - height/2f) * anglePerPixel;
@@ -375,10 +376,9 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 				height
 		);
 		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
-    }
+    }*/
 
 	// 1.17
-	/*
 	private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
 		float horizontalRotation = (x - width/2f) * anglePerPixel;
 		float verticalRotation = (y - height/2f) * anglePerPixel;
@@ -420,5 +420,4 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 		);
 		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
 	}
-	 */
 }

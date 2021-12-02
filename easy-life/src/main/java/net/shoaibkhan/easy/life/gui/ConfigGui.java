@@ -79,19 +79,19 @@ public class ConfigGui extends LightweightGuiDescription {
     private void pwClick(){
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PWConfigGui(client.player,client),"Player Warnings" , player);
-        this.client.openScreen(screen);
+        this.client.setScreen(screen);
     }
 
     private void pcClick(){
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PCConfigGui(client.player,client), "Player Coordinates", player);
-        this.client.openScreen(screen);
+        this.client.setScreen(screen);
     }
 
     private void pdClick(){
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PDConfigGui(client.player,client), "Player Directions", player);
-        this.client.openScreen(screen);
+        this.client.setScreen(screen);
     }
 
     @Override
