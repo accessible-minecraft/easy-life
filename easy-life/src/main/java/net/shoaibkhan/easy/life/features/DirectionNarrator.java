@@ -1,8 +1,8 @@
 package net.shoaibkhan.easy.life.features;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.config.Config;
@@ -33,8 +33,8 @@ public class DirectionNarrator {
             if(Config.get(Config.getCardinal_to_Degrees_Key())){
                 text += angle;
             } else {
-                String string = new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
-                text = "Facing " + string.toLowerCase();
+              String string = new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
+              text = I18n.translate("narrate.easylife.direction", string);
             }
         }
 

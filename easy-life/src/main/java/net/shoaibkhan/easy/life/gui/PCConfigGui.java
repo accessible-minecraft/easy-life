@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.CustomColorButton;
@@ -32,8 +33,6 @@ public class PCConfigGui extends LightweightGuiDescription {
         setRootPanel(root);
         root.setSize(320, 220);
 
-
-
         WLabel pc_color_label = new WLabel(new LiteralText("Text Color :-"), Colors.colors("black",100));
         pc_color_label.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pc_color_label, 1, 1, 3, 1);
@@ -43,7 +42,7 @@ public class PCConfigGui extends LightweightGuiDescription {
         else pccolor.setEnabled(true);
         root.add(pccolor, 12, 1, 5, 1);
 
-        WTextField pccolortf = new WTextField(new LiteralText(""+ Config.getString(Config.getPcColorCustomVal())));
+        WTextField pccolortf = new WTextField(new LiteralText(Config.getString(Config.getPcColorCustomVal())));
         if(Config.get(Config.getPcColorCustom())) pccolortf.setEditable(true);
         else pccolortf.setEditable(false);
         pccolortf.setDisabledColor(0x2c2c2c);
@@ -105,21 +104,21 @@ public class PCConfigGui extends LightweightGuiDescription {
         WTextField pcyf = new WTextField(new LiteralText(Config.getString(Config.getPcPositionY())));
         root.add(pcyf, 10, 11, 2, 1);
 
-        DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("Submit",pcxf,pcyf, Config.getPcPositionX(), Config.getPcPositionY());
+        DoubleSubmitButton pcpossubmit = new DoubleSubmitButton("gui.easylife.submit",pcxf,pcyf, Config.getPcPositionX(), Config.getPcPositionY());
         root.add(pcpossubmit, 14, 11, 3, 1);
         
 
 
 
-        WButton nsbutton = new WButton(new LiteralText("Back"));
+        WButton nsbutton = new WButton(new TranslatableText("gui.easylife.back"));
         nsbutton.setOnClick(this::onBackClick);
         root.add(nsbutton, 3, 13, 7, 1);
 
-        WButton doneButton = new WButton(new LiteralText("Done"));
+        WButton doneButton = new WButton(new TranslatableText("gui.easylife.done"));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 13, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Player Coordination Configuration"), Colors.colors("red",100));
+        WLabel label = new WLabel(new TranslatableText("gui.easylife.playerCoordinatesSettings"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 
@@ -128,7 +127,7 @@ public class PCConfigGui extends LightweightGuiDescription {
 
     private void onBackClick(){
         this.player.closeScreen();
-        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
+        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "configuration");
         this.client.setScreen(screen);
     }
 

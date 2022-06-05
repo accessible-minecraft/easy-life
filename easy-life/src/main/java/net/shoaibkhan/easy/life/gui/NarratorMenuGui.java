@@ -18,17 +18,20 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
 import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.utils.Colors;
+import net.shoaibkhan.easy.life.utils.PlayerPosition;
 
 public class NarratorMenuGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -43,23 +46,23 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
         setRootPanel(root);
         
-        WButton wb11 = new WButton(new LiteralText("Target Information"));
+        WButton wb11 = new WButton(new TranslatableText("gui.easylife.targetInfo"));
         wb11.setOnClick(this::target_information);
         root.add(wb11, 1, 1, 7, 1);
         
-        WButton wb12 = new WButton(new LiteralText("Target Position"));
+        WButton wb12 = new WButton(new TranslatableText("gui.easylife.targetPosition"));
         wb12.setOnClick(this::target_position);
         root.add(wb12, 9, 1, 7, 1);;
 
-        WButton wb22 = new WButton(new LiteralText("Light Level"));
+        WButton wb22 = new WButton(new TranslatableText("gui.easylife.light"));
         wb22.setOnClick(this::light_level);
         root.add(wb22, 1, 3, 7, 1);
 
-        WButton wb23 = new WButton(new LiteralText("Biome"));
+        WButton wb23 = new WButton(new TranslatableText("gui.easylife.biome"));
         wb23.setOnClick(this::getBiome);
         root.add(wb23, 9, 3, 7, 1);
 
-		WLabel labelForPadding = new WLabel(new LiteralText(""), Colors.colors("red",100));
+		WLabel labelForPadding = new WLabel(LiteralText.EMPTY, Colors.colors("red",100));
 		root.add(labelForPadding, 0, 4, 17, 1);
 
 		root.validate(this);
@@ -79,10 +82,12 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			this.player.closeScreen();
 
 			HitResult hit = get_target();
+			if (hit == null)
+				return;
 			 
 			switch(hit.getType()) {
 			    case MISS:
-	                Initial.narrate("Too far");;
+	                Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
 			    	break; 
 			    case BLOCK:{
 			        try {
@@ -90,8 +95,8 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 						BlockPos blockPos = blockHit.getBlockPos();
 						BlockState blockState = client.world.getBlockState(blockPos);
 						Block block = blockState.getBlock();
-						MutableText mutableText = new LiteralText("").append(block.getName());
-						String text = "" + mutableText.getString() + ", " + get_position_difference(blockPos);
+						MutableText mutableText = block.getName();
+						String text = mutableText.getString() + ", " + get_position_difference(blockPos);
 						Initial.narrate(text);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -103,10 +108,9 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			    	try {
 	                    EntityHitResult entityHitResult = (EntityHitResult) hit;
 	                    String name = "";
-	                    MutableText mutableText = new LiteralText("").append(entityHitResult.getEntity().getName());
-	                    name = mutableText.getString();
+	                    name = entityHitResult.getEntity().getName().getString();
 	                    BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
-	                    String text = "" + name + ", " + get_position_difference(blockPos);
+	                    String text = name + ", " + get_position_difference(blockPos);
 						Initial.narrate(text);
 	                } catch (Exception e) {
 	                    e.printStackTrace();
@@ -125,9 +129,12 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         try {
 			this.player.closeScreen();
 			HitResult hit = get_target();
+			if (hit == null)
+				return;
+			
 			switch (hit.getType()) {
 			    case MISS:
-			        	Initial.narrate("Too far");;
+	                Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
 			        break;
 			    case BLOCK: {
 			        try {
@@ -160,7 +167,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         try {
 			this.player.closeScreen();
 			int light = this.client.world.getLightLevel(this.player.getBlockPos());
-			Initial.narrate("Light level is, "+ light);
+			Initial.narrate(I18n.translate("narrate.easylife.light", light));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -171,86 +178,68 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 			this.player.closeScreen();
 			Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()));
 			String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
-			Initial.narrate(""+name+" biome");
+			Initial.narrate(I18n.translate("narrate.easylife.biome", name));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
 
-    private String get_position_difference(BlockPos blockPos) {
-    	String dir = client.player.getHorizontalFacing().asString();
-        dir = dir.toLowerCase().trim();
-        
-        String diffXBlockPos = ((double)player.getBlockPos().getX() - blockPos.getX()) + "";
-        String diffYBlockPos = ((double)(player.getBlockPos().getY()+1) - blockPos.getY())+ "";
-        String diffZBlockPos = ((double)player.getBlockPos().getZ() - blockPos.getZ()) + "";
-        
-        diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
-        diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
-        diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
-        
-        if(!diffXBlockPos.equalsIgnoreCase("0")) {
-        	if(dir.contains("east")||dir.contains("west")) {
-        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-        		diffXBlockPos += " blocks away";
-        	} else if(dir.contains("north")) {
-        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to left";
-        		else diffXBlockPos += " blocks to right";
-        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-        	} else if(dir.contains("south")) {
-        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to right";
-        		else diffXBlockPos += " blocks to left";
-        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
-        	}
-        } else {
-        	diffXBlockPos = "";
-        }
-        
-        if(!diffYBlockPos.equalsIgnoreCase("0")) {
-        	if(diffYBlockPos.contains("-")) {
-        		diffYBlockPos = diffYBlockPos.replace("-", "");
-        		diffYBlockPos += " blocks up";
-        	} else {
-        		diffYBlockPos += " blocks down";
-        	}
-        } else {
-        	diffYBlockPos = "";
-        }
-        
-        if(!diffZBlockPos.equalsIgnoreCase("0")) {
-        	if(dir.contains("north")||dir.contains("south")) {
-        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-        		diffZBlockPos += " blocks away";
-        	} else if(dir.contains("east")) {
-        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to right";
-        		else diffZBlockPos += " blocks to left";
-        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-        	} else if(dir.contains("west")) {
-        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to left";
-        		else diffZBlockPos += " blocks to right";
-        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
-        	}
-        } else {
-        	diffZBlockPos = "";
-        }
-        
-        String text = "";
-        if(dir.contains("north")||dir.contains("south")) text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
-        else text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
-        return text;
-    }
+	public String get_position_difference(BlockPos blockPos) {
+		ClientPlayerEntity player = client.player;
+		Direction dir = client.player.getHorizontalFacing();
+
+		Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos));
+		BlockPos diffBlockPos = new BlockPos(Math.round(diff.x), Math.round(diff.y), Math.round(diff.z));
+
+		String diffXBlockPos = "";
+		String diffYBlockPos = "";
+		String diffZBlockPos = "";
+
+		if (diffBlockPos.getX() != 0) {
+			if (dir == Direction.NORTH) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "right", "left");
+			} else if (dir == Direction.SOUTH) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "left", "right");
+			} else if (dir == Direction.EAST) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "away", "behind");
+			} else if (dir == Direction.WEST) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "behind", "away");
+			}
+		}
+
+		if (diffBlockPos.getY() != 0) {
+			diffYBlockPos = diff(diffBlockPos.getY(), "up", "down");
+		}
+
+		if (diffBlockPos.getZ() != 0) {
+			if (dir == Direction.SOUTH) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "away", "behind");
+			} else if (dir == Direction.NORTH) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "behind", "away");
+			} else if (dir == Direction.EAST) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "right", "left");
+			} else if (dir == Direction.WEST) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "left", "right");
+			}
+		}
+
+		String text = "";
+		if (dir == Direction.NORTH || dir == Direction.SOUTH)
+			text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
+		else
+			text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
+		return text;
+	}
+
+	private static String diff(int blocks, String key1, String key2) {
+		return I18n.translate("narrate.easylife.posDiff." + (blocks < 0 ? key1 : key2), Math.abs(blocks));
+	}
     
     private String get_position(BlockPos blockPos) {
     	try {
-			String posX = ((double)blockPos.getX())+"";
-			String posY = ((double)blockPos.getY())+"";
-			String posZ = ((double)blockPos.getZ())+"";
-			posX = posX.substring(0, posX.indexOf("."));
-			posY = posY.substring(0, posY.indexOf("."));
-			posZ = posZ.substring(0, posZ.indexOf("."));
-			if(posX.contains("-")) posX = posX.replace("-", "negative");
-			if(posY.contains("-")) posY = posY.replace("-", "negative");
-			if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
+			String posX = PlayerPosition.getNarratableNumber(blockPos.getX());
+			String posY = PlayerPosition.getNarratableNumber(blockPos.getY());
+			String posZ = PlayerPosition.getNarratableNumber(blockPos.getZ());
 			return String.format("%s x %s y %s z", posX, posY, posZ);
 		} catch (Exception e) {
 			e.printStackTrace();

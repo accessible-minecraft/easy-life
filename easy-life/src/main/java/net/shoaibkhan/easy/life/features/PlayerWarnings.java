@@ -1,5 +1,7 @@
 package net.shoaibkhan.easy.life.features;
 
+import static net.shoaibkhan.easy.life.utils.Colors.colors;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
@@ -8,15 +10,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.config.Config;
-
-import static net.shoaibkhan.easy.life.utils.Colors.colors;
 
 public class PlayerWarnings {
     public static int healthWarningFlag, foodWarningFlag, airWarningFlag;
     public static int healthWarningAfterFlag, foodWarningAfterFlag, airWarningAfterFlag;
+
+    private static final MutableText AIR_LOW = new TranslatableText("narrate.easylife.airLow");
+    private static final MutableText FOOD_LOW = new TranslatableText("narrate.easylife.foodLow");
+    private static final MutableText HEALTH_LOW = new TranslatableText("narrate.easylife.healthLow");
 
     private final MinecraftClient client;
 
@@ -90,10 +95,10 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())), Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"),
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, HEALTH_LOW,
                     width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
 
-            Initial.narrate("Health Low");
+            Initial.narrate(HEALTH_LOW.getString());
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
@@ -107,10 +112,10 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())), Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, HEALTH_LOW, width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
 
             matrixStack.pop();
-            Initial.narrate("Health Low");
+            Initial.narrate(HEALTH_LOW.getString());
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
             }
@@ -122,7 +127,7 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())),Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Health Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()),100));
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, HEALTH_LOW, width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()),100));
 
             matrixStack.pop();
         }
@@ -145,10 +150,10 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())), Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, FOOD_LOW,
                     width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
             matrixStack.pop();
-            Initial.narrate("Food Low");
+            Initial.narrate(FOOD_LOW.getString());
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
@@ -160,7 +165,7 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())),Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Food Low!"),
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, FOOD_LOW,
                     width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()),100));
             matrixStack.pop();
         }
@@ -179,9 +184,9 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())), Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, AIR_LOW, width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()), 100));
             matrixStack.pop();
-            Initial.narrate("Air Low");
+            Initial.narrate(AIR_LOW.getString());
 
             if (Config.get(Config.getPwSoundStatus())) {
                 player.playSound(SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.PLAYERS, (float) 1, (float) 1);
@@ -193,7 +198,7 @@ public class PlayerWarnings {
             matrixStack.push();
             matrixStack.scale(Integer.parseInt(Config.getString(Config.getPwScale())),Integer.parseInt(Config.getString(Config.getPwScale())), inGameHud.getZOffset());
 
-            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, new LiteralText("Air Low!"), width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()),100));
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, AIR_LOW, width * reqWidth / 100, height * reqHeight / 100, colors(Config.getString(Config.getPwColor()),100));
 
             matrixStack.pop();
         }

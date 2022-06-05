@@ -1,6 +1,7 @@
 package net.shoaibkhan.easy.life.utils;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.easy.life.config.Config;
@@ -46,23 +47,21 @@ public class PlayerPosition {
         return Double.parseDouble(tempPosZ);
     }
 
-    public String getNarratableXPos(){
-        String posX = "" + getX();
-        if(posX.contains("-")) posX = posX.replace("-", "negative");
-        return ""+posX+"x";
-    }
+	public String getNarratableXPos() {
+		return getNarratableNumber(getX()) + "x";
+	}
 
-    public String getNarratableYPos(){
-        String posY= "" + getY();
-        if(posY.contains("-")) posY = posY.replace("-", "negative");
-        return ""+posY+"y";
-    }
+	public String getNarratableYPos() {
+		return getNarratableNumber(getY()) + "y";
+	}
 
-    public String getNarratableZPos(){
-        String posZ= "" + getZ();
-        if(posZ.contains("-")) posZ = posZ.replace("-", "negative");
-        return ""+posZ+"z";
-    }
+	public String getNarratableZPos() {
+		return getNarratableNumber(getZ()) + "z";
+	}
+
+	public static String getNarratableNumber(double d) {
+		return d >= 0 ? String.valueOf(d) : I18n.translate("narrate.easylife.nagetive", -d);
+	}
 
     public int getVerticalFacingDirection(){
         assert player != null;
@@ -83,30 +82,24 @@ public class PlayerPosition {
         assert player != null;
 
         int angle  = getHorizontalFacingDirectionInDegrees();
-        String cardinal = "";
+        String cardinal;
 
         if ((angle >= -150 && angle <= -120) || (angle >= 210 && angle <= 240)) {
-            // Looking North East
-            cardinal = "North East";
+          // Looking North East
+          cardinal = "northEast";
         } else if ((angle >= -60 && angle <= -30) || (angle >= 300 && angle <= 330)) {
-            // Looking South East
-            cardinal = "South East";
+          // Looking South East
+          cardinal = "southEast";
         } else if ((angle >= 30 && angle <= 60) || (angle >= -330 && angle <= -300)) {
-            // Looking South West
-            cardinal = "South West";
+          // Looking South West
+          cardinal = "southWest";
         } else if ((angle >= 120 && angle <= 150) || (angle >= -240 && angle <= -210)) {
-            // Looking North West
-            cardinal = "North West";
+          // Looking North West
+          cardinal = "northWest";
         } else {
-            String dir = player.getHorizontalFacing().asString();
-            dir = dir.toLowerCase().trim();
-            if (dir.contains("north")) cardinal = "North";
-            else if (dir.contains("south")) cardinal = "South";
-            else if (dir.contains("east")) cardinal = "East";
-            else if (dir.contains("west")) cardinal = "West";
-            else cardinal = "East";
+          cardinal = player.getHorizontalFacing().asString();
         }
 
-        return cardinal;
+        return I18n.translate("narrate.easylife." + cardinal);
     }
 }

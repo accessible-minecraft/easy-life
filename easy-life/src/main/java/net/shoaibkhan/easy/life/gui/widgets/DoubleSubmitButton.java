@@ -3,7 +3,7 @@ package net.shoaibkhan.easy.life.gui.widgets;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.config.Config;
 
 public class DoubleSubmitButton extends WButton{
@@ -11,7 +11,7 @@ public class DoubleSubmitButton extends WButton{
     private WTextField posx,posy;
 
     public DoubleSubmitButton(String translationKey,WTextField posx,WTextField posy,String jsonkeyx,String jsonkeyy){
-        super(new LiteralText(translationKey));
+        super(new TranslatableText(translationKey));
         this.posx = posx;
         this.posy = posy;
         this.jsonkeyx = jsonkeyx;

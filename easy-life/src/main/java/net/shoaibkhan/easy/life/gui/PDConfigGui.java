@@ -118,7 +118,7 @@ public class PDConfigGui extends LightweightGuiDescription {
         WTextField pdyf = new WTextField(new LiteralText(Config.getString(Config.getPdPositionY())));
         root.add(pdyf, 10, 11, 2, 1);
 
-        DoubleSubmitButton pdpossubmit = new DoubleSubmitButton("Submit",pdxf,pdyf, Config.getPdPositionX(), Config.getPdPositionY());
+        DoubleSubmitButton pdpossubmit = new DoubleSubmitButton("gui.easylife.submit",pdxf,pdyf, Config.getPdPositionX(), Config.getPdPositionY());
         root.add(pdpossubmit, 14, 11, 3, 1);
         
         root.validate(this);
@@ -126,7 +126,7 @@ public class PDConfigGui extends LightweightGuiDescription {
 
     private void onBackClick(){
         this.player.closeScreen();
-        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
+        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "configuration");
         this.client.setScreen(screen);
     }
 

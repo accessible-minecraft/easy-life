@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
@@ -41,7 +42,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         ScaleButton pwscale = new ScaleButton("Scale", Config.getPwScale());
         root.add(pwscale, 8, 1, 4, 1);
 
-        ConfigButton pwsound = new ConfigButton("Sounds", Config.getPwSoundStatus());
+        ConfigButton pwsound = new ConfigButton("sounds", Config.getPwSoundStatus());
         root.add(pwsound, 13, 1, 5, 1);
 
         WLabel pwpos = new WLabel(new LiteralText("Position :-"), Colors.colors("black",100));
@@ -62,7 +63,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         WTextField pwyf = new WTextField(new LiteralText(Config.getString(Config.getPwPositionY())));
         root.add(pwyf, 10, 3, 2, 1);
 
-        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("Submit",pwxf,pwyf, Config.getPwPositionX(), Config.getPwPositionY());
+        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("gui.easylife.submit",pwxf,pwyf, Config.getPwPositionX(), Config.getPwPositionY());
         root.add(pwpossubmit, 14, 3, 3, 1);
 
         WLabel pwtimeout = new WLabel(new LiteralText("Timeout (in seconds) :-"), Colors.colors("black",100));
@@ -72,7 +73,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         WTextField pwtof = new WTextField(new LiteralText(Config.getString(Config.getPwTimeout())));
         root.add(pwtof, 9, 5, 2, 1);
 
-        SubmitButton pwtosubmit = new SubmitButton("Submit",pwtof, Config.getPwTimeout());
+        SubmitButton pwtosubmit = new SubmitButton("gui.easylife.submit",pwtof, Config.getPwTimeout());
         root.add(pwtosubmit, 12, 5, 3, 1);
 
         WLabel pwht = new WLabel(new LiteralText("Health Threshold :-"), Colors.colors("black",100));
@@ -93,7 +94,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         WTextField pwhtstf = new WTextField(new LiteralText(Config.getString(Config.getPwHtSTh())));
         root.add(pwhtstf, 15, 7, 2, 1);
 
-        THDoubleSubmitButton pwhtsubmit = new THDoubleSubmitButton("Submit",pwhtftf,pwhtstf, Config.getPwHtFTh(), Config.getPwHtSTh());
+        THDoubleSubmitButton pwhtsubmit = new THDoubleSubmitButton("gui.easylife.submit",pwhtftf,pwhtstf, Config.getPwHtFTh(), Config.getPwHtSTh());
         root.add(pwhtsubmit, 18, 7, 3, 1);
 
         WLabel pwft = new WLabel(new LiteralText("Food Threshold :-"), Colors.colors("black",100));
@@ -103,7 +104,7 @@ public class PWConfigGui extends LightweightGuiDescription {
         WTextField pwftf = new WTextField(new LiteralText(Config.getString(Config.getPwFtth())));
         root.add(pwftf, 7, 9, 2, 1);
 
-        THSubmitButton pwftsubmit = new THSubmitButton("Submit",pwftf, Config.getPwFtth());
+        THSubmitButton pwftsubmit = new THSubmitButton("gui.easylife.submit",pwftf, Config.getPwFtth());
         root.add(pwftsubmit, 10, 9, 3, 1);
 
         WLabel pwat = new WLabel(new LiteralText("Air Threshold :-"), Colors.colors("black",100));
@@ -113,20 +114,20 @@ public class PWConfigGui extends LightweightGuiDescription {
         WTextField pwatf = new WTextField(new LiteralText(Config.getString(Config.getPwAtth())));
         root.add(pwatf, 7, 11, 2, 1);
 
-        THSubmitButton pwatsubmit = new THSubmitButton("Submit",pwatf, Config.getPwAtth());
+        THSubmitButton pwatsubmit = new THSubmitButton("gui.easylife.submit",pwatf, Config.getPwAtth());
         root.add(pwatsubmit, 10, 11, 3, 1);
         
 
 
-        WButton nsbutton = new WButton(new LiteralText("Back"));
+        WButton nsbutton = new WButton(new TranslatableText("gui.easylife.back"));
         nsbutton.setOnClick(this::onBackClick);
         root.add(nsbutton, 3, 13, 7, 1);
 
-        WButton doneButton = new WButton(new LiteralText("Done"));
+        WButton doneButton = new WButton(new TranslatableText("gui.easylife.done"));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 13, 7, 1);
 
-        WLabel label = new WLabel(new LiteralText("Player Warnings Configuration"), Colors.colors("red",100));
+        WLabel label = new WLabel(new TranslatableText("gui.easylife.playerWarningsSettings"), Colors.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
         
@@ -135,7 +136,7 @@ public class PWConfigGui extends LightweightGuiDescription {
 
     private void onBackClick(){
         this.player.closeScreen();
-        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "Easy Life Configuration", player);
+        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "configuration");
         this.client.setScreen(screen);
     }
 
