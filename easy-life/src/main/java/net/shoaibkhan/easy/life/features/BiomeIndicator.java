@@ -2,7 +2,6 @@ package net.shoaibkhan.easy.life.features;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.shoaibkhan.easy.life.Initial;

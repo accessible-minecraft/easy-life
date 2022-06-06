@@ -5,6 +5,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.utils.PlayerPosition;
@@ -39,7 +40,7 @@ public class PositionAndDirectionOverlay {
         String posX = new PlayerPosition(client).getNarratableXPos();
         String posY = new PlayerPosition(client).getNarratableYPos();
         String posZ = new PlayerPosition(client).getNarratableZPos();
-        String posString = "Position: " + posX + " | " + posY + " | " + posZ + "  ";
+        String posString = I18n.translate("gui.easylife.position", posX, posY, posZ);
 
         int x = Integer.parseInt(Config.getString(Config.getPcPositionX())), y = Integer.parseInt(Config.getString(Config.getPcPositionY()));
         int bgColor = colors(Config.getString(Config.getPcBgColor()), Config.getOpacity(Config.getPcBgColorOpacity()));

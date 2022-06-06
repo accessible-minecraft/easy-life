@@ -6,7 +6,8 @@
   "name": "Easy Life",
   "description": "This mod alerts player when health is decreased and also adds a button to check health and hunger manually and much more features!",
   "authors": [
-    "Shoaib Khan"
+    "Shoaib Khan",
+    "Snownee"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/easy-life",
@@ -18,11 +19,7 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.shoaibkhan.easy.life.Initial"
-    ],
-    "client": [],
-    "server": []
+    "client": [ "net.shoaibkhan.easy.life.Initial" ]
   },
   "mixins": [
     "easy_life_mixin.json"
@@ -32,7 +29,7 @@
     "fabricloader": ">=0.7.4",
     "fabric-key-binding-api-v1":"*",
     "fabric": "*",
-    "minecraft": "1.18.x"
+    "minecraft": "1.18.1"
   },
   "suggests": {
     "another-mod": ""

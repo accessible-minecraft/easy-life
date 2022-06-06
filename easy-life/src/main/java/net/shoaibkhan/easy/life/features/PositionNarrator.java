@@ -2,7 +2,6 @@ package net.shoaibkhan.easy.life.features;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.shoaibkhan.easy.life.ClientMod;
 import net.shoaibkhan.easy.life.Initial;
 import net.shoaibkhan.easy.life.utils.KeyBinds;

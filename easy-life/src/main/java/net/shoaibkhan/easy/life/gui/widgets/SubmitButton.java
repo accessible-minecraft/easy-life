@@ -3,7 +3,7 @@ package net.shoaibkhan.easy.life.gui.widgets;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.easy.life.config.Config;
 
 public class SubmitButton extends WButton{
@@ -11,7 +11,7 @@ public class SubmitButton extends WButton{
     private WTextField textField;
 
     public SubmitButton(String translationText,WTextField textField,String jsonKey){
-        super(new LiteralText(translationText));
+        super(new TranslatableText(translationText));
         this.textField = textField;
         this.jsonKey = jsonKey;
     }
