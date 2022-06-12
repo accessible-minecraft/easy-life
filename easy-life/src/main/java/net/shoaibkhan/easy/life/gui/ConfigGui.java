@@ -63,7 +63,7 @@ public class ConfigGui extends LightweightGuiDescription {
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 7, 13, 7, 1);
 
-        WLabel labelForPadding = new WLabel(Text.empty(), Colors.colors("red", 100));
+        WLabel labelForPadding = new WLabel(Text.of(""), Colors.colors("red", 100));
         root.add(labelForPadding, 0, 14, 25, 1);
 
         WLabel label = new WLabel(Text.of(I18n.translate("gui.easylife")), Colors.colors("red", 100));
@@ -80,19 +80,22 @@ public class ConfigGui extends LightweightGuiDescription {
     private void pwClick() {
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PWConfigGui(client.player, client), "playerWarnings");
-        this.client.setScreen(screen);
+        client.setScreen(screen); // post 1.18
+//        client.openScreen(screen); // pre 1.18
     }
 
     private void pcClick() {
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PCConfigGui(client.player, client), "playerCoordinates");
-        this.client.setScreen(screen);
+        client.setScreen(screen); // post 1.18
+//        client.openScreen(screen); // pre 1.18
     }
 
     private void pdClick() {
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new PDConfigGui(client.player, client), "playerDirections");
-        this.client.setScreen(screen);
+        client.setScreen(screen); // post 1.18
+//        client.openScreen(screen); // pre 1.18
     }
 
     @Override

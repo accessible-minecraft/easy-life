@@ -2,7 +2,6 @@ package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
-import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
@@ -18,22 +17,22 @@ public class SubmitButton extends WButton {
         this.jsonKey = jsonKey;
     }
 
-//    // 1.16
+    //    // pre 1.17
 //    @Override
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
-//        if(this.isEnabled()){
+//        if (this.isEnabled()) {
 //            String value = this.textField.getText();
-//            if(Config.setInt(jsonKey, value)) {
+//            if (Config.setInt(jsonKey, value)) {
 //                this.textField.setText("");
 //                this.textField.setSuggestion(value);
 //            }
 //        }
 //    }
 
-    // 1.17
+    // post 1.17
     @Override
-    public InputResult onClick(int x, int y, int button) {
+    public io.github.cottonmc.cotton.gui.widget.data.InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         if (this.isEnabled()) {
             String value = this.textField.getText();
@@ -42,6 +41,6 @@ public class SubmitButton extends WButton {
                 this.textField.setSuggestion(Text.of(value));
             }
         }
-        return InputResult.PROCESSED;
+        return io.github.cottonmc.cotton.gui.widget.data.InputResult.PROCESSED;
     }
 }

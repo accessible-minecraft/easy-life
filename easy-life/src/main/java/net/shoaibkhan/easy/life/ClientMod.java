@@ -70,13 +70,15 @@ public class ClientMod {
             assert client.player != null;
             if (KeyBinds.CONFIG_MENU_KEY.getKeyBind().wasPressed()) {
                 Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "configuration");
-                client.setScreen(screen);
+                client.setScreen(screen); // post 1.18
+//                client.openScreen(screen); // pre 1.18
                 return;
             }
 
             if (KeyBinds.F4_MENU_KEY.getKeyBind().wasPressed()) {
                 Screen screen = new ConfigScreen(new NarratorMenuGui(client.player, client), "f4Menu");
-                client.setScreen(screen);
+                client.setScreen(screen); // post 1.18
+//                client.openScreen(screen); // pre 1.18
                 return;
             }
 

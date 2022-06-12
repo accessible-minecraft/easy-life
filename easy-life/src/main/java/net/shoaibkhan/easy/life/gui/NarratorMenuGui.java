@@ -10,7 +10,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
-//import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.Entity;
@@ -61,7 +60,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         wb23.setOnClick(this::getBiome);
         root.add(wb23, 9, 3, 7, 1);
 
-        WLabel labelForPadding = new WLabel(Text.empty(), Colors.colors("red", 100));
+        WLabel labelForPadding = new WLabel(Text.of(""), Colors.colors("red", 100));
         root.add(labelForPadding, 0, 4, 17, 1);
 
         root.validate(this);
@@ -73,6 +72,180 @@ public class NarratorMenuGui extends LightweightGuiDescription {
 
     private static String diff(int blocks, String key1, String key2) {
         return I18n.translate("narrate.easylife.posDiff." + (blocks < 0 ? key1 : key2), Math.abs(blocks));
+    }
+
+    @Override
+    public void addPainters() {
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey", 50)));
+    }
+
+    private void target_information() {
+        try {
+            this.player.closeScreen();
+
+            HitResult hit = get_target();
+            if (hit == null)
+                return;
+
+            switch (hit.getType()) {
+                case MISS -> Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
+                case BLOCK -> {
+                    try {
+                        BlockHitResult blockHit = (BlockHitResult) hit;
+                        BlockPos blockPos = blockHit.getBlockPos();
+                        assert client.world != null;
+                        BlockState blockState = client.world.getBlockState(blockPos);
+                        Block block = blockState.getBlock();
+                        MutableText mutableText = block.getName();
+                        String text = mutableText.getString() + ", " + get_position_difference(blockPos);
+                        Initial.narrate(text);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                case ENTITY -> {
+                    try {
+                        EntityHitResult entityHitResult = (EntityHitResult) hit;
+                        String name;
+                        name = entityHitResult.getEntity().getName().getString();
+                        BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
+                        String text = name + ", " + get_position_difference(blockPos);
+                        Initial.narrate(text);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void target_position() {
+        try {
+            this.player.closeScreen();
+            HitResult hit = get_target();
+            if (hit == null)
+                return;
+
+            switch (hit.getType()) {
+                case MISS:
+                    Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
+                    break;
+                case BLOCK: {
+                    try {
+                        BlockHitResult blockHitResult = (BlockHitResult) hit;
+                        BlockPos blockPos = blockHitResult.getBlockPos();
+                        Initial.narrate(get_position(blockPos));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case ENTITY: {
+                    try {
+                        EntityHitResult entityHitResult = (EntityHitResult) hit;
+                        BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
+                        Initial.narrate(get_position(blockPos));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void light_level() {
+        try {
+            this.player.closeScreen();
+            assert this.client.world != null;
+            int light = this.client.world.getLightLevel(this.player.getBlockPos());
+            Initial.narrate(I18n.translate("narrate.easylife.light", light));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getBiome() {
+        try {
+            this.player.closeScreen();
+            assert client.world != null;
+            Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()).value()); // post 1.18
+//            Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos())); // pre 1.18
+            assert id != null;
+            String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
+            Initial.narrate(I18n.translate("narrate.easylife.biome", name));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String get_position_difference(BlockPos blockPos) {
+        ClientPlayerEntity player = client.player;
+        assert client.player != null;
+        Direction dir = client.player.getHorizontalFacing();
+
+//        Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos)); // post 1.18
+        Vec3d diff = new Vec3d(player.getX(), player.getEyeY(), player.getZ()).subtract(Vec3d.ofCenter(blockPos)); // pre 1.18
+        BlockPos diffBlockPos = new BlockPos(Math.round(diff.x), Math.round(diff.y), Math.round(diff.z));
+
+        String diffXBlockPos = "";
+        String diffYBlockPos = "";
+        String diffZBlockPos = "";
+
+        if (diffBlockPos.getX() != 0) {
+            if (dir == Direction.NORTH) {
+                diffXBlockPos = diff(diffBlockPos.getX(), "right", "left");
+            } else if (dir == Direction.SOUTH) {
+                diffXBlockPos = diff(diffBlockPos.getX(), "left", "right");
+            } else if (dir == Direction.EAST) {
+                diffXBlockPos = diff(diffBlockPos.getX(), "away", "behind");
+            } else if (dir == Direction.WEST) {
+                diffXBlockPos = diff(diffBlockPos.getX(), "behind", "away");
+            }
+        }
+
+        if (diffBlockPos.getY() != 0) {
+            diffYBlockPos = diff(diffBlockPos.getY(), "up", "down");
+        }
+
+        if (diffBlockPos.getZ() != 0) {
+            if (dir == Direction.SOUTH) {
+                diffZBlockPos = diff(diffBlockPos.getZ(), "away", "behind");
+            } else if (dir == Direction.NORTH) {
+                diffZBlockPos = diff(diffBlockPos.getZ(), "behind", "away");
+            } else if (dir == Direction.EAST) {
+                diffZBlockPos = diff(diffBlockPos.getZ(), "right", "left");
+            } else if (dir == Direction.WEST) {
+                diffZBlockPos = diff(diffBlockPos.getZ(), "left", "right");
+            }
+        }
+
+        String text;
+        if (dir == Direction.NORTH || dir == Direction.SOUTH)
+            text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
+        else
+            text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
+        return text;
+    }
+
+    private String get_position(BlockPos blockPos) {
+        try {
+            String posX = PlayerPosition.getNarratableNumber(blockPos.getX());
+            String posY = PlayerPosition.getNarratableNumber(blockPos.getY());
+            String posZ = PlayerPosition.getNarratableNumber(blockPos.getZ());
+            return String.format("%s x %s y %s z", posX, posY, posZ);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private static HitResult raycastInDirection(MinecraftClient client, float tickDelta, Vec3d direction, float extendReachBy) {
@@ -152,7 +325,6 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         ));
     }
 
-    // 1.17
     private static Vec3d map(float anglePerPixel, Vec3d center, Vec3f horizontalRotationAxis, Vec3f verticalRotationAxis, int x, int y, int width, int height) {
         float horizontalRotation = (x - width / 2f) * anglePerPixel;
         float verticalRotation = (y - height / 2f) * anglePerPixel;
@@ -163,229 +335,13 @@ public class NarratorMenuGui extends LightweightGuiDescription {
         return new Vec3d(temp2);
     }
 
-    @Override
-    public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey", 50)));
-    }
-
-    private void target_information() {
-        try {
-            this.player.closeScreen();
-
-            HitResult hit = get_target();
-            if (hit == null)
-                return;
-
-            switch (hit.getType()) {
-                case MISS -> Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
-                case BLOCK -> {
-                    try {
-                        BlockHitResult blockHit = (BlockHitResult) hit;
-                        BlockPos blockPos = blockHit.getBlockPos();
-                        assert client.world != null;
-                        BlockState blockState = client.world.getBlockState(blockPos);
-                        Block block = blockState.getBlock();
-                        MutableText mutableText = block.getName();
-                        String text = mutableText.getString() + ", " + get_position_difference(blockPos);
-                        Initial.narrate(text);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
-                }
-                case ENTITY -> {
-                    try {
-                        EntityHitResult entityHitResult = (EntityHitResult) hit;
-                        String name;
-                        name = entityHitResult.getEntity().getName().getString();
-                        BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
-                        String text = name + ", " + get_position_difference(blockPos);
-                        Initial.narrate(text);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private void target_position() {
-        try {
-            this.player.closeScreen();
-            HitResult hit = get_target();
-            if (hit == null)
-                return;
-
-            switch (hit.getType()) {
-                case MISS:
-                    Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
-                    break;
-                case BLOCK: {
-                    try {
-                        BlockHitResult blockHitResult = (BlockHitResult) hit;
-                        BlockPos blockPos = blockHitResult.getBlockPos();
-                        Initial.narrate(get_position(blockPos));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-                case ENTITY: {
-                    try {
-                        EntityHitResult entityHitResult = (EntityHitResult) hit;
-                        BlockPos blockPos = entityHitResult.getEntity().getBlockPos();
-                        Initial.narrate(get_position(blockPos));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                default:
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void light_level() {
-        try {
-            this.player.closeScreen();
-            assert this.client.world != null;
-            int light = this.client.world.getLightLevel(this.player.getBlockPos());
-            Initial.narrate(I18n.translate("narrate.easylife.light", light));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getBiome() {
-        try {
-            this.player.closeScreen();
-            assert client.world != null;
-            Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(player.getBlockPos()).value());
-            assert id != null;
-            String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
-            Initial.narrate(I18n.translate("narrate.easylife.biome", name));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String get_position_difference(BlockPos blockPos) {
-        ClientPlayerEntity player = client.player;
-        assert client.player != null;
-        Direction dir = client.player.getHorizontalFacing();
-
-        Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos));
-        BlockPos diffBlockPos = new BlockPos(Math.round(diff.x), Math.round(diff.y), Math.round(diff.z));
-
-        String diffXBlockPos = "";
-        String diffYBlockPos = "";
-        String diffZBlockPos = "";
-
-        if (diffBlockPos.getX() != 0) {
-            if (dir == Direction.NORTH) {
-                diffXBlockPos = diff(diffBlockPos.getX(), "right", "left");
-            } else if (dir == Direction.SOUTH) {
-                diffXBlockPos = diff(diffBlockPos.getX(), "left", "right");
-            } else if (dir == Direction.EAST) {
-                diffXBlockPos = diff(diffBlockPos.getX(), "away", "behind");
-            } else if (dir == Direction.WEST) {
-                diffXBlockPos = diff(diffBlockPos.getX(), "behind", "away");
-            }
-        }
-
-        if (diffBlockPos.getY() != 0) {
-            diffYBlockPos = diff(diffBlockPos.getY(), "up", "down");
-        }
-
-        if (diffBlockPos.getZ() != 0) {
-            if (dir == Direction.SOUTH) {
-                diffZBlockPos = diff(diffBlockPos.getZ(), "away", "behind");
-            } else if (dir == Direction.NORTH) {
-                diffZBlockPos = diff(diffBlockPos.getZ(), "behind", "away");
-            } else if (dir == Direction.EAST) {
-                diffZBlockPos = diff(diffBlockPos.getZ(), "right", "left");
-            } else if (dir == Direction.WEST) {
-                diffZBlockPos = diff(diffBlockPos.getZ(), "left", "right");
-            }
-        }
-
-        String text;
-        if (dir == Direction.NORTH || dir == Direction.SOUTH)
-            text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
-        else
-            text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
-        return text;
-    }
-
-    // 1.16
-	/*
-    private static Vec3d map(float anglePerPixel, Vec3d center, Vector3f horizontalRotationAxis, Vector3f verticalRotationAxis, int x, int y, int width, int height) {
-    	    float horizontalRotation = (x - width/2f) * anglePerPixel;
-    	    float verticalRotation = (y - height/2f) * anglePerPixel;
-
-    	    final Vector3f temp2 = new Vector3f(center);
-    	    temp2.rotate(verticalRotationAxis.getDegreesQuaternion(verticalRotation));
-    	    temp2.rotate(horizontalRotationAxis.getDegreesQuaternion(horizontalRotation));
-    	    return new Vec3d(temp2);
-    	}
-
-    private HitResult get_target() {
-		int width = client.getWindow().getScaledWidth();
-		int height = client.getWindow().getScaledHeight();
-		Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
-		double fov = client.options.fov;
-		double angleSize = fov/height;
-		Vector3f verticalRotationAxis = new Vector3f(cameraDirection);
-		verticalRotationAxis.cross(Vector3f.POSITIVE_Y);
-
-		Vector3f horizontalRotationAxis = new Vector3f(cameraDirection);
-		horizontalRotationAxis.cross(verticalRotationAxis);
-		horizontalRotationAxis.normalize();
-
-		verticalRotationAxis = new Vector3f(cameraDirection);
-		verticalRotationAxis.cross(horizontalRotationAxis);
-
-		int x = width/2;
-		int y = height/2;
-
-		Vec3d direction = map(
-				(float) angleSize,
-				cameraDirection,
-				horizontalRotationAxis,
-				verticalRotationAxis,
-				x,
-				y,
-				width,
-				height
-		);
-		return raycastInDirection(client, client.getTickDelta(), direction, 5f);
-    }*/
-
-    private String get_position(BlockPos blockPos) {
-        try {
-            String posX = PlayerPosition.getNarratableNumber(blockPos.getX());
-            String posY = PlayerPosition.getNarratableNumber(blockPos.getY());
-            String posZ = PlayerPosition.getNarratableNumber(blockPos.getZ());
-            return String.format("%s x %s y %s z", posX, posY, posZ);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     private HitResult get_target() {
         int width = client.getWindow().getScaledWidth();
         int height = client.getWindow().getScaledHeight();
         assert client.cameraEntity != null;
         Vec3d cameraDirection = client.cameraEntity.getRotationVec(client.getTickDelta());
-        double fov = client.options.getFov().getValue();
+//        double fov = client.options.fov; // pre 1.19
+        double fov = client.options.getFov().getValue(); // post 1.19
         double angleSize = fov / height;
         Vec3f verticalRotationAxis = new Vec3f(cameraDirection);
         verticalRotationAxis.cross(Vec3f.POSITIVE_Y);

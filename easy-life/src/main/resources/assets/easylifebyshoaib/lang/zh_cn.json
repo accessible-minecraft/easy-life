@@ -46,7 +46,7 @@
   "narrate.easylife.healthLow": "生命值低！",
   "narrate.easylife.foodLow": "饥饿值低！",
   "narrate.easylife.airLow": "氧气值低！",
-  "narrate.easylife.nagetive": "负%s",
+  "narrate.easylife.negative": "负%s",
   "narrate.easylife.tooFar": "距离太远",
   "narrate.easylife.biome": "生物群系：%s",
   "narrate.easylife.light": "光照强度：%s",
@@ -55,5 +55,6 @@
   "narrate.easylife.posDiff.left": "左边%s米",
   "narrate.easylife.posDiff.right": "右边%s米",
   "narrate.easylife.posDiff.up": "上方%s米",
-  "narrate.easylife.posDiff.down": "下方%s米"
+  "narrate.easylife.posDiff.down": "下方%s米",
+  "narrate.easylife.hotbar": "%s 选择"
 }

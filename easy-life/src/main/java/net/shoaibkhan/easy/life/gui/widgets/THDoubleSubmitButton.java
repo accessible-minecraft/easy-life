@@ -23,7 +23,7 @@ public class THDoubleSubmitButton extends WButton {
         this.jsonkeyb = jsonkeyb;
     }
 
-//    // 1.16
+//    // pre 1.17
 //    @Override
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
@@ -39,7 +39,7 @@ public class THDoubleSubmitButton extends WButton {
 //        }
 //    }
 
-    // 1.17
+    // post 1.17
     @Override
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);

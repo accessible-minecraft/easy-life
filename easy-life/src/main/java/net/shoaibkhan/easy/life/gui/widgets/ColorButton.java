@@ -1,7 +1,6 @@
 package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
-import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 
 import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.config.Config;
@@ -24,21 +23,21 @@ public class ColorButton extends WButton {
         }
     }
 
-//    // 1.16
+    //    // pre 1.17
 //    @Override
 //    public void onClick(int x, int y, int button) {
 //        super.onClick(x, y, button);
-//        if(this.isEnabled()){
-//            if((this.index+1)==Colors.colorNames.length) index = 0;
-//            else this.index+=1;
+//        if (this.isEnabled()) {
+//            if ((this.index + 1) == Colors.colorNames.length) index = 0;
+//            else this.index += 1;
 //            Config.setString(jsonKey, Colors.colorNames[index]);
-//            this.setLabel(Text.of(translationKey +" : "+ Colors.colorNames[index]));
+//            this.setLabel(Text.of(translationKey + " : " + Colors.colorNames[index]));
 //        }
 //    }
 
-    // 1.17
+    // post 1.17
     @Override
-    public InputResult onClick(int x, int y, int button) {
+    public io.github.cottonmc.cotton.gui.widget.data.InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
         if (this.isEnabled()) {
             if ((this.index + 1) == Colors.colorNames.length) index = 0;
@@ -46,6 +45,6 @@ public class ColorButton extends WButton {
             Config.setString(jsonKey, Colors.colorNames[index]);
             this.setLabel(Text.of(translationKey + " : " + Colors.colorNames[index]));
         }
-        return InputResult.PROCESSED;
+        return io.github.cottonmc.cotton.gui.widget.data.InputResult.PROCESSED;
     }
 }
