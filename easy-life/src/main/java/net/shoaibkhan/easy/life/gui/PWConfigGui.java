@@ -11,8 +11,8 @@ import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.config.Config;
 import net.shoaibkhan.easy.life.gui.widgets.ColorButton;
 import net.shoaibkhan.easy.life.gui.widgets.ConfigButton;
@@ -24,10 +24,10 @@ import net.shoaibkhan.easy.life.gui.widgets.THSubmitButton;
 import net.shoaibkhan.easy.life.utils.Colors;
 
 public class PWConfigGui extends LightweightGuiDescription {
-    private ClientPlayerEntity player;
-    private MinecraftClient client;
-    
-    public PWConfigGui(ClientPlayerEntity player,MinecraftClient client){
+    private final ClientPlayerEntity player;
+    private final MinecraftClient client;
+
+    public PWConfigGui(ClientPlayerEntity player, MinecraftClient client) {
         this.player = player;
         this.client = client;
 
@@ -45,107 +45,106 @@ public class PWConfigGui extends LightweightGuiDescription {
         ConfigButton pwsound = new ConfigButton("sounds", Config.getPwSoundStatus());
         root.add(pwsound, 13, 1, 5, 1);
 
-        WLabel pwpos = new WLabel(new LiteralText("Position :-"), Colors.colors("black",100));
+        WLabel pwpos = new WLabel(Text.of("Position :-"), Colors.colors("black", 100));
         pwpos.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwpos, 1, 3, 3, 1);
 
-        WLabel pwx = new WLabel(new LiteralText("X="));
+        WLabel pwx = new WLabel(Text.of("X="));
         pwx.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwx, 5, 3, 1, 1);
 
-        WTextField pwxf = new WTextField(new LiteralText(Config.getString(Config.getPwPositionX())));
+        WTextField pwxf = new WTextField(Text.of(Config.getString(Config.getPwPositionX())));
         root.add(pwxf, 6, 3, 2, 1);
 
-        WLabel pwy = new WLabel(new LiteralText("Y="));
+        WLabel pwy = new WLabel(Text.of("Y="));
         pwy.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwy, 9, 3, 1, 1);
 
-        WTextField pwyf = new WTextField(new LiteralText(Config.getString(Config.getPwPositionY())));
+        WTextField pwyf = new WTextField(Text.of(Config.getString(Config.getPwPositionY())));
         root.add(pwyf, 10, 3, 2, 1);
 
-        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("gui.easylife.submit",pwxf,pwyf, Config.getPwPositionX(), Config.getPwPositionY());
+        DoubleSubmitButton pwpossubmit = new DoubleSubmitButton("gui.easylife.submit", pwxf, pwyf, Config.getPwPositionX(), Config.getPwPositionY());
         root.add(pwpossubmit, 14, 3, 3, 1);
 
-        WLabel pwtimeout = new WLabel(new LiteralText("Timeout (in seconds) :-"), Colors.colors("black",100));
+        WLabel pwtimeout = new WLabel(Text.of("Timeout (in seconds) :-"), Colors.colors("black", 100));
         pwtimeout.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwtimeout, 1, 5, 5, 1);
 
-        WTextField pwtof = new WTextField(new LiteralText(Config.getString(Config.getPwTimeout())));
+        WTextField pwtof = new WTextField(Text.of(Config.getString(Config.getPwTimeout())));
         root.add(pwtof, 9, 5, 2, 1);
 
-        SubmitButton pwtosubmit = new SubmitButton("gui.easylife.submit",pwtof, Config.getPwTimeout());
+        SubmitButton pwtosubmit = new SubmitButton("gui.easylife.submit", pwtof, Config.getPwTimeout());
         root.add(pwtosubmit, 12, 5, 3, 1);
 
-        WLabel pwht = new WLabel(new LiteralText("Health Threshold :-"), Colors.colors("black",100));
+        WLabel pwht = new WLabel(Text.of("Health Threshold :-"), Colors.colors("black", 100));
         pwht.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwht, 1, 7, 5, 1);
 
-        WLabel pwhtft = new WLabel(new LiteralText("First="));
+        WLabel pwhtft = new WLabel(Text.of("First="));
         pwhtft.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwhtft, 7, 7, 2, 1);
 
-        WTextField pwhtftf = new WTextField(new LiteralText(Config.getString(Config.getPwHtFTh())));
+        WTextField pwhtftf = new WTextField(Text.of(Config.getString(Config.getPwHtFTh())));
         root.add(pwhtftf, 9, 7, 2, 1);
 
-        WLabel pwhtst = new WLabel(new LiteralText("Second="));
+        WLabel pwhtst = new WLabel(Text.of("Second="));
         pwhtst.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwhtst, 12, 7, 2, 1);
 
-        WTextField pwhtstf = new WTextField(new LiteralText(Config.getString(Config.getPwHtSTh())));
+        WTextField pwhtstf = new WTextField(Text.of(Config.getString(Config.getPwHtSTh())));
         root.add(pwhtstf, 15, 7, 2, 1);
 
-        THDoubleSubmitButton pwhtsubmit = new THDoubleSubmitButton("gui.easylife.submit",pwhtftf,pwhtstf, Config.getPwHtFTh(), Config.getPwHtSTh());
+        THDoubleSubmitButton pwhtsubmit = new THDoubleSubmitButton("gui.easylife.submit", pwhtftf, pwhtstf, Config.getPwHtFTh(), Config.getPwHtSTh());
         root.add(pwhtsubmit, 18, 7, 3, 1);
 
-        WLabel pwft = new WLabel(new LiteralText("Food Threshold :-"), Colors.colors("black",100));
+        WLabel pwft = new WLabel(Text.of("Food Threshold :-"), Colors.colors("black", 100));
         pwft.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwft, 1, 9, 4, 1);
 
-        WTextField pwftf = new WTextField(new LiteralText(Config.getString(Config.getPwFtth())));
+        WTextField pwftf = new WTextField(Text.of(Config.getString(Config.getPwFtth())));
         root.add(pwftf, 7, 9, 2, 1);
 
-        THSubmitButton pwftsubmit = new THSubmitButton("gui.easylife.submit",pwftf, Config.getPwFtth());
+        THSubmitButton pwftsubmit = new THSubmitButton("gui.easylife.submit", pwftf, Config.getPwFtth());
         root.add(pwftsubmit, 10, 9, 3, 1);
 
-        WLabel pwat = new WLabel(new LiteralText("Air Threshold :-"), Colors.colors("black",100));
+        WLabel pwat = new WLabel(Text.of("Air Threshold :-"), Colors.colors("black", 100));
         pwat.setVerticalAlignment(VerticalAlignment.CENTER);
         root.add(pwat, 1, 11, 4, 1);
 
-        WTextField pwatf = new WTextField(new LiteralText(Config.getString(Config.getPwAtth())));
+        WTextField pwatf = new WTextField(Text.of(Config.getString(Config.getPwAtth())));
         root.add(pwatf, 7, 11, 2, 1);
 
-        THSubmitButton pwatsubmit = new THSubmitButton("gui.easylife.submit",pwatf, Config.getPwAtth());
+        THSubmitButton pwatsubmit = new THSubmitButton("gui.easylife.submit", pwatf, Config.getPwAtth());
         root.add(pwatsubmit, 10, 11, 3, 1);
-        
 
 
-        WButton nsbutton = new WButton(new TranslatableText("gui.easylife.back"));
+        WButton nsbutton = new WButton(Text.of(I18n.translate("gui.easylife.back")));
         nsbutton.setOnClick(this::onBackClick);
         root.add(nsbutton, 3, 13, 7, 1);
 
-        WButton doneButton = new WButton(new TranslatableText("gui.easylife.done"));
+        WButton doneButton = new WButton(Text.of(I18n.translate("gui.easylife.done")));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 12, 13, 7, 1);
 
-        WLabel label = new WLabel(new TranslatableText("gui.easylife.playerWarningsSettings"), Colors.colors("red",100));
+        WLabel label = new WLabel(Text.of(I18n.translate("gui.easylife.playerWarningsSettings")), Colors.colors("red", 100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
-        
+
         root.validate(this);
     }
 
-    private void onBackClick(){
+    private void onBackClick() {
         this.player.closeScreen();
-        Screen screen = new ConfigScreen(new ConfigGui(this.player,this.client), "configuration");
+        Screen screen = new ConfigScreen(new ConfigGui(this.player, this.client), "configuration");
         this.client.setScreen(screen);
     }
 
     private void onDoneClick() {
         this.player.closeScreen();
     }
-    
+
     @Override
     public void addPainters() {
-        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey",50)));
+        this.rootPanel.setBackgroundPainter(BackgroundPainter.createColorful(Colors.colors("lightgrey", 50)));
     }
 }

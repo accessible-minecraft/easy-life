@@ -3,18 +3,20 @@ package net.shoaibkhan.easy.life.gui.widgets;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.text.TranslatableText;
+
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.config.Config;
 
 public class CustomColorButton extends WButton {
-    private String translateKey;
-    private String jsonKey;
-    private ColorButton cButton;
-    private WTextField tField;
-    private SubmitColorButton sButton;
+    private final String translateKey;
+    private final String jsonKey;
+    private final ColorButton cButton;
+    private final WTextField tField;
+    private final SubmitColorButton sButton;
 
     public CustomColorButton(String translationKey, String jsonKey, ColorButton cButton, WTextField tField, SubmitColorButton sButton) {
-        super(new TranslatableText(translationKey + (Config.get(jsonKey) ? " : on" : " : off")));
+        super(Text.of(I18n.translate(translationKey + (Config.get(jsonKey) ? " : on" : " : off"))));
         this.translateKey = translationKey;
         this.jsonKey = jsonKey;
         this.cButton = cButton;
@@ -28,7 +30,7 @@ public class CustomColorButton extends WButton {
 //        super.onClick(x, y, button);
 //        if(this.isEnabled()){
 //            boolean enabled = Config.toggle(this.jsonKey);
-//            TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+//            TranslatableText newButtonText = I18n.translate(this.translateKey + (enabled ? " : on" : " : off"));
 //            this.setLabel(newButtonText);
 //            if(enabled){
 //                cButton.setEnabled(false);
@@ -42,15 +44,15 @@ public class CustomColorButton extends WButton {
 //        }
 //    }
 
-  // 1.17
+    // 1.17
     @Override
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if(this.isEnabled()){
+        if (this.isEnabled()) {
             boolean enabled = Config.toggle(this.jsonKey);
-            TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+            Text newButtonText = Text.of(I18n.translate(this.translateKey + (enabled ? " : on" : " : off")));
             this.setLabel(newButtonText);
-            if(enabled){
+            if (enabled) {
                 cButton.setEnabled(false);
                 tField.setEditable(true);
                 sButton.setEnabled(true);

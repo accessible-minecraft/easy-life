@@ -16,7 +16,7 @@ public class PlayerEntityMixin {
     @Inject(at = @At("HEAD"),method = "tick")
     private void tickUpdate(CallbackInfo info){
         if (ClientMod.kbFlag) {
-            // player.sendMessage(new LiteralText("string"), false);
+            // player.sendMessage(Text.of("string"), false);
             ClientMod.kbFlag = false;
         }
     }

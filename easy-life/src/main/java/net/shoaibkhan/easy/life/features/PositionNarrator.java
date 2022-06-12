@@ -11,7 +11,7 @@ public class PositionNarrator {
     private final MinecraftClient client;
     private final ClientPlayerEntity player;
 
-    public PositionNarrator(MinecraftClient client){
+    public PositionNarrator(MinecraftClient client) {
         this.client = client;
         this.player = client.player;
 

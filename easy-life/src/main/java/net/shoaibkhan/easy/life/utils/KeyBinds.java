@@ -14,9 +14,15 @@ public enum KeyBinds {
     private KeyBinding keyBind;
 
 
-    KeyBinds(KeyBinding keyBind) {this.keyBind = keyBind;}
+    KeyBinds(KeyBinding keyBind) {
+        this.keyBind = keyBind;
+    }
 
-    public KeyBinding getKeyBind(){return this.keyBind;}
+    public KeyBinding getKeyBind() {
+        return this.keyBind;
+    }
 
-    public void setKeyBind(KeyBinding newKeyBind){this.keyBind = newKeyBind;}
+    public void setKeyBind(KeyBinding newKeyBind) {
+        this.keyBind = newKeyBind;
+    }
 }

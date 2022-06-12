@@ -12,19 +12,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 /**
- * 
  * @author Shoaib Khan
- *
  */
+
 @Mixin(WButton.class)
-public abstract class ButtonMixin{
+public abstract class ButtonMixin {
 
     @Shadow(remap = false)
     private Text label;
 
-    @Inject(at = @At("TAIL"),locals = LocalCapture.CAPTURE_FAILSOFT,method = "paint",remap = false)
-    private void buttonHovered(MatrixStack matrices, int x, int y, int mouseX, int mouseY, CallbackInfo info, boolean hovered,int state,float px,float buttonLeft,float buttonTop,int halfWidth,float buttonWidth,float buttonHeight,float buttonEndLeft){
-        // only for 1.17 and below
+    @Inject(at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT, method = "paint", remap = false)
+    private void buttonHovered(MatrixStack matrices, int x, int y, int mouseX, int mouseY, CallbackInfo info, boolean hovered, int state, float px, float buttonLeft, float buttonTop, int halfWidth, float buttonWidth, float buttonHeight, float buttonEndLeft) {
+        // TODO only for 1.17 and below
 
 //        if( state == 2 && hovered == false && !NarrateLabel.usingTab.contains("tab"+label+""+x+""+y+"")) {
 //        	NarrateLabel.usingTab += "tab"+label+""+x+""+y+"";

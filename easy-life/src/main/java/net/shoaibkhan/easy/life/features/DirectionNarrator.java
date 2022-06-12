@@ -13,28 +13,28 @@ public class DirectionNarrator {
 
     private final MinecraftClient client;
 
-    public DirectionNarrator(MinecraftClient client){
+    public DirectionNarrator(MinecraftClient client) {
         this.client = client;
-        if(KeyBinds.DIRECTION_NARRATOR_KEY.getKeyBind().wasPressed())
+        if (KeyBinds.DIRECTION_NARRATOR_KEY.getKeyBind().wasPressed())
             main();
     }
 
-    private void main(){
+    private void main() {
         final PlayerEntity player = client.player;
         assert player != null;
         String text = "";
 
-        if(ClientMod.isAltPressed){
+        if (ClientMod.isAltPressed) {
             int angle = new PlayerPosition(client).getVerticalFacingDirection();
-            text = "" + angle;
+            text = PlayerPosition.getNarratableNumber(angle);
         } else {
             int angle = new PlayerPosition(client).getHorizontalFacingDirectionInDegrees();
 
-            if(Config.get(Config.getCardinal_to_Degrees_Key())){
+            if (Config.get(Config.getCardinal_to_Degrees_Key())) {
                 text += angle;
             } else {
-              String string = new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
-              text = I18n.translate("narrate.easylife.direction", string);
+                String string = new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
+                text = I18n.translate("narrate.easylife.direction", string);
             }
         }
 

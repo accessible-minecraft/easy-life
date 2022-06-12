@@ -18,7 +18,7 @@ public class PositionAndDirectionOverlay {
     private final TextRenderer textRenderer;
     private final MatrixStack matrixStack;
 
-    public PositionAndDirectionOverlay(MinecraftClient client){
+    public PositionAndDirectionOverlay(MinecraftClient client) {
         this.client = client;
         this.inGameHud = client.inGameHud;
         this.textRenderer = client.textRenderer;
@@ -28,12 +28,12 @@ public class PositionAndDirectionOverlay {
         }
     }
 
-    private void main(){
+    private void main() {
         RenderSystem.enableBlend();
 
-        if(Config.get(Config.getPlayerCoordinatesKey())) printPlayerCoordinatesOnScreen();
+        if (Config.get(Config.getPlayerCoordinatesKey())) printPlayerCoordinatesOnScreen();
 
-        if(Config.get(Config.getPlayerDirectionKey())) printPlayerDirectionOnScreen();
+        if (Config.get(Config.getPlayerDirectionKey())) printPlayerDirectionOnScreen();
     }
 
     private void printPlayerCoordinatesOnScreen() {
@@ -64,24 +64,25 @@ public class PositionAndDirectionOverlay {
         matrixStack.pop();
     }
 
-    private void printPlayerDirectionOnScreen(){
-        int x = Integer.parseInt(Config.getString(Config.getPdPositionX())),y = Integer.parseInt(Config.getString(Config.getPdPositionY()));
+    private void printPlayerDirectionOnScreen() {
+        int x = Integer.parseInt(Config.getString(Config.getPdPositionX())), y = Integer.parseInt(Config.getString(Config.getPdPositionY()));
         int bgColor = colors(Config.getString(Config.getPdBgColor()), Config.getOpacity(Config.getPdBgColorOpacity()));
         int color = colors(Config.getString(Config.getPdColor()), Config.getOpacity(Config.getPdColorOpacity()));
         try {
-            if(Config.get(Config.getPdColorCustom())) color = colors(Config.getString(Config.getPdColorCustomVal()), Config.getOpacity(Config.getPdColorOpacity()));
+            if (Config.get(Config.getPdColorCustom()))
+                color = colors(Config.getString(Config.getPdColorCustomVal()), Config.getOpacity(Config.getPdColorOpacity()));
         } catch (Exception e) {
             color = colors(Config.getString(Config.getPdColor()), Config.getOpacity(Config.getPdColorOpacity()));
         }
 
-        String dirString="Direction: " + new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
+        String dirString = "Direction: " + new PlayerPosition(client).getHorizontalFacingDirectionInCardinal();
         matrixStack.push();
         matrixStack.scale(1, 1, inGameHud.getZOffset());
-        DrawableHelper.fill(matrixStack, x, y, (dirString.length()*5) + 5 + x, y+14, bgColor);
+        DrawableHelper.fill(matrixStack, x, y, (dirString.length() * 5) + 5 + x, y + 14, bgColor);
         matrixStack.pop();
         matrixStack.push();
         matrixStack.scale(1, 1, inGameHud.getZOffset());
-        textRenderer.draw(matrixStack, dirString, x+3, y+3, color);
+        textRenderer.draw(matrixStack, dirString, x + 3, y + 3, color);
         matrixStack.pop();
     }
 }

@@ -15,11 +15,16 @@ import net.minecraft.client.util.NarratorManager;
 import net.shoaibkhan.easy.life.utils.KeyBinds;
 
 public class Initial implements ClientModInitializer {
-    private static NarratorManager narratorManager;
     public static ClientMod clientMod;
     public static CustomWait wait;
-	public static Map<String, Integer> counterMap;
+    public static Map<String, Integer> counterMap;
     public static String biomeIndicatorString = "";
+    private static NarratorManager narratorManager;
+
+    public static void narrate(String string) {
+        NarratorManager.INSTANCE.clear();
+        narratorManager.narrate(string);
+    }
 
     @Override
     public void onInitializeClient() {
@@ -33,22 +38,17 @@ public class Initial implements ClientModInitializer {
         countMapThread.setWait(999, 0, MinecraftClient.getInstance());
         countMapThread.startThread();
         countMapThread.start();
-        
+
         clientMod = new ClientMod();
         wait = new CustomWait();
     }
 
-    private void initializeKeyBinds(){
+    private void initializeKeyBinds() {
         KeyBinds.HEALTH_N_HUNGER_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.healthHunger", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "gui.easylife")));
         KeyBinds.PLAYER_COORDINATES_AND_DIRECTION_OVERLAY_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.coordinates", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F6, "gui.easylife")));
         KeyBinds.CONFIG_MENU_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_M, "gui.easylife")));
         KeyBinds.POSITION_NARRATOR_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.position", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "gui.easylife")));
         KeyBinds.DIRECTION_NARRATOR_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.direction", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "gui.easylife")));
         KeyBinds.F4_MENU_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.easylife.narratorMenu", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F4, "gui.easylife")));
-    }
-
-    public static void narrate(String string){
-        NarratorManager.INSTANCE.clear();
-        narratorManager.narrate(string);
     }
 }

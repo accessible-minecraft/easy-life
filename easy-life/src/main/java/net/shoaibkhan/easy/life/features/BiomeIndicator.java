@@ -9,28 +9,31 @@ import net.shoaibkhan.easy.life.Initial;
 public class BiomeIndicator extends Thread {
     private boolean running;
 
-    public void startThread(){
+    public void startThread() {
         this.running = true;
         this.start();
     }
 
-    public void stopThread(){
+    public void stopThread() {
         this.running = false;
         this.interrupt();
     }
-    public void run(){
-        while(running) {
+
+    public void run() {
+        while (running) {
             try {
                 MinecraftClient client = MinecraftClient.getInstance();
                 assert client.world != null;
                 assert client.player != null;
-                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos()));
+
+                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos()).value());
+
                 assert id != null;
                 String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
 
                 if (!Initial.biomeIndicatorString.equalsIgnoreCase(name)) {
                     Initial.biomeIndicatorString = name;
-                    String toNarrate =name + " biome entered.";
+                    String toNarrate = name + " biome entered.";
                     Initial.narrate(toNarrate);
                 }
 

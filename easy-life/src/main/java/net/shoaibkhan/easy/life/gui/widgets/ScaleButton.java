@@ -2,16 +2,17 @@ package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.text.LiteralText;
+
+import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.config.Config;
 
 public class ScaleButton extends WButton {
-    private String translationKey;
-    private String jsonKey;
+    private final String translationKey;
+    private final String jsonKey;
     private int value;
 
-    public ScaleButton(String translationKey,String jsonKey){
-        super(new LiteralText(translationKey + " : " + Config.getString(jsonKey)));
+    public ScaleButton(String translationKey, String jsonKey) {
+        super(Text.of(translationKey + " : " + Config.getString(jsonKey)));
         this.translationKey = translationKey;
         this.jsonKey = jsonKey;
         this.value = Integer.parseInt(Config.getString(jsonKey));
@@ -25,19 +26,19 @@ public class ScaleButton extends WButton {
 //            if(this.value+1>5) this.value = 1;
 //            else this.value += 1;
 //            Config.setInt(jsonKey, ""+value);
-//            this.setLabel(new LiteralText(this.translationKey + " : " + this.value));
+//            this.setLabel(Text.of(this.translationKey + " : " + this.value));
 //        }
 //    }
 
-  // 1.17
+    // 1.17
     @Override
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if(this.isEnabled()){
-            if(this.value+1>5) this.value = 1;
+        if (this.isEnabled()) {
+            if (this.value + 1 > 5) this.value = 1;
             else this.value += 1;
-            Config.setInt(jsonKey, ""+value);
-            this.setLabel(new LiteralText(this.translationKey + " : " + this.value));
+            Config.setInt(jsonKey, "" + value);
+            this.setLabel(Text.of(this.translationKey + " : " + this.value));
         }
         return InputResult.PROCESSED;
     }

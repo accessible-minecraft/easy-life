@@ -3,15 +3,19 @@ package net.shoaibkhan.easy.life.gui.widgets;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.minecraft.text.TranslatableText;
+
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.easy.life.config.Config;
 
-public class DoubleSubmitButton extends WButton{
-    private String jsonkeyx,jsonkeyy;
-    private WTextField posx,posy;
+public class DoubleSubmitButton extends WButton {
+    private final String jsonkeyx;
+    private final String jsonkeyy;
+    private final WTextField posx;
+    private final WTextField posy;
 
-    public DoubleSubmitButton(String translationKey,WTextField posx,WTextField posy,String jsonkeyx,String jsonkeyy){
-        super(new TranslatableText(translationKey));
+    public DoubleSubmitButton(String translationKey, WTextField posx, WTextField posy, String jsonkeyx, String jsonkeyy) {
+        super(Text.of(I18n.translate(translationKey)));
         this.posx = posx;
         this.posy = posy;
         this.jsonkeyx = jsonkeyx;
@@ -44,8 +48,8 @@ public class DoubleSubmitButton extends WButton{
             if (Config.setInt(jsonkeyx, posx.getText()) && Config.setInt(jsonkeyy, posy.getText())) {
                 posx.setText("");
                 posy.setText("");
-                posx.setSuggestion(Config.getString(jsonkeyx));
-                posy.setSuggestion(Config.getString(jsonkeyy));
+                posx.setSuggestion(Text.of(Config.getString(jsonkeyx)));
+                posy.setSuggestion(Text.of(Config.getString(jsonkeyy)));
             }
         }
         return InputResult.PROCESSED;

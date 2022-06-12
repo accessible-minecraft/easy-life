@@ -2,7 +2,7 @@ package net.shoaibkhan.easy.life.gui.widgets;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
-import net.minecraft.text.TranslatableText;
+
 import net.shoaibkhan.easy.life.config.ELConfig;
 
 public class CustomColorButton extends WButton {
@@ -13,7 +13,7 @@ public class CustomColorButton extends WButton {
     private SubmitColorButton sButton;
 
     public CustomColorButton(String translationKey, String jsonKey, ColorButton cButton, WTextField tField, SubmitColorButton sButton) {
-        super(new TranslatableText(translationKey + (ELConfig.get(jsonKey) ? " : on" : " : off")));
+        super(I18n.translate(translationKey + (ELConfig.get(jsonKey) ? " : on" : " : off")));
         this.translateKey = translationKey;
         this.jsonKey = jsonKey;
         this.cButton = cButton;
@@ -24,11 +24,11 @@ public class CustomColorButton extends WButton {
     @Override
     public void onClick(int x, int y, int button) {
         super.onClick(x, y, button);
-        if(this.isEnabled()){
+        if (this.isEnabled()) {
             boolean enabled = ELConfig.toggle(this.jsonKey);
-            TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+            TranslatableText newButtonText = I18n.translate(this.translateKey + (enabled ? " : on" : " : off"));
             this.setLabel(newButtonText);
-            if(enabled){
+            if (enabled) {
                 cButton.setEnabled(false);
                 tField.setEditable(true);
                 sButton.setEnabled(true);
