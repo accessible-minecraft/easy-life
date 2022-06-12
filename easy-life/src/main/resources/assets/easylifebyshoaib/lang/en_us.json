@@ -55,5 +55,6 @@
   "narrate.easylife.posDiff.left": "%s blocks left",
   "narrate.easylife.posDiff.right": "%s blocks right",
   "narrate.easylife.posDiff.up": "%s blocks up",
-  "narrate.easylife.posDiff.down": "%s blocks down"
+  "narrate.easylife.posDiff.down": "%s blocks down",
+  "narrate.easylife.hotbar": "%s selected"
 }

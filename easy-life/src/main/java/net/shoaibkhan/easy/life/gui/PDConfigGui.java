@@ -121,7 +121,8 @@ public class PDConfigGui extends LightweightGuiDescription {
     private void onBackClick() {
         this.player.closeScreen();
         Screen screen = new ConfigScreen(new ConfigGui(this.player, this.client), "configuration");
-        this.client.setScreen(screen);
+        client.setScreen(screen); // post 1.18
+//        client.openScreen(screen); // pre 1.18
     }
 
     private void onDoneClick() {

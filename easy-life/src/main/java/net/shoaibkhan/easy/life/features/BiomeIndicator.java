@@ -26,7 +26,8 @@ public class BiomeIndicator extends Thread {
                 assert client.world != null;
                 assert client.player != null;
 
-                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos()).value());
+                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos()).value()); // post 1.18
+//                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos())); // pre 1.18
 
                 assert id != null;
                 String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
