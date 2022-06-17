@@ -8,7 +8,7 @@ public class Colors {
     public static int colors(String c, int o) {
         c = c.trim().toLowerCase();
         switch (c) {
-            case "red" -> {
+            case "red":
                 if (o > 95 && o <= 100) return 0xffdb0000;
                 else if (o > 90 && o <= 95) return 0xfadb0000;
                 else if (o > 85 && o <= 90) return 0xe6db0000;
@@ -31,8 +31,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0ddb0000;
                 else if (o <= 0) return 0x00db0000;
                 return 0xffdb0000;
-            }
-            case "grey" -> {
+            case "grey":
                 if (o > 95 && o <= 100) return 0xff808080;
                 else if (o > 90 && o <= 95) return 0xfa808080;
                 else if (o > 85 && o <= 90) return 0xe6808080;
@@ -55,8 +54,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d808080;
                 else if (o <= 0) return 0x00808080;
                 return 0xff808080;
-            }
-            case "purple" -> {
+            case "purple":
                 if (o > 95 && o <= 100) return 0xff800080;
                 else if (o > 90 && o <= 95) return 0xfa800080;
                 else if (o > 85 && o <= 90) return 0xe6800080;
@@ -79,8 +77,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d800080;
                 else if (o <= 0) return 0x00800080;
                 return 0xff800080;
-            }
-            case "white" -> {
+            case "white":
                 if (o > 95 && o <= 100) return 0xfff0f0f0;
                 else if (o > 90 && o <= 95) return 0xfaf0f0f0;
                 else if (o > 85 && o <= 90) return 0xe6f0f0f0;
@@ -103,8 +100,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0df0f0f0;
                 else if (o <= 0) return 0x00f0f0f0;
                 return 0xfff0f0f0;
-            }
-            case "black" -> {
+            case "black":
                 if (o > 95 && o <= 100) return 0xff0f0f0f;
                 else if (o > 90 && o <= 95) return 0xfa0f0f0f;
                 else if (o > 85 && o <= 90) return 0xe60f0f0f;
@@ -127,8 +123,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d0f0f0f;
                 else if (o <= 0) return 0x000f0f0f;
                 return 0xff0f0f0f;
-            }
-            case "pink" -> {
+            case "pink":
                 if (o > 95 && o <= 100) return 0xffff0f87;
                 else if (o > 90 && o <= 95) return 0xfaff0f87;
                 else if (o > 85 && o <= 90) return 0xe6ff0f87;
@@ -151,8 +146,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0dff0f87;
                 else if (o <= 0) return 0x00ff0f87;
                 return 0xffff0f87;
-            }
-            case "blue" -> {
+            case "blue":
                 if (o > 95 && o <= 100) return 0xff1f1fff;
                 else if (o > 90 && o <= 95) return 0xfa1f1fff;
                 else if (o > 85 && o <= 90) return 0xe61f1fff;
@@ -175,8 +169,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d1f1fff;
                 else if (o <= 0) return 0x001f1fff;
                 return 0xff1f1fff;
-            }
-            case "green" -> {
+            case "green":
                 if (o > 95 && o <= 100) return 0xff00bd00;
                 else if (o > 90 && o <= 95) return 0xfa00bd00;
                 else if (o > 85 && o <= 90) return 0xe600bd00;
@@ -199,8 +192,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d00bd00;
                 else if (o <= 0) return 0x0000bd00;
                 return 0xff00bd00;
-            }
-            case "yellow" -> {
+            case "yellow":
                 if (o > 95 && o <= 100) return 0xffffff3d;
                 else if (o > 90 && o <= 95) return 0xfaffff3d;
                 else if (o > 85 && o <= 90) return 0xe6ffff3d;
@@ -223,8 +215,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0dffff3d;
                 else if (o <= 0) return 0x00ffff3d;
                 return 0xffffff3d;
-            }
-            case "orange" -> {
+            case "orange":
                 if (o > 95 && o <= 100) return 0xffe09200;
                 else if (o > 90 && o <= 95) return 0xfae09200;
                 else if (o > 85 && o <= 90) return 0xe6e09200;
@@ -247,8 +238,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0de09200;
                 else if (o <= 0) return 0x00e09200;
                 return 0xffe09200;
-            }
-            case "brown" -> {
+            case "brown":
                 if (o > 95 && o <= 100) return 0xff610000;
                 else if (o > 90 && o <= 95) return 0xfa610000;
                 else if (o > 85 && o <= 90) return 0xe6610000;
@@ -271,8 +261,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0d610000;
                 else if (o <= 0) return 0x00610000;
                 return 0xff610000;
-            }
-            case "lightgrey" -> {
+            case "lightgrey":
                 if (o > 95 && o <= 100) return 0xffececec;
                 else if (o > 90 && o <= 95) return 0xfaececec;
                 else if (o > 85 && o <= 90) return 0xe6ececec;
@@ -295,8 +284,7 @@ public class Colors {
                 else if (o > 0 && o <= 5) return 0x0dececec;
                 else if (o <= 0) return 0x00ececec;
                 return 0xffececec;
-            }
-            default -> {
+            default:
                 if (c.contains("#")) c = c.replace("#", "");
                 if (c.contains("0x")) c = c.replace("0x", "");
                 int hex = Integer.parseInt(c, 16);
@@ -305,7 +293,6 @@ public class Colors {
                 int b = (hex & 0xff);
                 Color color = Color.rgb((int) (o * 2.55), r, g, b);
                 return color.toRgb();
-            }
         }
     }
 

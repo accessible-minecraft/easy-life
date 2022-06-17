@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "easylifebyshoaib",
   "version": "${version}",
-
   "name": "Easy Life",
   "description": "This mod alerts player when health is decreased and also adds a button to check health and hunger manually and much more features!",
   "authors": [
@@ -13,21 +12,20 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/easy-life",
     "sources": "https://github.com/shoaib11120/easy-life"
   },
-
   "license": "MIT",
   "icon": "assets/icon.png",
-
   "environment": "*",
   "entrypoints": {
-    "client": [ "net.shoaibkhan.easy.life.Initial" ]
+    "client": [
+      "net.shoaibkhan.easy.life.Initial"
+    ]
   },
   "mixins": [
     "easy_life_mixin.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
-    "fabric-key-binding-api-v1":"*",
+    "fabric-key-binding-api-v1": "*",
     "fabric": "*",
     "minecraft": "1.19.*"
   },
