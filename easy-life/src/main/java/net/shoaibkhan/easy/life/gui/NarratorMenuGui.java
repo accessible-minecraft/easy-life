@@ -88,8 +88,11 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                 return;
 
             switch (hit.getType()) {
-                case MISS -> Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
-                case BLOCK -> {
+                case MISS: {
+                    Initial.narrate(I18n.translate("narrate.easylife.tooFar"));
+                    break;
+                }
+                case BLOCK: {
                     try {
                         BlockHitResult blockHit = (BlockHitResult) hit;
                         BlockPos blockPos = blockHit.getBlockPos();
@@ -102,9 +105,9 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                    break;
                 }
-                case ENTITY -> {
+                case ENTITY: {
                     try {
                         EntityHitResult entityHitResult = (EntityHitResult) hit;
                         String name;
@@ -115,6 +118,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    break;
                 }
             }
         } catch (Exception e) {

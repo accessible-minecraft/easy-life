@@ -23,7 +23,7 @@ public abstract class ButtonMixin {
 
     @Inject(at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT, method = "paint", remap = false)
     private void buttonHovered(MatrixStack matrices, int x, int y, int mouseX, int mouseY, CallbackInfo info, boolean hovered, int state, float px, float buttonLeft, float buttonTop, int halfWidth, float buttonWidth, float buttonHeight, float buttonEndLeft) {
-        // TODO only for post 1.17 and below
+        // TODO only for 1.17 and below
 
 //        if (state == 2 && hovered == false && !NarrateLabel.usingTab.contains("tab" + label + "" + x + "" + y + "")) {
 //            NarrateLabel.usingTab += "tab" + label + "" + x + "" + y + "";

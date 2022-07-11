@@ -29,7 +29,11 @@ public class BiomeIndicator extends Thread {
                 Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos()).value()); // post 1.18
 //                Identifier id = client.world.getRegistryManager().get(Registry.BIOME_KEY).getId(client.world.getBiome(client.player.getBlockPos())); // pre 1.18
 
-                assert id != null;
+                if (id == null) {
+                    System.out.println("\n\nUnable to detect biome!!\n\n");
+                    return;
+                }
+
                 String name = I18n.translate("biome." + id.getNamespace() + "." + id.getPath());
 
                 if (!Initial.biomeIndicatorString.equalsIgnoreCase(name)) {
