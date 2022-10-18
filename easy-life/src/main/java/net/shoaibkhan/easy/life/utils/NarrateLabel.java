@@ -27,8 +27,8 @@ public class NarrateLabel {
             return;
         prevX = x;
         prevY = y;
-        NarratorManager.INSTANCE.clear();
-        NarratorManager.INSTANCE.narrate(label);
+        MinecraftClient.getInstance().getNarratorManager().clear();
+        MinecraftClient.getInstance().getNarratorManager().narrate(label);
         if (Initial.wait.isAlive()) Initial.wait.stopThread();
         Initial.wait = new CustomWait();
         Initial.wait.setTabWait(5000, 1, instance, using);

@@ -289,7 +289,7 @@ public class NarratorMenuGui extends LightweightGuiDescription {
                 cameraPos,
                 vec3d3,
                 box,
-                (entityx) -> !entityx.isSpectator() && entityx.collides(),
+                (entityx) -> !entityx.isSpectator() && entityx.collidedSoftly,
                 extendedReach
         );
 

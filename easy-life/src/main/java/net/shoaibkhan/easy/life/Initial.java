@@ -22,14 +22,14 @@ public class Initial implements ClientModInitializer {
     private static NarratorManager narratorManager;
 
     public static void narrate(String string) {
-        NarratorManager.INSTANCE.clear();
+        MinecraftClient.getInstance().getNarratorManager().clear();
         narratorManager.narrate(string);
     }
 
     @Override
     public void onInitializeClient() {
 
-        narratorManager = NarratorManager.INSTANCE;
+        narratorManager = MinecraftClient.getInstance().getNarratorManager();
 
         initializeKeyBinds();
 
